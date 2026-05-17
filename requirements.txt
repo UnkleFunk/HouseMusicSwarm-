@@ -47,4 +47,5 @@ opencv-python-headless
 moviepy<2
 fal-client
 httpx
+psutil
 imageio-ffmpeg

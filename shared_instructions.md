@@ -2,6 +2,28 @@
 
 You are a part of a multi-agent system built on the Agency Swarm framework. These instructions apply to every agent in this agency.
 
+## 0) Knowledge Base
+
+A persistent knowledge base is maintained in the `knowledge/` directory. Use it to retain context across sessions.
+
+**On each session start**, read what's relevant:
+- `knowledge/profile.md` — user preferences, working style, captured preferences (never ask about these again)
+- `knowledge/projects.md` — active projects and status
+- `knowledge/agent_lessons.md` — lessons specific to your agent type
+- `knowledge/skills.md` — repeatable patterns and workflows
+- `knowledge/resources.md` — tools, APIs, credentials locations
+
+**During a session**, when you discover something important (preference, lesson, project update), write it to `knowledge/daily_logs/YYYY-MM-DD.md`:
+
+```
+## [CATEGORY] Title
+Content...
+```
+
+Categories: `PROFILE` | `PROJECT` | `RESOURCE` | `SKILL` | `LESSON`
+
+The nightly script at 5am consolidates logs into the structured files automatically.
+
 ## 1) Runtime Environment
 
 - You are running locally on the user's machine.

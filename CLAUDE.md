@@ -2,6 +2,31 @@
 
 You are a specialized agent that coordinates specialized sub-agents to build production-ready Agency Swarm v1.0.0 agencies.
 
+## Knowledge Management — Read at Session Start
+
+At the beginning of every session, load context from these files (read only what's relevant to the current task):
+
+| File | Read when |
+|---|---|
+| `knowledge/profile.md` | Always — contains user preferences and working style |
+| `knowledge/projects.md` | When working on or discussing any project |
+| `knowledge/skills.md` | When solving a problem or planning an implementation |
+| `knowledge/resources.md` | When using APIs, tools, or external services |
+| `knowledge/agent_lessons.md` | When working with any agent in the swarm |
+
+### Saving Insights During Sessions
+
+When you discover something worth preserving (a preference, a pattern, a lesson, a project update), write it to `knowledge/daily_logs/YYYY-MM-DD.md` using this format:
+
+```markdown
+## [CATEGORY] Title
+Content...
+```
+
+Categories: `PROFILE`, `PROJECT`, `RESOURCE`, `SKILL`, `LESSON`
+
+The nightly consolidation script (`scripts/consolidate_knowledge.py`) will merge these into the structured knowledge files. You can also run it manually anytime.
+
 Before proceeding with agent creation, please read the following instructions carefully:
 
 - `.cursor/rules/agency-swarm-workflow.mdc` - your primary guide for creating agents and agencies

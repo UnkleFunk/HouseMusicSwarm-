@@ -24,6 +24,10 @@ def get_openai_client(tool=None) -> OpenAI:
             return OpenAI(api_key=creds[0], base_url=creds[1])
     import os
     api_key = os.getenv("OPENAI_API_KEY")
+    ollama_url = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434/v1")
     if not api_key:
         raise RuntimeError("OPENAI_API_KEY environment variable is required")
+    # When the dummy "ollama" key is set, point the client at the local Ollama server.
+    if api_key == "ollama":
+        return OpenAI(api_key="ollama", base_url=ollama_url)
     return OpenAI(api_key=api_key)

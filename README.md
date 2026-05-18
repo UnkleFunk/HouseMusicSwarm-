@@ -10,12 +10,12 @@
 
 Create polished slide decks, research reports, data visualizations, documents, images, and videos — all from a single prompt in your terminal. No platform, no UI, no setup hassles.
 
-✨ **One prompt → Complete deliverables**
-🎯 **8 specialized agents working together**
-⚡ **Install in 30 seconds, running in 60**
-🔧 **100% customizable and forkable**
+✨ **One prompt → Complete deliverables**<br>
+🎯 **8 specialized agents working together**<br>
+⚡ **Install in 30 seconds, running in 60**<br>
+🔧 **100% customizable and forkable**<br>
 
-Built on [Agency Swarm](https://github.com/VRSEN/agency-swarm) — the framework powering real AI agencies.
+Built on [Agency Swarm](https://github.com/VRSEN/agency-swarm) — the framework powering real AI swarms.<br>
 
 ---
 
@@ -151,7 +151,19 @@ python server.py           # Runs on localhost:8080
 
 - **Watch the full demo:** [YouTube video →](https://youtu.be/c5DdXzqaeVU?si=rM2CNaZ8qVwMvqmz)
 - **Multi-agent framework:** [Agency Swarm](https://github.com/VRSEN/agency-swarm)
+- **Terminal UI for Agency Swarm:** [AgentSwarm](https://github.com/VRSEN/agentswarm-cli) (OpenCode-based TUI)
 - **External integrations:** [Composio](https://composio.dev)
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=VRSEN/OpenSwarm&type=date&legend=top-left)](https://www.star-history.com/#VRSEN/OpenSwarm&type=date&legend=top-left)
+
+---
+
+## 👥 Team
+
+- **Artemii Shatokhin** — Built the core OpenSwarm agent team: the specialist agents, orchestration layer, shared tools, and runtime integrations. ([GitHub](https://github.com/ArtemShatokhin))
+- **Nick Bobrowski** — Built the foundation OpenSwarm builds on: Agency Swarm and the AgentSwarm CLI/TUI, an OpenCode-based terminal experience customized for Agency Swarm. ([GitHub](https://github.com/nicko-ai))
 
 ---
 

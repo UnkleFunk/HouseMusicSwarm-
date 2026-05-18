@@ -10,6 +10,7 @@ import json
 import re
 import threading
 from pathlib import Path
+from types import SimpleNamespace
 from typing import Literal
 
 import os
@@ -92,28 +93,57 @@ async def _agent_get_response(agent: Agent, prompt: str, *, use_stream: bool = F
     Codex endpoint requires stream=True; use get_response_stream() in that case.
     """
     if use_stream:
+        stream = None
+        stream_exhausted = False
+        completed_result = None
         stream = agent.get_response_stream(prompt)
         text_deltas: list[str] = []
-        async for event in stream:
-            data = getattr(event, "data", None)
-            if data is not None:
-                delta = getattr(data, "delta", None)
-                if delta and isinstance(delta, str):
-                    text_deltas.append(delta)
-        result = await stream.wait_final_result()
+        try:
+            async for event in stream:
+                data = getattr(event, "data", None)
+                data_kind = getattr(data, "type", None) if data is not None else None
+                if data is not None and data_kind == "response.output_text.delta":
+                    delta = getattr(data, "delta", None)
+                    if delta and isinstance(delta, str):
+                        text_deltas.append(delta)
+                if data_kind == "response.completed" and text_deltas:
+                    assembled = "".join(text_deltas)
+                    try:
+                        _coerce_plan_response(assembled)
+                    except Exception:  # noqa: BLE001
+                        pass
+                    else:
+                        completed_result = SimpleNamespace(final_output=assembled)
+                        break
+            else:
+                stream_exhausted = True
+        finally:
+            if stream is not None and not stream_exhausted:
+                cancel = getattr(stream, "cancel", None)
+                if callable(cancel):
+                    try:
+                        cancel(mode="immediate")
+                    except Exception:  # noqa: BLE001
+                        pass
+                close = getattr(stream, "aclose", None)
+                if callable(close):
+                    try:
+                        await close()
+                    except Exception:  # noqa: BLE001
+                        pass
+        if completed_result is not None:
+            return completed_result
+        result = getattr(stream, "final_result", None)
         fo = getattr(result, "final_output", None) if result is not None else None
-        if not fo and text_deltas:
-            assembled = "".join(text_deltas)
-            try:
-                if result is not None:
-                    result.final_output = assembled
-                else:
-                    class _R:
-                        final_output = assembled
-                    result = _R()
-            except Exception:
-                pass
-        return result
+        if fo:
+            return result
+
+        assembled = "".join(text_deltas)
+
+        class _R:
+            final_output = assembled
+
+        return _R()
     return await agent.get_response(prompt)
 
 
@@ -153,11 +183,12 @@ def _make_planner_agent(tool=None) -> "tuple[Agent, bool]":
         name="Slide Planner",
         description="Creates structured slide outline plans.",
         instructions=(
-            "You generate JSON plans for slide creation. "
-            "Output must be valid JSON only, no markdown fences, no extra text."
+            "You generate structured slide creation plans. "
+            "Fill the requested output schema exactly."
         ),
         tools=[],
         model=model,
+        output_type=_PlanResponse,
         model_settings=ModelSettings(
             reasoning=Reasoning(effort="high", summary="auto"),
             verbosity=None if is_codex else "medium",
@@ -201,6 +232,22 @@ def _extract_json_block(text: str) -> str:
     return (match.group(1) if match else raw).strip()
 
 
+def _coerce_plan_response(output: object) -> _PlanResponse:
+    """Normalize structured Agent output, with a text fallback for older SDK paths."""
+    if isinstance(output, _PlanResponse):
+        return output
+    if isinstance(output, BaseModel):
+        return _PlanResponse.model_validate(output.model_dump())
+    if isinstance(output, dict):
+        return _PlanResponse.model_validate(output)
+    if isinstance(output, str):
+        plan_text = _extract_json_block(output)
+        if not plan_text:
+            raise ValueError("planner returned empty output")
+        return _PlanResponse.model_validate(json.loads(plan_text))
+    raise TypeError(f"unsupported planner output type: {type(output).__name__}")
+
+
 def _build_planner_prompt(
     task_brief: str,
     count: int,
@@ -214,7 +261,7 @@ def _build_planner_prompt(
     template_block = "\n".join(template_lines) if template_lines else "(none)"
     return (
         "Create a structured plan for inserting blank slides. "
-        "Return JSON only with shape:\n"
+        "Fill the structured output with shape:\n"
         '{ "slides": [ { "page": int, "title": str, "content": str, "template_key": str|null, "template_name": str|null, "template_status": "existing"|"new"|null, "depends_on": int|null } ] }\n'
         f"Constraints:\n- exactly {count} slides\n"
         f"- pages must be contiguous from {insert_position} to {insert_position + count - 1}\n"
@@ -405,15 +452,11 @@ class InsertNewSlides(BaseTool):
             )
         except Exception as exc:
             return f"❌ Outline generation failed: {exc}"
-        plan_text = _extract_json_block(
-            str(getattr(plan_result, "final_output", "") or "")
-        )
-        if not plan_text:
-            return "❌ Outline generation failed: planner returned empty output."
+        plan_output = getattr(plan_result, "final_output", None)
         try:
-            plan_obj = _PlanResponse.model_validate(json.loads(plan_text))
-        except (json.JSONDecodeError, ValidationError) as exc:
-            return f"❌ Outline generation failed: planner returned invalid JSON ({exc})."
+            plan_obj = _coerce_plan_response(plan_output)
+        except (TypeError, ValueError, json.JSONDecodeError, ValidationError) as exc:
+            return f"❌ Outline generation failed: planner returned invalid structured output ({exc})."
 
         # Write blank slide placeholders (no content generation here)
         created: list[str] = []

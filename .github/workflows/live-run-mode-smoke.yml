@@ -1,0 +1,39 @@
+name: Live Run Mode Smoke
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/live-run-mode-smoke.yml'
+      - 'bin/openswarm'
+      - 'package-lock.json'
+      - 'package.json'
+      - 'pyproject.toml'
+      - 'scripts/smoke-run-mode.py'
+      - 'swarm.py'
+      - '*_agent/**'
+      - 'data_analyst_agent/**'
+      - 'deep_research/**'
+      - 'orchestrator/**'
+      - 'virtual_assistant/**'
+
+jobs:
+  smoke:
+    runs-on: macos-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify OpenSwarm agent roster through TUI
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python3 scripts/smoke-run-mode.py --source local --check agents
+      - name: Verify live Agency Swarm Run-mode prompt
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python3 scripts/smoke-run-mode.py --source local --check prompt

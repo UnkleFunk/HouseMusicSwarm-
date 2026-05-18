@@ -1,0 +1,96 @@
+name: Fallback Publish npm on Release
+
+on:
+  release:
+    types:
+      - published
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    if: github.repository == 'VRSEN/OpenSwarm'
+    runs-on: ubuntu-latest
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      NPM_CONFIG_PROVENANCE: false
+    steps:
+      - name: Checkout release tag
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Validate release metadata
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: |
+          set -euo pipefail
+
+          if [[ -z "${NODE_AUTH_TOKEN}" ]]; then
+            echo "NPM_TOKEN is required to publish to npm." >&2
+            exit 1
+          fi
+
+          release_version="${RELEASE_TAG#v}"
+          npm_tag=latest
+          is_prerelease=false
+          if [[ "$release_version" == *-* ]]; then
+            is_prerelease=true
+            npm_tag="${release_version#*-}"
+            npm_tag="${npm_tag%%.*}"
+          fi
+          if [[ "$is_prerelease" != "${{ github.event.release.prerelease }}" ]]; then
+            echo "Release prerelease flag must match semver prerelease suffix." >&2
+            echo "tag=$RELEASE_TAG github_prerelease=${{ github.event.release.prerelease }}" >&2
+            exit 1
+          fi
+          package_version="$(node -p "require('./package.json').version")"
+          lock_version="$(node -p "require('./package-lock.json').packages[''].version")"
+          python_version="$(python3 - <<'PY'
+          import tomllib
+          with open("pyproject.toml", "rb") as handle:
+              print(tomllib.load(handle)["project"]["version"])
+          PY
+          )"
+
+          if [[ ! "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z][0-9A-Za-z.-]*)?$ ]]; then
+            echo "Release tag must be vX.Y.Z or vX.Y.Z-prerelease, got: $RELEASE_TAG" >&2
+            exit 1
+          fi
+
+          if [[ "$package_version" != "$release_version" || "$lock_version" != "$release_version" || "$python_version" != "$release_version" ]]; then
+            echo "Release tag, package.json, package-lock.json, and pyproject.toml versions must match." >&2
+            echo "tag=$release_version package=$package_version lock=$lock_version pyproject=$python_version" >&2
+            exit 1
+          fi
+
+          mapfile -t assets < <(gh release view "$RELEASE_TAG" --json assets --jq '.assets[].name' | sort)
+          required_assets=(
+            agentswarm-darwin-arm64
+            agentswarm-darwin-x64
+            agentswarm-linux-x64
+            agentswarm-windows-x64.exe
+          )
+
+          for required in "${required_assets[@]}"; do
+            if ! printf '%s\n' "${assets[@]}" | grep -Fxq "$required"; then
+              echo "Release $RELEASE_TAG is missing required asset: $required" >&2
+              exit 1
+            fi
+          done
+
+          echo "NPM_TAG=$npm_tag" >> "$GITHUB_ENV"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Publish npm package
+        run: npm publish --access public --tag "$NPM_TAG"

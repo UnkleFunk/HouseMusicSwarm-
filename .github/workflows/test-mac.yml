@@ -21,20 +21,34 @@ jobs:
           python-version: '3.12'
       - uses: actions/checkout@v4
         with:
-          repository: ArtemShatokhin/agentswarm-cli
-          ref: aaaa4557178e54ad88ec839345d411cf7cace76e
+          repository: VRSEN/agentswarm-cli
+          ref: v1.4.34
           path: agentswarm-cli
       - uses: oven-sh/setup-bun@v2
         with:
-          bun-version: "1.3.11"
+          bun-version: "1.3.13"
       - name: Smoke-test pinned custom macOS TUI build
         shell: bash
         working-directory: agentswarm-cli
+        env:
+          OPENCODE_CHANNEL: rc
+          AGENTSWARM_PRODUCT_DISPLAY_NAME: OpenSwarm
+          AGENTSWARM_PRODUCT_COMMAND: openswarm
+          AGENTSWARM_PRODUCT_PACKAGE_NAME: "@vrsen/openswarm"
+          AGENTSWARM_PRODUCT_LAUNCHER_PACKAGE_NAME: "@vrsen/openswarm"
+          AGENTSWARM_PRODUCT_RELEASE_REPO: VRSEN/OpenSwarm
+          AGENTSWARM_PRODUCT_DOCS_URL: https://github.com/VRSEN/OpenSwarm
+          AGENTSWARM_PRODUCT_ISSUE_URL: https://github.com/VRSEN/OpenSwarm/issues/new?template=bug-report.yml
+          AGENTSWARM_PRODUCT_MDNS_DOMAIN: openswarm.local
+          AGENTSWARM_PRODUCT_STARTER_REPO: VRSEN/OpenSwarm
+          AGENTSWARM_PRODUCT_STARTER_FOLDER: openswarm
+          AGENTSWARM_PRODUCT_ENTRY_FILES: swarm.py,agency.py
+          AGENTSWARM_PRODUCT_VERSION: 1.0.1-rc.4
         run: |
           bun install
           cd packages/opencode
           bun run script/build.ts --single --skip-install
-          ./dist/agentswarm-cli-darwin-arm64/bin/agentswarm --version
+          test "$(./dist/agentswarm-cli-darwin-arm64/bin/agentswarm --version)" = "1.0.1-rc.4"
       - name: Test startup
         shell: bash
         run: |

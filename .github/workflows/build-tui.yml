@@ -2,19 +2,116 @@ name: Build TUI Binaries
 
 on:
   workflow_dispatch:
+    inputs:
+      version:
+        description: "Release version. Defaults to package.json."
+        required: false
+        type: string
   push:
     tags:
-      - 'v*'
+      - 'v*.*.*'
+
+concurrency: release-${{ github.ref }}
+
+permissions:
+  contents: read
+
+env:
+  AGENTSWARM_CLI_VERSION: 1.4.34
 
 jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      release_version: ${{ steps.release.outputs.release_version }}
+      release_tag: ${{ steps.release.outputs.release_tag }}
+      is_prerelease: ${{ steps.release.outputs.is_prerelease }}
+      npm_tag: ${{ steps.release.outputs.npm_tag }}
+      target_commitish: ${{ steps.release.outputs.target_commitish }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Resolve release version
+        id: release
+        shell: bash
+        env:
+          INPUT_VERSION: ${{ github.event.inputs.version || '' }}
+        run: |
+          set -euo pipefail
+
+          if [[ "${GITHUB_EVENT_NAME}" == "workflow_dispatch" && "${GITHUB_REF_NAME}" != "main" ]]; then
+            echo "Manual releases must run from main. Current ref: ${GITHUB_REF_NAME}" >&2
+            exit 1
+          fi
+
+          package_version="$(node -p "require('./package.json').version")"
+          lock_version="$(node -p "require('./package-lock.json').packages[''].version")"
+          python_version="$(python3 - <<'PY'
+          import tomllib
+          with open("pyproject.toml", "rb") as handle:
+              print(tomllib.load(handle)["project"]["version"])
+          PY
+          )"
+
+          input_version="$INPUT_VERSION"
+          input_version="${input_version#v}"
+          release_version="${input_version:-$package_version}"
+
+          if [[ ! "$release_version" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z][0-9A-Za-z.-]*)?$ ]]; then
+            echo "Release version must be semver X.Y.Z or X.Y.Z-prerelease, got: $release_version" >&2
+            exit 1
+          fi
+
+          if [[ "$package_version" != "$release_version" ]]; then
+            echo "package.json version ($package_version) must match release version ($release_version)." >&2
+            exit 1
+          fi
+
+          if [[ "$lock_version" != "$release_version" ]]; then
+            echo "package-lock.json version ($lock_version) must match release version ($release_version)." >&2
+            exit 1
+          fi
+
+          if [[ "$python_version" != "$release_version" ]]; then
+            echo "pyproject.toml version ($python_version) must match release version ($release_version)." >&2
+            exit 1
+          fi
+
+          release_tag="v$release_version"
+          is_prerelease=false
+          npm_tag=latest
+          if [[ "$release_version" == *-* ]]; then
+            is_prerelease=true
+            npm_tag="${release_version#*-}"
+            npm_tag="${npm_tag%%.*}"
+          fi
+
+          if [[ "${GITHUB_REF_TYPE}" == "tag" && "${GITHUB_REF_NAME}" != "$release_tag" ]]; then
+            echo "Tag ${GITHUB_REF_NAME} does not match package version $release_version." >&2
+            exit 1
+          fi
+
+          {
+            echo "release_version=$release_version"
+            echo "release_tag=$release_tag"
+            echo "is_prerelease=$is_prerelease"
+            echo "npm_tag=$npm_tag"
+            echo "target_commitish=$GITHUB_SHA"
+          } >> "$GITHUB_OUTPUT"
+
   build:
+    needs: prepare
     strategy:
       matrix:
         include:
           - os: macos-latest
             platform: darwin
             arch: arm64
-          - os: macos-13
+          - os: macos-15-intel
             platform: darwin
             arch: x64
           - os: ubuntu-latest
@@ -28,14 +125,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          repository: ArtemShatokhin/agentswarm-cli
-          ref: aaaa4557178e54ad88ec839345d411cf7cace76e
+          repository: VRSEN/agentswarm-cli
+          ref: v${{ env.AGENTSWARM_CLI_VERSION }}
           path: agentswarm-cli
 
       - uses: oven-sh/setup-bun@v2
         with:
-          # Bun 1.3.12 produces a darwin-arm64 binary that exits 137 during smoke test.
-          bun-version: "1.3.11"
+          bun-version: "1.3.13"
 
       - name: Install dependencies
         working-directory: agentswarm-cli
@@ -43,6 +139,20 @@ jobs:
 
       - name: Build binary
         working-directory: agentswarm-cli/packages/opencode
+        env:
+          OPENCODE_CHANNEL: ${{ needs.prepare.outputs.npm_tag }}
+          AGENTSWARM_PRODUCT_DISPLAY_NAME: OpenSwarm
+          AGENTSWARM_PRODUCT_COMMAND: openswarm
+          AGENTSWARM_PRODUCT_PACKAGE_NAME: "@vrsen/openswarm"
+          AGENTSWARM_PRODUCT_LAUNCHER_PACKAGE_NAME: "@vrsen/openswarm"
+          AGENTSWARM_PRODUCT_RELEASE_REPO: VRSEN/OpenSwarm
+          AGENTSWARM_PRODUCT_DOCS_URL: https://github.com/VRSEN/OpenSwarm
+          AGENTSWARM_PRODUCT_ISSUE_URL: https://github.com/VRSEN/OpenSwarm/issues/new?template=bug-report.yml
+          AGENTSWARM_PRODUCT_MDNS_DOMAIN: openswarm.local
+          AGENTSWARM_PRODUCT_STARTER_REPO: VRSEN/OpenSwarm
+          AGENTSWARM_PRODUCT_STARTER_FOLDER: openswarm
+          AGENTSWARM_PRODUCT_ENTRY_FILES: swarm.py,agency.py
+          AGENTSWARM_PRODUCT_VERSION: ${{ needs.prepare.outputs.release_version }}
         run: bun run script/build.ts --single --skip-install
 
       - name: Rename binary (Unix)
@@ -66,7 +176,10 @@ jobs:
           if-no-files-found: error
 
   release:
-    needs: build
+    needs:
+      - prepare
+      - build
+    if: github.repository == 'VRSEN/OpenSwarm'
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -77,7 +190,114 @@ jobs:
           merge-multiple: true
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
+        shell: bash
+        env:
+          GH_REPO: ${{ github.repository }}
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ needs.prepare.outputs.release_tag }}
+          IS_PRERELEASE: ${{ needs.prepare.outputs.is_prerelease }}
+          TARGET_COMMITISH: ${{ needs.prepare.outputs.target_commitish }}
+        run: |
+          set -euo pipefail
+
+          mapfile -t files < <(find dist -type f | sort)
+          if (( ${#files[@]} == 0 )); then
+            echo "No release assets found in dist/." >&2
+            exit 1
+          fi
+
+          create_flags=(--draft --generate-notes --target "$TARGET_COMMITISH" --title "$RELEASE_TAG")
+          edit_flags=(--draft=false)
+          if [[ "$IS_PRERELEASE" == "true" ]]; then
+            create_flags+=(--prerelease --latest=false)
+            edit_flags+=(--prerelease)
+          else
+            create_flags+=(--latest)
+            edit_flags+=(--latest)
+          fi
+
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            gh release upload "$RELEASE_TAG" "${files[@]}" --clobber
+          else
+            gh release create "$RELEASE_TAG" "${files[@]}" "${create_flags[@]}"
+          fi
+
+          gh release edit "$RELEASE_TAG" "${edit_flags[@]}"
+
+  publish-npm:
+    needs:
+      - prepare
+      - release
+    if: github.repository == 'VRSEN/OpenSwarm'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      NPM_CONFIG_PROVENANCE: false
+      NPM_TAG: ${{ needs.prepare.outputs.npm_tag }}
+    steps:
+      - name: Checkout release tag
+        uses: actions/checkout@v4
         with:
-          files: dist/*
-          generate_release_notes: true
+          ref: ${{ needs.prepare.outputs.release_tag }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Validate release metadata
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ needs.prepare.outputs.release_tag }}
+          RELEASE_VERSION: ${{ needs.prepare.outputs.release_version }}
+        run: |
+          set -euo pipefail
+
+          if [[ -z "${NODE_AUTH_TOKEN}" ]]; then
+            echo "NPM_TOKEN is required to publish to npm." >&2
+            exit 1
+          fi
+
+          if [[ "$RELEASE_TAG" != "v$RELEASE_VERSION" ]]; then
+            echo "Release tag ($RELEASE_TAG) must match release version ($RELEASE_VERSION)." >&2
+            exit 1
+          fi
+
+          package_version="$(node -p "require('./package.json').version")"
+          lock_version="$(node -p "require('./package-lock.json').packages[''].version")"
+          python_version="$(python3 - <<'PY'
+          import tomllib
+          with open("pyproject.toml", "rb") as handle:
+              print(tomllib.load(handle)["project"]["version"])
+          PY
+          )"
+
+          if [[ "$package_version" != "$RELEASE_VERSION" || "$lock_version" != "$RELEASE_VERSION" || "$python_version" != "$RELEASE_VERSION" ]]; then
+            echo "Release tag, package.json, package-lock.json, and pyproject.toml versions must match." >&2
+            echo "tag=$RELEASE_VERSION package=$package_version lock=$lock_version pyproject=$python_version" >&2
+            exit 1
+          fi
+
+          mapfile -t assets < <(gh release view "$RELEASE_TAG" --json assets --jq '.assets[].name' | sort)
+          required_assets=(
+            agentswarm-darwin-arm64
+            agentswarm-darwin-x64
+            agentswarm-linux-x64
+            agentswarm-windows-x64.exe
+          )
+
+          for required in "${required_assets[@]}"; do
+            if ! printf '%s\n' "${assets[@]}" | grep -Fxq "$required"; then
+              echo "Release $RELEASE_TAG is missing required asset: $required" >&2
+              exit 1
+            fi
+          done
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Publish npm package
+        run: npm publish --access public --tag "$NPM_TAG"

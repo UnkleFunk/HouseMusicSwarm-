@@ -1,0 +1,31 @@
+name: Diagnose Hostinger public_html
+
+on:
+  workflow_dispatch:
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check public_html contents
+        uses: appleboy/ssh-action@v1.2.4
+        with:
+          host: 195.179.239.223
+          port: 65002
+          username: ${{ secrets.HOSTINGER_SSH_USER }}
+          password: ${{ secrets.HOSTINGER_SSH_PASS }}
+          script: |
+            echo "=== Home directory ==="
+            ls -la ~/
+            echo ""
+            echo "=== public_html contents ==="
+            ls -la ~/public_html/ | head -40
+            echo ""
+            echo "=== Checking for WordPress ==="
+            ls ~/public_html/wp-config.php 2>/dev/null && echo "WordPress FOUND" || echo "No WordPress"
+            echo ""
+            echo "=== Index files ==="
+            ls ~/public_html/index* 2>/dev/null
+            echo ""
+            echo "=== Our index.html first line ==="
+            head -3 ~/public_html/index.html 2>/dev/null || echo "index.html not found"

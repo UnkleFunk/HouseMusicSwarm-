@@ -1,0 +1,37 @@
+name: Deploy to unklefunk.music (Hostinger)
+
+on:
+  push:
+    branches: ["claude/build-music-artist-hub-OZuwW", "main"]
+    paths: ["website/**"]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy files via SSH/SCP
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: 195.179.239.223
+          port: 65002
+          username: ${{ secrets.HOSTINGER_SSH_USER }}
+          password: ${{ secrets.HOSTINGER_SSH_PASS }}
+          source: "website/index.html,website/style.css,website/main.js"
+          target: "public_html/"
+          strip_components: 1
+
+      - name: Verify deployment
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: 195.179.239.223
+          port: 65002
+          username: ${{ secrets.HOSTINGER_SSH_USER }}
+          password: ${{ secrets.HOSTINGER_SSH_PASS }}
+          script: |
+            echo "Files in public_html:"
+            ls -lh ~/public_html/index.html ~/public_html/style.css ~/public_html/main.js
+            echo "Deployment complete — unklefunk.music is live"

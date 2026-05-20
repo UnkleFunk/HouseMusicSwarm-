@@ -1,19 +1,47 @@
 # House Music Swarm — Vision & Roadmap
 
+## Current State (as of May 2026)
+
+### ✅ Already Built
+- **The swarm** — full OpenSwarm fork running on Agency Swarm framework
+  - Orchestrator, Deep Research, Data Analyst, Docs, Slides, Image Gen, Video Gen, Virtual Assistant
+  - All agents can communicate and hand off to each other
+  - Composio integration: 10,000+ external tools (Spotify, Gmail, GitHub, etc.)
+  - SEARCH_API_KEY for web search (SearchAPI.io) — can query Traxsource & Beatport
+  - Virtual Assistant has `EditFile` + `WriteFile` tools
+
+- **The website** — unklefunk.music (live at Hostinger)
+  - `website/index.html` — full single-page artist hub
+  - Chart section already on the page, currently showing hand-curated Essential Cuts
+
+- **The deploy pipeline** — GitHub Actions auto-deploys on push to `main`
+  - Any agent that writes `website/index.html` + triggers `git push` → site updates live
+
+### 🔧 What Needs to Be Added
+1. **`music_profile_agent/`** — holds and refines Unkle Funk's taste DNA
+2. **`SearchTraxsource` + `SearchBeatport` tools** — discovery layer (uses SEARCH_API_KEY)
+3. **`PublishChart` tool** — writes chart HTML to website + commits + pushes
+4. **Wiring** — add music agents to `swarm.py` and `orchestrator/instructions.md`
+
+---
+
 ## The Goal
+
 An AI swarm that knows Unkle Funk's musical DNA well enough to:
 1. Find new tracks on Traxsource / Beatport that fit within his taste "overton window"
 2. Auto-generate a publishable Top 10 chart (monthly or twice monthly)
-3. Keep unklefunk.music's chart section current with zero manual effort
+3. Update unklefunk.music's chart section automatically — no manual effort
 4. Surface fresh picks for Sunday Slackin' every week
 
 ---
 
-## The Taste Profile (known data points)
+## Taste Profile — Musical DNA
 
 ### Sub-genres
 - Deep House, Tech House, Classic Chicago House, Detroit Deep Soul
 - Warm, hypnotic, floor-functional — never commercial, always underground
+- BPM window: ~118–128
+- Vibe: tracks that sound like Unkle Funk would have made or played them
 
 ### His Own Productions (musical fingerprint)
 - "1998" — 123 BPM, C Minor, Deep House (Soulsupplement Records, 2016)
@@ -21,103 +49,107 @@ An AI swarm that knows Unkle Funk's musical DNA well enough to:
 - "Groove Italio" — DOIN' WORK Records
 - "Experimental" — DOIN' WORK Records
 
-### Dream Labels (catalog = taste data)
+### Dream Labels (full catalogs = taste data)
 - Soulsupplement Records
 - Wulfpack
 - DOIN' WORK Records
-- (expand list as user provides more)
+- *(expand as user provides more)*
 
-### All-Time Essential Cuts (taste anchors)
-- Mr. Fingers — Can You Feel It (Trax, 1986)
-- Larry Heard — Mystery of Love (Alleviated, 1985)
-- Frankie Knuckles — Your Love (Trax, 1987)
-- Ron Trent — Altered States (Prescription, 1992)
-- Cajmere feat. Dajae — Brighter Days (Cajual, 1992)
-- Kerri Chandler — Bar A Thym (Kaoz Theory, 2001)
-- Moodymann — Dem Young Sconies (Mahogani Music, 2007)
-- Dennis Ferrer — Hey Hey (Objektivity, 2009)
-- (expand to ~100 tracks as user provides)
+### All-Time Essential Cuts (taste anchors — expand to ~100)
+- Mr. Fingers — Can You Feel It (Trax, 1986) — Classic Chicago
+- Larry Heard — Mystery of Love (Alleviated, 1985) — Deep Blueprint
+- Frankie Knuckles — Your Love (Trax, 1987) — Chicago Classic
+- Ron Trent — Altered States (Prescription, 1992) — Deep Hypnotic
+- Cajmere feat. Dajae — Brighter Days (Cajual, 1992) — Chicago House
+- Kerri Chandler — Bar A Thym (Kaoz Theory, 2001) — Deep House
+- Moodymann — Dem Young Sconies (Mahogani Music, 2007) — Detroit Deep
+- Dennis Ferrer — Hey Hey (Objektivity, 2009) — Soulful House
 
 ### Artist Network (trust signals)
 - Anaiek, Disco Aliens collective, Tyrohn Brooks (Obitykenobi), Chris Mindel, DJ PLEXXX
 
 ---
 
-## The Swarm Architecture
+## New Agent Architecture
 
-### Agents
-
-**ProfileAgent**
-- Holds and refines the taste DNA document
+### `music_profile_agent/`
+- Holds the taste DNA as a living document (`music_profile.md`)
 - Accepts approve/reject feedback on recommendations
-- Outputs taste vectors: BPM window, key preferences, energy level, label pedigree score
+- Refines weights over time (which labels, BPMs, keys get boosted)
+- Provides taste vectors to CurationAgent on request
 
-**DiscoveryAgent**
-- Polls Traxsource new releases (by genre, by label, by BPM range)
-- Polls Beatport new releases
-- Optionally monitors SoundCloud for emerging artists
-- Returns raw candidate track lists with metadata
+### `music_discovery_agent/` (or tools added to Deep Research)
+- `SearchTraxsource` tool — queries Traxsource new releases by genre/label/BPM via SEARCH_API_KEY
+- `SearchBeatport` tool — same for Beatport
+- Returns raw candidate tracks with metadata (title, artist, label, BPM, key, genre tags)
 
-**CurationAgent**
-- Scores each candidate against the taste profile
-- Filters by BPM window (~118–128), sub-genre tags, label reputation
-- Ranks by multi-factor score
-- Returns top 20 candidates for human review OR top 10 auto-approved
+### `music_curation_agent/`
+- Receives candidates from discovery
+- Scores each against taste profile (BPM match, label pedigree, genre alignment, artist network)
+- Returns ranked top 20 for human review or top 10 auto-approved
+- Explains why each track made the cut
 
-**ChartAgent**
-- Formats the approved top 10 as a chart
-- Updates website/index.html chart section
-- Commits and pushes → auto-deploys to unklefunk.music
-- Archives previous charts
+### `PublishChart` tool (added to Virtual Assistant or new WebsiteAgent)
+- Takes approved top 10 list
+- Renders chart HTML matching the existing `dj-chart` CSS class structure in `website/index.html`
+- Writes to repo, commits, pushes → GitHub Actions auto-deploys to unklefunk.music
+- Archives previous chart to a `website/charts/` history page
 
-### Communication Flow
+---
+
+## Communication Flow
 ```
-User → ProfileAgent (taste updates, approvals)
-ProfileAgent → CurationAgent (taste vectors)
-DiscoveryAgent → CurationAgent (new release candidates)
-CurationAgent → ChartAgent (ranked top 10)
-ChartAgent → website (deployed chart)
+User
+  └─► Orchestrator
+        ├─► MusicProfileAgent  (taste DNA queries + feedback)
+        ├─► MusicDiscoveryAgent (new release candidates)
+        ├─► MusicCurationAgent  (scored top 10)
+        └─► VirtualAssistant → PublishChart → git push → GitHub Actions → unklefunk.music
 ```
 
 ---
 
-## Data Sources & APIs Needed
-- **Traxsource API** (or scraping) — new releases by genre/label
-- **Beatport API** — new releases, chart data
-- **SoundCloud API** — optional, for emerging artist discovery
-- **Spotify API** — cross-reference artist data
+## The Publish Pipeline (already works)
+```
+swarm writes website/index.html
+  └─► git commit + push to main
+        └─► GitHub Actions (deploy-hostinger.yml)
+              └─► SCP to Hostinger public_html
+                    └─► unklefunk.music live ✓
+```
 
 ---
 
-## Website Integration
-- Chart section in `website/index.html` updates automatically
-- Each chart gets a date stamp: "May 2026 Selects", "June 2026 Selects"
-- Archive page eventually: all past charts browsable at unklefunk.music/charts
+## Keys Already in `.env.example`
+- `OPENAI_API_KEY` or `ANTHROPIC_API_KEY` — model provider
+- `COMPOSIO_API_KEY` + `COMPOSIO_USER_ID` — Spotify, SoundCloud, GitHub integrations
+- `SEARCH_API_KEY` — Traxsource + Beatport web search
+
+## Keys Still Needed
+- Beatport API key (if they open their API — otherwise SEARCH_API_KEY covers it)
+- GitHub token in env (for the `PublishChart` git push)
 
 ---
 
-## Skill: `/update-chart`
-Future Claude Code skill that:
-1. Asks DiscoveryAgent for this week's new releases
-2. Runs CurationAgent to score against profile
-3. Shows Unkle Funk the top 10 for approval
-4. On approval, ChartAgent updates + deploys the website
-5. Logs the chart to a monthly archive
+## Phases
 
----
-
-## Phase 1 (Now)
-- [x] Website built and deployed at unklefunk.music
+### Phase 1 — Done ✓
+- [x] Website live at unklefunk.music
+- [x] GitHub Actions deploy pipeline
+- [x] Swarm built (OpenSwarm fork)
 - [x] Hand-curated Essential Cuts chart on site
-- [x] Taste profile documented in this file
+- [x] Taste profile documented here
 
-## Phase 2 (Next)
-- [ ] Build ProfileAgent with taste DNA doc
-- [ ] Build DiscoveryAgent with Traxsource/Beatport API tools
-- [ ] Build CurationAgent with scoring logic
-- [ ] Test with one month of new releases
+### Phase 2 — Next Session
+- [ ] Create `music_profile_agent/` with `music_profile.md`
+- [ ] Add `SearchTraxsource` + `SearchBeatport` tools
+- [ ] Create `music_curation_agent/`
+- [ ] Add `PublishChart` tool to VirtualAssistant
+- [ ] Wire all into `swarm.py` + `orchestrator/instructions.md`
+- [ ] Test with one month of new Traxsource releases
 
-## Phase 3 (Full Automation)
-- [ ] ChartAgent writes + deploys charts to website
-- [ ] Monthly chart automation via cron/scheduler
+### Phase 3 — Full Automation
+- [ ] Monthly chart cron via GitHub Actions
 - [ ] Sunday Slackin' weekly picks pipeline
+- [ ] Chart archive at unklefunk.music/charts
+- [ ] Approve/reject UI on website for direct feedback loop

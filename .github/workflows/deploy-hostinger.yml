@@ -36,7 +36,7 @@ jobs:
           port: 65002
           username: ${{ secrets.HOSTINGER_SSH_USER }}
           password: ${{ secrets.HOSTINGER_SSH_PASS }}
-          source: "website/index.html,website/style.css,website/main.js"
+          source: "website/index.html,website/style.css,website/main.js,website/.htaccess"
           target: "~/public_html/"
           strip_components: 1
 

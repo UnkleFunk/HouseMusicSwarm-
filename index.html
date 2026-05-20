@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unkle Funk | House Music Artist | Chicago</title>
+  <meta name="description" content="Unkle Funk — Chicago-based house music DJ, producer, and host of the Sunday Slackin' podcast. 16+ years behind the decks. Deep house, tech house, classic Chicago soul.">
+  <meta property="og:title" content="Unkle Funk | House Music">
+  <meta property="og:description" content="Chicago-based house music DJ and producer. Host of the Sunday Slackin' podcast since 2010.">
+  <meta property="og:url" content="https://unklefunk.music">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#09090b">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav class="nav" id="nav">
+  <div class="nav__container">
+    <a href="#" class="nav__logo">UNKLE FUNK</a>
+    <ul class="nav__menu" id="navMenu">
+      <li><a href="#about" class="nav__link">About</a></li>
+      <li><a href="#podcast" class="nav__link">Sunday Slackin'</a></li>
+      <li><a href="#music" class="nav__link">Music</a></li>
+      <li><a href="#discography" class="nav__link">Releases</a></li>
+      <li><a href="#connect" class="nav__link nav__cta">Connect</a></li>
+    </ul>
+    <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE DRAWER -->
+<div class="drawer" id="drawer">
+  <ul class="drawer__menu">
+    <li><a href="#about" class="drawer__link">About</a></li>
+    <li><a href="#podcast" class="drawer__link">Sunday Slackin'</a></li>
+    <li><a href="#music" class="drawer__link">Music</a></li>
+    <li><a href="#discography" class="drawer__link">Releases</a></li>
+    <li><a href="#connect" class="drawer__link">Connect</a></li>
+  </ul>
+</div>
+<div class="drawer__overlay" id="drawerOverlay"></div>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <canvas class="hero__canvas" id="heroCanvas"></canvas>
+  <div class="hero__gradient"></div>
+  <div class="hero__content">
+    <div class="hero__tag">Chicago &middot; House Music &middot; Est. 2003</div>
+    <h1 class="hero__title">
+      UNKLE<span class="hero__title-break"></span>FUNK
+    </h1>
+    <p class="hero__subtitle">DJ &middot; Producer &middot; Host of Sunday&nbsp;Slackin'</p>
+    <div class="hero__actions">
+      <a href="#music" class="btn btn--gold">Hear the Music</a>
+      <a href="#podcast" class="btn btn--outline">Sunday Slackin' Podcast</a>
+    </div>
+    <div class="hero__platforms">
+      <a href="https://soundcloud.com/unklefunkssounds" target="_blank" rel="noopener noreferrer" class="hero__plat-link" aria-label="SoundCloud">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M1.175 12.225a.498.498 0 0 0-.471.463l-.267 2.87.267 2.85a.498.498 0 0 0 .471.463.498.498 0 0 0 .471-.463l.302-2.85-.302-2.87a.498.498 0 0 0-.471-.463zm2.083-.639a.503.503 0 0 0-.503.505l-.234 3.007.234 3.019a.503.503 0 1 0 1.006 0l.265-3.019-.265-3.007a.503.503 0 0 0-.503-.505zm2.1-.414a.607.607 0 0 0-.607.607l-.202 3.049.202 3.017a.607.607 0 1 0 1.215 0l.23-3.017-.23-3.049a.607.607 0 0 0-.608-.607zm2.156-.284a.71.71 0 0 0-.71.71l-.17 3.06.17 3.006a.71.71 0 0 0 1.42 0l.196-3.006-.196-3.06a.71.71 0 0 0-.71-.71zm2.21.006a.812.812 0 0 0-.811.812l-.14 3.043.14 2.993a.811.811 0 0 0 1.623 0l.16-2.993-.16-3.043a.812.812 0 0 0-.812-.812zm2.21-.129a.913.913 0 0 0-.912.913l-.11 2.954.11 2.968a.913.913 0 1 0 1.825 0l.126-2.968-.126-2.954a.913.913 0 0 0-.913-.913zm2.21-.094a1.015 1.015 0 0 0-1.014 1.015l-.08 2.929.08 2.942a1.015 1.015 0 0 0 2.029 0l.093-2.942-.093-2.929a1.015 1.015 0 0 0-1.015-1.015zm4.239-1.376c-.144 0-.285.024-.42.07a5.194 5.194 0 0 0-5.133-4.453 5.2 5.2 0 0 0-1.986.394c-.218.087-.277.178-.278.253v9.09c.001.08.062.148.141.16h7.676A2.016 2.016 0 0 0 22 14.944a2.016 2.016 0 0 0-2.016-2.016z"/></svg>
+      </a>
+      <a href="https://open.spotify.com/artist/3OIZINZmZ2lKSYVsmSmrnH" target="_blank" rel="noopener noreferrer" class="hero__plat-link" aria-label="Spotify">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+      </a>
+      <a href="https://www.beatport.com/artist/unkle-funk/244559" target="_blank" rel="noopener noreferrer" class="hero__plat-link" aria-label="Beatport">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M4.012 0C1.796 0 0 1.796 0 4.012v15.976C0 22.204 1.796 24 4.012 24h15.976C22.204 24 24 22.204 24 19.988V4.012C24 1.796 22.204 0 19.988 0H4.012zm5.302 5.8h2.342v3.682c.512-.576 1.17-.864 1.97-.864 1.007 0 1.826.36 2.458 1.08.63.719.947 1.65.947 2.791 0 1.142-.317 2.073-.947 2.793-.632.72-1.451 1.08-2.458 1.08-.8 0-1.458-.288-1.97-.864v.72H9.314V5.8zm5.79 5.689c0-.637-.17-1.148-.512-1.533-.342-.385-.786-.577-1.332-.577-.546 0-.99.192-1.33.577-.341.385-.512.896-.512 1.533s.17 1.148.512 1.533c.34.385.784.577 1.33.577.546 0 .99-.192 1.332-.577.342-.385.513-.896.513-1.533z"/></svg>
+      </a>
+      <a href="https://www.facebook.com/sundayslackin/" target="_blank" rel="noopener noreferrer" class="hero__plat-link" aria-label="Facebook">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      </a>
+    </div>
+  </div>
+  <div class="hero__scroll">
+    <div class="hero__scroll-line"></div>
+    <span class="hero__scroll-label">Scroll</span>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section" id="about">
+  <div class="container">
+    <div class="about">
+      <div class="about__text">
+        <p class="label">About the Artist</p>
+        <h2 class="section-title">Rooted in Chicago.<br>Built on House.</h2>
+        <div class="about__body">
+          <p>Unkle Funk is a Chicago-based house music DJ, producer, and curator with over <strong>16 years behind the decks</strong> and more than <strong>6 years crafting tracks in the studio</strong>. His sound lives at the intersection of deep house, tech house, and classic Chicago soul — warm, hypnotic, and built for the floor.</p>
+          <p>In <strong>2010</strong>, he launched the <em>Sunday Slackin'</em> podcast — a weekly showcase of exclusive mixes from DJs and producers around the globe, each set crafted specifically for the show. Over nine seasons, Sunday Slackin' grew into one of house music's most consistent independent platforms, connecting underground talent with listeners worldwide.</p>
+          <p>His studio productions appear on labels including <strong>Soulsupplement Records</strong>, <strong>Wulfpack</strong>, and <strong>DOIN' WORK Records</strong>, with releases available on Beatport, Spotify, and SoundCloud. Regular collaborators include Anaiek and artists from the Disco Aliens collective.</p>
+        </div>
+        <div class="stats">
+          <div class="stat">
+            <div class="stat__val">16+</div>
+            <div class="stat__lbl">Years Behind the Decks</div>
+          </div>
+          <div class="stat">
+            <div class="stat__val">2010</div>
+            <div class="stat__lbl">Podcast Founded</div>
+          </div>
+          <div class="stat">
+            <div class="stat__val">9+</div>
+            <div class="stat__lbl">Podcast Seasons</div>
+          </div>
+          <div class="stat">
+            <div class="stat__val">CHI</div>
+            <div class="stat__lbl">Based in Chicago, IL</div>
+          </div>
+        </div>
+      </div>
+      <div class="about__visual">
+        <div class="vinyl">
+          <div class="vinyl__disc">
+            <div class="vinyl__groove vinyl__groove--1"></div>
+            <div class="vinyl__groove vinyl__groove--2"></div>
+            <div class="vinyl__groove vinyl__groove--3"></div>
+            <div class="vinyl__groove vinyl__groove--4"></div>
+            <div class="vinyl__label">
+              <div class="vinyl__label-inner">
+                <span class="vinyl__label-name">UNKLE FUNK</span>
+                <div class="vinyl__label-center"></div>
+                <span class="vinyl__label-city">CHICAGO</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="about__quote">
+          <blockquote>"It's not just a podcast — it's a lifestyle."</blockquote>
+          <cite>— Sunday Slackin', since 2010</cite>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SUNDAY SLACKIN' PODCAST -->
+<section class="section section--alt" id="podcast">
+  <div class="container">
+    <div class="podcast">
+      <div class="podcast__header">
+        <p class="label">Weekly Mix Podcast &middot; Since 2010</p>
+        <h2 class="section-title">Sunday Slackin'</h2>
+        <p class="podcast__desc">Every week since 2010, Sunday Slackin' has delivered exclusive guest mixes from DJs and producers around the globe — each set custom-crafted for the show. No recycled sets. No filler. Just raw, unfiltered house music for the weekend. Guests include Tyrohn Brooks (Obitykenobi / Disco Aliens), Chris Mindel, DJ PLEXXX, and many more.</p>
+      </div>
+      <div class="podcast__embed">
+        <iframe
+          allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
+          frameborder="0"
+          height="450"
+          style="width:100%;overflow:hidden;border-radius:16px;"
+          sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
+          src="https://embed.podcasts.apple.com/us/podcast/sunday-slackin/id406329520"
+          title="Sunday Slackin' on Apple Podcasts">
+        </iframe>
+      </div>
+      <div class="podcast__platforms">
+        <p class="podcast__platforms-label">Also available on</p>
+        <div class="podcast__links">
+          <a href="https://podcasts.apple.com/us/podcast/sunday-slackin/id406329520" target="_blank" rel="noopener noreferrer" class="plat-btn">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+            Apple Podcasts
+          </a>
+          <a href="https://www.podomatic.com/podcasts/sundayslackin" target="_blank" rel="noopener noreferrer" class="plat-btn">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+            Podomatic
+          </a>
+          <a href="https://tunein.com/podcasts/Music-Podcasts/Sunday-Slackin-Podcast-p1222713/" target="_blank" rel="noopener noreferrer" class="plat-btn">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+            TuneIn
+          </a>
+          <a href="https://play.anghami.com/podcast/1017952605" target="_blank" rel="noopener noreferrer" class="plat-btn">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+            Anghami
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MUSIC PLAYERS -->
+<section class="section" id="music">
+  <div class="container">
+    <p class="label">Stream &amp; Download</p>
+    <h2 class="section-title">The Music</h2>
+    <div class="music-grid">
+      <div class="music-embed">
+        <div class="music-embed__header">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M1.175 12.225a.498.498 0 0 0-.471.463l-.267 2.87.267 2.85a.498.498 0 0 0 .471.463.498.498 0 0 0 .471-.463l.302-2.85-.302-2.87a.498.498 0 0 0-.471-.463zm2.083-.639a.503.503 0 0 0-.503.505l-.234 3.007.234 3.019a.503.503 0 1 0 1.006 0l.265-3.019-.265-3.007a.503.503 0 0 0-.503-.505zm2.1-.414a.607.607 0 0 0-.607.607l-.202 3.049.202 3.017a.607.607 0 1 0 1.215 0l.23-3.017-.23-3.049a.607.607 0 0 0-.608-.607zm2.156-.284a.71.71 0 0 0-.71.71l-.17 3.06.17 3.006a.71.71 0 0 0 1.42 0l.196-3.006-.196-3.06a.71.71 0 0 0-.71-.71zm2.21.006a.812.812 0 0 0-.811.812l-.14 3.043.14 2.993a.811.811 0 0 0 1.623 0l.16-2.993-.16-3.043a.812.812 0 0 0-.812-.812zm2.21-.129a.913.913 0 0 0-.912.913l-.11 2.954.11 2.968a.913.913 0 1 0 1.825 0l.126-2.968-.126-2.954a.913.913 0 0 0-.913-.913zm2.21-.094a1.015 1.015 0 0 0-1.014 1.015l-.08 2.929.08 2.942a1.015 1.015 0 0 0 2.029 0l.093-2.942-.093-2.929a1.015 1.015 0 0 0-1.015-1.015zm4.239-1.376c-.144 0-.285.024-.42.07a5.194 5.194 0 0 0-5.133-4.453 5.2 5.2 0 0 0-1.986.394c-.218.087-.277.178-.278.253v9.09c.001.08.062.148.141.16h7.676A2.016 2.016 0 0 0 22 14.944a2.016 2.016 0 0 0-2.016-2.016z"/></svg>
+          <h3>SoundCloud</h3>
+        </div>
+        <iframe
+          width="100%"
+          height="300"
+          scrolling="no"
+          frameborder="no"
+          allow="autoplay"
+          src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/unklefunkssounds&color=%23c9a84c&auto_play=false&hide_related=false&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=true"
+          title="Unkle Funk on SoundCloud">
+        </iframe>
+        <a href="https://soundcloud.com/unklefunkssounds" target="_blank" rel="noopener noreferrer" class="music-embed__link">Open on SoundCloud →</a>
+      </div>
+      <div class="music-embed">
+        <div class="music-embed__header">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+          <h3>Spotify</h3>
+        </div>
+        <iframe
+          style="border-radius:12px"
+          src="https://open.spotify.com/embed/artist/3OIZINZmZ2lKSYVsmSmrnH?utm_source=generator&theme=0"
+          width="100%"
+          height="352"
+          frameBorder="0"
+          allowfullscreen=""
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          loading="lazy"
+          title="Unkle Funk on Spotify">
+        </iframe>
+        <a href="https://open.spotify.com/artist/3OIZINZmZ2lKSYVsmSmrnH" target="_blank" rel="noopener noreferrer" class="music-embed__link">Open on Spotify →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DISCOGRAPHY -->
+<section class="section section--alt" id="discography">
+  <div class="container">
+    <p class="label">Original Productions</p>
+    <h2 class="section-title">Releases</h2>
+
+    <!-- 9 Years Chart Feature -->
+    <div class="chart-feature">
+      <div class="chart-feature__badge">MILESTONE</div>
+      <div class="chart-feature__content">
+        <h3 class="chart-feature__title">Unkle Funk's 9 Years of Sunday Slackin' Chart</h3>
+        <p class="chart-feature__desc">To celebrate 9 years of Sunday Slackin', Unkle Funk curated an exclusive chart on Traxsource — a definitive selection of tracks that defined the sound of the podcast.</p>
+        <a href="https://www.traxsource.com/title/1250558/unkle-funks-9-years-of-sunday-slackin-chart" target="_blank" rel="noopener noreferrer" class="btn btn--gold">View the Chart on Traxsource →</a>
+      </div>
+    </div>
+
+    <div class="releases">
+      <!-- Release 1 -->
+      <div class="release">
+        <div class="release__artwork">
+          <div class="release__artwork-inner" style="--hue: 40">
+            <div class="release__vinyl-mark"></div>
+            <span class="release__year-badge">2016</span>
+          </div>
+        </div>
+        <div class="release__info">
+          <div class="release__label-name">Soulsupplement Records</div>
+          <h3 class="release__title">1998</h3>
+          <p class="release__artist">Unkle Funk</p>
+          <p class="release__detail">Original Mix &middot; May 16, 2016</p>
+          <div class="release__tags">
+            <span class="tag">Deep House</span>
+            <span class="tag">7:17</span>
+            <span class="tag">123 BPM</span>
+            <span class="tag">C Minor</span>
+          </div>
+          <a href="https://www.beatport.com/track/1998-original-mix/7919929" target="_blank" rel="noopener noreferrer" class="release__link">Buy on Beatport →</a>
+        </div>
+      </div>
+
+      <!-- Release 2 -->
+      <div class="release">
+        <div class="release__artwork">
+          <div class="release__artwork-inner" style="--hue: 200">
+            <div class="release__vinyl-mark"></div>
+            <span class="release__year-badge">2016</span>
+          </div>
+        </div>
+        <div class="release__info">
+          <div class="release__label-name">Wulfpack</div>
+          <h3 class="release__title">La Honda Dreams</h3>
+          <p class="release__artist">Unkle Funk &amp; Anaiek feat. One Little Fishie</p>
+          <p class="release__detail">Original Mix &middot; February 15, 2016</p>
+          <div class="release__tags">
+            <span class="tag">Deep House</span>
+            <span class="tag">Collaboration</span>
+            <span class="tag">Progressive House</span>
+          </div>
+          <a href="https://www.beatport.com/track/la-honda-dreams-ft-one-little-fishie-original-mix/7608868" target="_blank" rel="noopener noreferrer" class="release__link">Buy on Beatport →</a>
+        </div>
+      </div>
+
+      <!-- Release 3 -->
+      <div class="release">
+        <div class="release__artwork">
+          <div class="release__artwork-inner" style="--hue: 270">
+            <div class="release__vinyl-mark"></div>
+            <span class="release__year-badge">2016</span>
+          </div>
+        </div>
+        <div class="release__info">
+          <div class="release__label-name">Wulfpack</div>
+          <h3 class="release__title">La Honda Dreams <span class="release__remix-tag">Deep Tribe Remix</span></h3>
+          <p class="release__artist">Unkle Funk &amp; Anaiek feat. One Little Fishie</p>
+          <p class="release__detail">Remix &middot; February 15, 2016</p>
+          <div class="release__tags">
+            <span class="tag">Deep House</span>
+            <span class="tag">Remix</span>
+          </div>
+          <a href="https://www.beatport.com/track/la-honda-dreams-ft-one-little-fishie-deep-tribe-remix/7608869" target="_blank" rel="noopener noreferrer" class="release__link">Buy on Beatport →</a>
+        </div>
+      </div>
+
+      <!-- Release 4 -->
+      <div class="release">
+        <div class="release__artwork">
+          <div class="release__artwork-inner" style="--hue: 10">
+            <div class="release__vinyl-mark"></div>
+            <span class="release__year-badge">—</span>
+          </div>
+        </div>
+        <div class="release__info">
+          <div class="release__label-name">DOIN' WORK Records</div>
+          <h3 class="release__title">Groove Italio</h3>
+          <p class="release__artist">Unkle Funk</p>
+          <p class="release__detail">Original Mix</p>
+          <div class="release__tags">
+            <span class="tag">House</span>
+            <span class="tag">Original Mix</span>
+          </div>
+          <a href="https://www.beatport.com/artist/unkle-funk/244559" target="_blank" rel="noopener noreferrer" class="release__link">Find on Beatport →</a>
+        </div>
+      </div>
+
+      <!-- Release 5 -->
+      <div class="release">
+        <div class="release__artwork">
+          <div class="release__artwork-inner" style="--hue: 140">
+            <div class="release__vinyl-mark"></div>
+            <span class="release__year-badge">—</span>
+          </div>
+        </div>
+        <div class="release__info">
+          <div class="release__label-name">DOIN' WORK Records</div>
+          <h3 class="release__title">Experimental</h3>
+          <p class="release__artist">Unkle Funk</p>
+          <p class="release__detail">Original Mix</p>
+          <div class="release__tags">
+            <span class="tag">House</span>
+            <span class="tag">Original Mix</span>
+          </div>
+          <a href="https://www.beatport.com/artist/unkle-funk/244559" target="_blank" rel="noopener noreferrer" class="release__link">Find on Beatport →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="releases__footer">
+      <a href="https://www.beatport.com/artist/unkle-funk/244559" target="_blank" rel="noopener noreferrer" class="btn btn--outline">Full Catalog on Beatport</a>
+      <a href="https://www.discogs.com/artist/310653-Unkle-Funk" target="_blank" rel="noopener noreferrer" class="btn btn--outline">Discogs Profile</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONNECT -->
+<section class="section" id="connect">
+  <div class="container">
+    <p class="label">Find Unkle Funk</p>
+    <h2 class="section-title">Connect</h2>
+    <div class="connect-grid">
+      <a href="https://soundcloud.com/unklefunkssounds" target="_blank" rel="noopener noreferrer" class="connect-card">
+        <div class="connect-card__icon" style="--icon-color: #ff5500">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M1.175 12.225a.498.498 0 0 0-.471.463l-.267 2.87.267 2.85a.498.498 0 0 0 .471.463.498.498 0 0 0 .471-.463l.302-2.85-.302-2.87a.498.498 0 0 0-.471-.463zm2.083-.639a.503.503 0 0 0-.503.505l-.234 3.007.234 3.019a.503.503 0 1 0 1.006 0l.265-3.019-.265-3.007a.503.503 0 0 0-.503-.505zm2.1-.414a.607.607 0 0 0-.607.607l-.202 3.049.202 3.017a.607.607 0 1 0 1.215 0l.23-3.017-.23-3.049a.607.607 0 0 0-.608-.607zm2.156-.284a.71.71 0 0 0-.71.71l-.17 3.06.17 3.006a.71.71 0 0 0 1.42 0l.196-3.006-.196-3.06a.71.71 0 0 0-.71-.71zm2.21.006a.812.812 0 0 0-.811.812l-.14 3.043.14 2.993a.811.811 0 0 0 1.623 0l.16-2.993-.16-3.043a.812.812 0 0 0-.812-.812zm2.21-.129a.913.913 0 0 0-.912.913l-.11 2.954.11 2.968a.913.913 0 1 0 1.825 0l.126-2.968-.126-2.954a.913.913 0 0 0-.913-.913zm2.21-.094a1.015 1.015 0 0 0-1.014 1.015l-.08 2.929.08 2.942a1.015 1.015 0 0 0 2.029 0l.093-2.942-.093-2.929a1.015 1.015 0 0 0-1.015-1.015zm4.239-1.376c-.144 0-.285.024-.42.07a5.194 5.194 0 0 0-5.133-4.453 5.2 5.2 0 0 0-1.986.394c-.218.087-.277.178-.278.253v9.09c.001.08.062.148.141.16h7.676A2.016 2.016 0 0 0 22 14.944a2.016 2.016 0 0 0-2.016-2.016z"/></svg>
+        </div>
+        <div class="connect-card__body">
+          <h3>SoundCloud</h3>
+          <p>Tracks, mixes &amp; unreleased</p>
+        </div>
+        <span class="connect-card__arrow">→</span>
+      </a>
+
+      <a href="https://open.spotify.com/artist/3OIZINZmZ2lKSYVsmSmrnH" target="_blank" rel="noopener noreferrer" class="connect-card">
+        <div class="connect-card__icon" style="--icon-color: #1db954">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+        </div>
+        <div class="connect-card__body">
+          <h3>Spotify</h3>
+          <p>Stream original productions</p>
+        </div>
+        <span class="connect-card__arrow">→</span>
+      </a>
+
+      <a href="https://www.beatport.com/artist/unkle-funk/244559" target="_blank" rel="noopener noreferrer" class="connect-card">
+        <div class="connect-card__icon" style="--icon-color: #01ff95">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.012 0C1.796 0 0 1.796 0 4.012v15.976C0 22.204 1.796 24 4.012 24h15.976C22.204 24 24 22.204 24 19.988V4.012C24 1.796 22.204 0 19.988 0H4.012zm5.302 5.8h2.342v3.682c.512-.576 1.17-.864 1.97-.864 1.007 0 1.826.36 2.458 1.08.63.719.947 1.65.947 2.791 0 1.142-.317 2.073-.947 2.793-.632.72-1.451 1.08-2.458 1.08-.8 0-1.458-.288-1.97-.864v.72H9.314V5.8zm5.79 5.689c0-.637-.17-1.148-.512-1.533-.342-.385-.786-.577-1.332-.577-.546 0-.99.192-1.33.577-.341.385-.512.896-.512 1.533s.17 1.148.512 1.533c.34.385.784.577 1.33.577.546 0 .99-.192 1.332-.577.342-.385.513-.896.513-1.533z"/></svg>
+        </div>
+        <div class="connect-card__body">
+          <h3>Beatport</h3>
+          <p>Buy &amp; download tracks</p>
+        </div>
+        <span class="connect-card__arrow">→</span>
+      </a>
+
+      <a href="https://podcasts.apple.com/us/podcast/sunday-slackin/id406329520" target="_blank" rel="noopener noreferrer" class="connect-card">
+        <div class="connect-card__icon" style="--icon-color: #b150e2">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        </div>
+        <div class="connect-card__body">
+          <h3>Apple Podcasts</h3>
+          <p>Sunday Slackin' podcast</p>
+        </div>
+        <span class="connect-card__arrow">→</span>
+      </a>
+
+      <a href="https://www.facebook.com/sundayslackin/" target="_blank" rel="noopener noreferrer" class="connect-card">
+        <div class="connect-card__icon" style="--icon-color: #1877f2">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </div>
+        <div class="connect-card__body">
+          <h3>Facebook</h3>
+          <p>Sunday Slackin' community</p>
+        </div>
+        <span class="connect-card__arrow">→</span>
+      </a>
+
+      <a href="https://www.discogs.com/artist/310653-Unkle-Funk" target="_blank" rel="noopener noreferrer" class="connect-card">
+        <div class="connect-card__icon" style="--icon-color: #c9a84c">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 4.5a7.5 7.5 0 1 1 0 15 7.5 7.5 0 0 1 0-15zm0 3a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9zm0 1.5a3 3 0 1 1 0 6 3 3 0 0 1 0-6zm0 1.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/></svg>
+        </div>
+        <div class="connect-card__body">
+          <h3>Discogs</h3>
+          <p>Full vinyl &amp; release catalog</p>
+        </div>
+        <span class="connect-card__arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <div class="footer__left">
+        <span class="footer__logo">UNKLE FUNK</span>
+        <p class="footer__sub">Chicago House Music</p>
+      </div>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <a href="#about">About</a>
+        <a href="#podcast">Sunday Slackin'</a>
+        <a href="#music">Music</a>
+        <a href="#discography">Releases</a>
+        <a href="#connect">Connect</a>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <p>&copy; 2024 Unkle Funk. All rights reserved.</p>
+      <p>Chicago, IL &middot; House Music Since 2003</p>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

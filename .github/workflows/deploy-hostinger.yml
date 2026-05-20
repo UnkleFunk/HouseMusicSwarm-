@@ -21,13 +21,12 @@ jobs:
           username: ${{ secrets.HOSTINGER_SSH_USER }}
           password: ${{ secrets.HOSTINGER_SSH_PASS }}
           script: |
-            echo "=== Connected to Hostinger ==="
-            echo "Home dir: $HOME"
-            ls -la ~/
-            echo ""
-            echo "=== public_html contents ==="
-            ls -la ~/public_html/ 2>/dev/null || echo "public_html not found"
             mkdir -p ~/public_html
+            echo "=== Clearing conflicting files ==="
+            # Rename any index.php so our index.html takes over
+            [ -f ~/public_html/index.php ] && mv ~/public_html/index.php ~/public_html/index.php.bak && echo "Moved index.php to index.php.bak" || echo "No index.php found"
+            echo "=== public_html before deploy ==="
+            ls -la ~/public_html/
 
       - name: Upload files
         uses: appleboy/scp-action@v1.0.0

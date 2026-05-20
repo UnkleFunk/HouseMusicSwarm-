@@ -650,6 +650,118 @@ ul { list-style: none; }
 }
 .music-embed__link:hover { color: var(--gold-light); }
 
+/* ── DJ CHART ───────────────────────────────────────────── */
+.dj-chart {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 3rem;
+}
+
+.dj-chart__header {
+  padding: 2rem 2.5rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.dj-chart__title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  letter-spacing: 0.04em;
+  color: var(--white);
+  margin-bottom: 0.5rem;
+}
+
+.dj-chart__subtitle {
+  font-size: 0.9rem;
+  color: var(--text-2);
+  line-height: 1.6;
+  max-width: 600px;
+}
+
+.dj-chart__list {
+  list-style: none;
+}
+
+.dj-chart__item {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1rem 2.5rem;
+  border-bottom: 1px solid var(--border);
+  transition: background var(--transition);
+}
+.dj-chart__item:last-child { border-bottom: none; }
+.dj-chart__item:hover { background: rgba(201,168,76,0.03); }
+
+.dj-chart__num {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--gold);
+  min-width: 20px;
+  opacity: 0.6;
+}
+
+.dj-chart__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.dj-chart__track {
+  display: block;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.15rem;
+  letter-spacing: 0.04em;
+  color: var(--white);
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dj-chart__artist {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--text-2);
+  margin-top: 0.1rem;
+}
+
+.dj-chart__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.dj-chart__year {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--text-3);
+}
+
+.dj-chart__footer {
+  padding: 1.25rem 2.5rem;
+  border-top: 1px solid var(--border);
+  background: rgba(201,168,76,0.02);
+}
+
+.dj-chart__archive {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-3);
+  letter-spacing: 0.04em;
+  transition: color var(--transition);
+}
+.dj-chart__archive:hover { color: var(--gold); }
+
+@media (max-width: 768px) {
+  .dj-chart__header { padding: 1.5rem; }
+  .dj-chart__item { padding: 0.875rem 1.5rem; gap: 0.875rem; }
+  .dj-chart__meta .tag { display: none; }
+  .dj-chart__footer { padding: 1rem 1.5rem; }
+}
+
 /* ── DISCOGRAPHY ────────────────────────────────────────── */
 .chart-feature {
   background: linear-gradient(135deg, rgba(201,168,76,0.08) 0%, rgba(201,168,76,0.03) 100%);

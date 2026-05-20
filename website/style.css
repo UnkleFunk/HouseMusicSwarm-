@@ -679,65 +679,74 @@ ul { list-style: none; }
   max-width: 600px;
 }
 
-.dj-chart__list {
-  list-style: none;
+.dj-chart__links {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  padding: 1.5rem 2.5rem;
 }
 
-.dj-chart__item {
+.dj-chart__platform-btn {
   display: flex;
   align-items: center;
-  gap: 1.25rem;
-  padding: 1rem 2.5rem;
-  border-bottom: 1px solid var(--border);
-  transition: background var(--transition);
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: border-color var(--transition), background var(--transition), transform var(--transition);
 }
-.dj-chart__item:last-child { border-bottom: none; }
-.dj-chart__item:hover { background: rgba(201,168,76,0.03); }
-
-.dj-chart__num {
-  font-family: 'Space Mono', monospace;
-  font-size: 0.65rem;
-  font-weight: 700;
-  color: var(--gold);
-  min-width: 20px;
-  opacity: 0.6;
+.dj-chart__platform-btn:hover {
+  border-color: rgba(201,168,76,0.3);
+  background: rgba(201,168,76,0.03);
+  transform: translateY(-2px);
 }
 
-.dj-chart__info {
+.dj-chart__platform-icon {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background-color: color-mix(in srgb, var(--icon-color, var(--gold)) 10%, transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--icon-color, var(--gold));
+}
+
+.dj-chart__platform-body {
   flex: 1;
   min-width: 0;
 }
 
-.dj-chart__track {
+.dj-chart__platform-name {
   display: block;
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 1.15rem;
-  letter-spacing: 0.04em;
+  font-size: 1.2rem;
+  letter-spacing: 0.06em;
   color: var(--white);
-  line-height: 1.2;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  line-height: 1;
+  margin-bottom: 0.2rem;
 }
 
-.dj-chart__artist {
+.dj-chart__platform-sub {
   display: block;
-  font-size: 0.8rem;
-  color: var(--text-2);
-  margin-top: 0.1rem;
-}
-
-.dj-chart__meta {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  flex-shrink: 0;
-}
-
-.dj-chart__year {
-  font-family: 'Space Mono', monospace;
-  font-size: 0.65rem;
+  font-size: 0.75rem;
   color: var(--text-3);
+}
+
+.dj-chart__platform-arrow {
+  color: var(--text-3);
+  font-size: 1rem;
+  transition: color var(--transition), transform var(--transition);
+}
+.dj-chart__platform-btn:hover .dj-chart__platform-arrow {
+  color: var(--gold);
+  transform: translateX(3px);
+}
+
+@media (max-width: 480px) {
+  .dj-chart__links { grid-template-columns: 1fr; }
 }
 
 .dj-chart__footer {

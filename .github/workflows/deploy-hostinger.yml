@@ -13,7 +13,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Deploy via SSH
+      - name: Prepare public_html
         uses: appleboy/ssh-action@v1.2.4
         with:
           host: 195.179.239.223
@@ -22,11 +22,11 @@ jobs:
           password: ${{ secrets.HOSTINGER_SSH_PASS }}
           script: |
             mkdir -p ~/public_html
-            echo "=== Clearing conflicting files ==="
-            # Rename any index.php so our index.html takes over
-            [ -f ~/public_html/index.php ] && mv ~/public_html/index.php ~/public_html/index.php.bak && echo "Moved index.php to index.php.bak" || echo "No index.php found"
             echo "=== public_html before deploy ==="
             ls -la ~/public_html/
+            echo "=== Removing any conflicting index files ==="
+            rm -f ~/public_html/index.php ~/public_html/index.php.bak
+            echo "Done."
 
       - name: Upload files
         uses: appleboy/scp-action@v1.0.0
@@ -39,7 +39,7 @@ jobs:
           target: "~/public_html/"
           strip_components: 1
 
-      - name: Fix permissions and confirm
+      - name: Verify deploy
         uses: appleboy/ssh-action@v1.2.4
         with:
           host: 195.179.239.223
@@ -47,12 +47,24 @@ jobs:
           username: ${{ secrets.HOSTINGER_SSH_USER }}
           password: ${{ secrets.HOSTINGER_SSH_PASS }}
           script: |
-            chmod 644 ~/public_html/index.html ~/public_html/style.css ~/public_html/main.js
+            chmod 644 ~/public_html/index.html ~/public_html/style.css ~/public_html/main.js ~/public_html/.htaccess
             echo "=== Deployed files ==="
-            ls -lh ~/public_html/index.html ~/public_html/style.css ~/public_html/main.js
+            ls -lh ~/public_html/index.html ~/public_html/style.css ~/public_html/main.js ~/public_html/.htaccess
             echo ""
             echo "=== Full public_html ==="
             ls -la ~/public_html/
             echo ""
-            echo "=== First line of our index.html ==="
-            head -2 ~/public_html/index.html
+            echo "=== First 3 lines of index.html ==="
+            head -3 ~/public_html/index.html
+            echo ""
+            echo "=== .htaccess content ==="
+            cat ~/public_html/.htaccess
+
+      - name: Check live site
+        run: |
+          echo "Waiting 5s for server to settle..."
+          sleep 5
+          HTTP=$(curl -s -o /dev/null -w "%{http_code}" --max-time 15 http://unklefunk.music/ || echo "CURL_FAILED")
+          echo "HTTP status: $HTTP"
+          BODY=$(curl -s --max-time 15 http://unklefunk.music/ | head -c 200 || echo "FETCH_FAILED")
+          echo "Site preview: $BODY"

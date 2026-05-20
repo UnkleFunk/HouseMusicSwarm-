@@ -12,21 +12,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        env:
-          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
-      - name: Upload files to Hostinger
-        uses: appleboy/scp-action@v1.0.0
-        with:
-          host: 195.179.239.223
-          port: 65002
-          username: ${{ secrets.HOSTINGER_SSH_USER }}
-          password: ${{ secrets.HOSTINGER_SSH_PASS }}
-          source: "website/index.html,website/style.css,website/main.js"
-          target: "public_html/"
-          strip_components: 1
-
-      - name: Confirm deployment
+      - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.2.4
         with:
           host: 195.179.239.223
@@ -34,5 +21,39 @@ jobs:
           username: ${{ secrets.HOSTINGER_SSH_USER }}
           password: ${{ secrets.HOSTINGER_SSH_PASS }}
           script: |
-            echo "=== unklefunk.music deployment complete ==="
+            echo "=== Connected to Hostinger ==="
+            echo "Home dir: $HOME"
+            ls -la ~/
+            echo ""
+            echo "=== public_html contents ==="
+            ls -la ~/public_html/ 2>/dev/null || echo "public_html not found"
+            mkdir -p ~/public_html
+
+      - name: Upload files
+        uses: appleboy/scp-action@v1.0.0
+        with:
+          host: 195.179.239.223
+          port: 65002
+          username: ${{ secrets.HOSTINGER_SSH_USER }}
+          password: ${{ secrets.HOSTINGER_SSH_PASS }}
+          source: "website/index.html,website/style.css,website/main.js"
+          target: "~/public_html/"
+          strip_components: 1
+
+      - name: Fix permissions and confirm
+        uses: appleboy/ssh-action@v1.2.4
+        with:
+          host: 195.179.239.223
+          port: 65002
+          username: ${{ secrets.HOSTINGER_SSH_USER }}
+          password: ${{ secrets.HOSTINGER_SSH_PASS }}
+          script: |
+            chmod 644 ~/public_html/index.html ~/public_html/style.css ~/public_html/main.js
+            echo "=== Deployed files ==="
             ls -lh ~/public_html/index.html ~/public_html/style.css ~/public_html/main.js
+            echo ""
+            echo "=== Full public_html ==="
+            ls -la ~/public_html/
+            echo ""
+            echo "=== First line of our index.html ==="
+            head -2 ~/public_html/index.html

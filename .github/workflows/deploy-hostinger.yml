@@ -12,9 +12,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        env:
+          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
       - name: Upload files to Hostinger
-        uses: appleboy/scp-action@v0.1.7
+        uses: appleboy/scp-action@v1.0.0
         with:
           host: 195.179.239.223
           port: 65002
@@ -25,7 +27,7 @@ jobs:
           strip_components: 1
 
       - name: Confirm deployment
-        uses: appleboy/ssh-action@v1.0.3
+        uses: appleboy/ssh-action@v1.2.4
         with:
           host: 195.179.239.223
           port: 65002

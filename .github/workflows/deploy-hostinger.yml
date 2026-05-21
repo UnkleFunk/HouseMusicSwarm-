@@ -13,7 +13,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Prepare public_html
+      - name: Prepare web root
         uses: appleboy/ssh-action@v1.2.4
         with:
           host: 195.179.239.223
@@ -21,11 +21,11 @@ jobs:
           username: ${{ secrets.HOSTINGER_SSH_USER }}
           password: ${{ secrets.HOSTINGER_SSH_PASS }}
           script: |
-            mkdir -p ~/public_html
-            echo "=== public_html before deploy ==="
-            ls -la ~/public_html/
+            mkdir -p ~/domains/unklefunk.music/public_html
+            echo "=== web root before deploy ==="
+            ls -la ~/domains/unklefunk.music/public_html/
             echo "=== Removing any conflicting index files ==="
-            rm -f ~/public_html/index.php ~/public_html/index.php.bak
+            rm -f ~/domains/unklefunk.music/public_html/default.php ~/domains/unklefunk.music/public_html/index.php
             echo "Done."
 
       - name: Upload files
@@ -36,7 +36,7 @@ jobs:
           username: ${{ secrets.HOSTINGER_SSH_USER }}
           password: ${{ secrets.HOSTINGER_SSH_PASS }}
           source: "website/index.html,website/style.css,website/main.js,website/.htaccess"
-          target: "~/public_html/"
+          target: "~/domains/unklefunk.music/public_html/"
           strip_components: 1
 
       - name: Verify deploy
@@ -47,24 +47,24 @@ jobs:
           username: ${{ secrets.HOSTINGER_SSH_USER }}
           password: ${{ secrets.HOSTINGER_SSH_PASS }}
           script: |
-            chmod 644 ~/public_html/index.html ~/public_html/style.css ~/public_html/main.js ~/public_html/.htaccess
+            chmod 644 ~/domains/unklefunk.music/public_html/index.html ~/domains/unklefunk.music/public_html/style.css ~/domains/unklefunk.music/public_html/main.js ~/domains/unklefunk.music/public_html/.htaccess
             echo "=== Deployed files ==="
-            ls -lh ~/public_html/index.html ~/public_html/style.css ~/public_html/main.js ~/public_html/.htaccess
+            ls -lh ~/domains/unklefunk.music/public_html/index.html ~/domains/unklefunk.music/public_html/style.css ~/domains/unklefunk.music/public_html/main.js ~/domains/unklefunk.music/public_html/.htaccess
             echo ""
-            echo "=== Full public_html ==="
-            ls -la ~/public_html/
+            echo "=== Full web root ==="
+            ls -la ~/domains/unklefunk.music/public_html/
             echo ""
             echo "=== First 3 lines of index.html ==="
-            head -3 ~/public_html/index.html
+            head -3 ~/domains/unklefunk.music/public_html/index.html
             echo ""
             echo "=== .htaccess content ==="
-            cat ~/public_html/.htaccess
+            cat ~/domains/unklefunk.music/public_html/.htaccess
 
       - name: Check live site
         run: |
           echo "Waiting 5s for server to settle..."
           sleep 5
-          HTTP=$(curl -s -o /dev/null -w "%{http_code}" --max-time 15 http://unklefunk.music/ || echo "CURL_FAILED")
+          HTTP=$(curl -s -L -o /dev/null -w "%{http_code}" --max-time 15 https://unklefunk.music/ || echo "CURL_FAILED")
           echo "HTTP status: $HTTP"
-          BODY=$(curl -s --max-time 15 http://unklefunk.music/ | head -c 200 || echo "FETCH_FAILED")
+          BODY=$(curl -s -L --max-time 15 https://unklefunk.music/ | head -c 200 || echo "FETCH_FAILED")
           echo "Site preview: $BODY"

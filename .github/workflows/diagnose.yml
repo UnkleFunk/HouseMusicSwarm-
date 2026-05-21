@@ -1,4 +1,4 @@
-name: Diagnose Hostinger public_html
+name: Diagnose Hostinger web root
 
 on:
   workflow_dispatch:
@@ -7,7 +7,7 @@ jobs:
   diagnose:
     runs-on: ubuntu-latest
     steps:
-      - name: Check public_html contents
+      - name: Check web root contents
         uses: appleboy/ssh-action@v1.2.4
         with:
           host: 195.179.239.223
@@ -18,14 +18,14 @@ jobs:
             echo "=== Home directory ==="
             ls -la ~/
             echo ""
-            echo "=== public_html contents ==="
-            ls -la ~/public_html/ | head -40
+            echo "=== Actual web root: ~/domains/unklefunk.music/public_html/ ==="
+            ls -la ~/domains/unklefunk.music/public_html/
             echo ""
-            echo "=== Checking for WordPress ==="
-            ls ~/public_html/wp-config.php 2>/dev/null && echo "WordPress FOUND" || echo "No WordPress"
+            echo "=== Legacy public_html (not served) ==="
+            ls -la ~/public_html/
             echo ""
             echo "=== Index files ==="
-            ls ~/public_html/index* 2>/dev/null
+            ls ~/domains/unklefunk.music/public_html/index* 2>/dev/null
             echo ""
             echo "=== Our index.html first line ==="
-            head -3 ~/public_html/index.html 2>/dev/null || echo "index.html not found"
+            head -3 ~/domains/unklefunk.music/public_html/index.html 2>/dev/null || echo "index.html not found"

@@ -183,4 +183,6 @@ cython_debug/
 
 .agency_swarm/
 third_party/
+context/transcripts/
+.memsearch/
 .claude/

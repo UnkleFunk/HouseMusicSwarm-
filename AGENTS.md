@@ -118,6 +118,14 @@ The coding agent will read this file, understand the structure, and make the rig
 - `shared_tools/` contains Composio-powered integrations (Gmail, Slack, GitHub, etc.) available to all agents
 - Models are configured via `DEFAULT_MODEL` in `.env` — never hardcoded
 
+---
+
+## Skill Registry
+
+| Skill | Trigger phrases |
+|---|---|
+| `memory-write` | "remember this", "note that", "update memory", "save this", "forget about" |
+
 Before proceeding with agent creation, please read the following instructions carefully:
 
 - `.cursor/rules/agency-swarm-workflow.mdc` - your primary guide for creating agents and agencies

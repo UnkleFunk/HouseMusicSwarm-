@@ -66,6 +66,7 @@ In this mode, transfer control early to the best specialist.
 - **Docs Agent**: document creation, editing, and conversion.
 - **Video Agent**: video generation/editing/assembly.
 - **Image Agent**: image generation/editing/composition.
+- **Reference Finder**: house music production tool — captures live audio, analyzes sonic characteristics, and returns the closest-matching recent Beatport/Traxsource chart tracks. Use for mix referencing, A/B comparison, mastering benchmarks, or any request about finding reference tracks.
 
 # Workflow
 

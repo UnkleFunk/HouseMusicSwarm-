@@ -54,6 +54,12 @@ dependencies = [
     "moviepy<2",
     "imageio-ffmpeg",
     "httpx",
+    # Reference Finder — audio analysis + vector DB
+    "librosa>=0.10.0",
+    "sounddevice>=0.4.6",
+    "soundfile>=0.12.1",
+    "pyloudnorm>=0.1.1",
+    "chromadb>=0.5.0",
 ]
 
 [project.scripts]

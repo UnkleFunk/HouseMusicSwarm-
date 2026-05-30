@@ -350,7 +350,11 @@ def archive_inbox(service):
         kwargs = {"userId": "me", "labelIds": ["INBOX"], "maxResults": 500}
         if page_token:
             kwargs["pageToken"] = page_token
-        resp = service.users().threads().list(**kwargs).execute()
+        try:
+            resp = service.users().threads().list(**kwargs).execute()
+        except HttpError as e:
+            print(f"  [error] Could not list inbox threads: {e}")
+            break
         threads = resp.get("threads", [])
         if not threads:
             break
@@ -379,7 +383,22 @@ def main():
     print("Gmail Consolidation Script")
     print("=" * 50)
     service = get_service()
-    print("Authenticated OK\n")
+    # Quick API connectivity check
+    try:
+        profile = service.users().getProfile(userId="me").execute()
+        print(f"Authenticated OK — {profile.get('emailAddress')}\n")
+    except HttpError as e:
+        if e.resp.status == 403 and "has not been used" in str(e):
+            import json, re
+            m = re.search(r"project[= ](\d+)", str(e))
+            proj = m.group(1) if m else "YOUR_PROJECT_ID"
+            print("\nERROR: Gmail API is not enabled for your Google Cloud project.")
+            print(f"\nFix: visit this URL and click Enable:")
+            print(f"  https://console.developers.google.com/apis/api/gmail.googleapis.com/overview?project={proj}")
+            print("\nThen wait 60 seconds and run this script again.")
+        else:
+            print(f"ERROR: {e}")
+        sys.exit(1)
 
     # ── Phase 1: Re-label + archive by old label ──────────────────────────
     print("── Phase 1: Consolidating labels ──")

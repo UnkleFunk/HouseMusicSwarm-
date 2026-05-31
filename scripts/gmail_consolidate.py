@@ -350,27 +350,25 @@ def archive_inbox(service):
     """Archive every remaining thread in INBOX (remove INBOX label)."""
     print("\n── Archiving remaining inbox threads ──")
     total = 0
-    page_token = None
     while True:
-        kwargs = {"userId": "me", "labelIds": ["INBOX"], "maxResults": 500}
-        if page_token:
-            kwargs["pageToken"] = page_token
+        # Never use pageToken here — as we archive threads they leave INBOX,
+        # so we always re-query page 1 until nothing is left.
         try:
-            resp = service.users().threads().list(**kwargs).execute()
-        except HttpError as e:
+            resp = service.users().threads().list(
+                userId="me", labelIds=["INBOX"], maxResults=500
+            ).execute()
+        except (HttpError, ssl.SSLError, OSError) as e:
             print(f"  [error] Could not list inbox threads: {e}")
-            break
+            time.sleep(5)
+            continue
         threads = resp.get("threads", [])
         if not threads:
             break
-        print(f"  Archiving batch of {len(threads)}...")
+        print(f"  Archiving batch of {len(threads)}... (total so far: {total})")
         for t in threads:
             modify_thread(service, t["id"], remove_labels=["INBOX"])
             total += 1
             time.sleep(0.05)
-        page_token = resp.get("nextPageToken")
-        if not page_token:
-            break
     print(f"  Archived {total} additional inbox threads.")
     return total
 

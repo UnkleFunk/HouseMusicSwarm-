@@ -376,12 +376,20 @@ def archive_inbox(service):
 
 
 def delete_label(service, label_id):
-    try:
-        service.users().labels().delete(userId="me", id=label_id).execute()
-        return True
-    except HttpError as e:
-        print(f"    [warn] could not delete {label_id}: {e}")
-        return False
+    for attempt in range(4):
+        try:
+            service.users().labels().delete(userId="me", id=label_id).execute()
+            return True
+        except HttpError as e:
+            if e.resp.status in (429,) or e.resp.status >= 500:
+                time.sleep(2 ** attempt)
+            else:
+                print(f"    [warn] could not delete {label_id}: {e}")
+                return False
+        except (ssl.SSLError, OSError) as e:
+            print(f"    [retry {attempt+1}] network error ({e}), waiting {2**attempt}s")
+            time.sleep(2 ** attempt)
+    return False
 
 
 def main():

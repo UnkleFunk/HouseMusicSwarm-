@@ -391,6 +391,7 @@ def delete_label(service, label_id):
 
 
 def main():
+    archive_only = "--archive-only" in sys.argv
     print("Gmail Consolidation Script")
     print("=" * 50)
     service = get_service()
@@ -411,42 +412,42 @@ def main():
             print(f"ERROR: {e}")
         sys.exit(1)
 
-    # ── Phase 1: Re-label + archive by old label ──────────────────────────
-    print("── Phase 1: Consolidating labels ──")
-    total_moved = 0
-    for old_id, category in LABEL_MAP.items():
-        name_resp = None
-        try:
-            name_resp = service.users().labels().get(userId="me", id=old_id).execute()
-            name = name_resp.get("name", old_id)
-        except HttpError:
-            name = old_id
-        print(f"  [{old_id}] {name}")
-        moved = process_label(service, old_id, category)
-        total_moved += moved
-        # delete the old label after processing
-        delete_label(service, old_id)
-        time.sleep(0.1)
+    if not archive_only:
+        # ── Phase 1: Re-label + archive by old label ──────────────────────
+        print("── Phase 1: Consolidating labels ──")
+        total_moved = 0
+        for old_id, category in LABEL_MAP.items():
+            try:
+                name_resp = service.users().labels().get(userId="me", id=old_id).execute()
+                name = name_resp.get("name", old_id)
+            except HttpError:
+                name = old_id
+            print(f"  [{old_id}] {name}")
+            moved = process_label(service, old_id, category)
+            total_moved += moved
+            delete_label(service, old_id)
+            time.sleep(0.1)
+        print(f"\nPhase 1 complete: {total_moved} threads re-labeled.\n")
 
-    print(f"\nPhase 1 complete: {total_moved} threads re-labeled.\n")
-
-    # ── Phase 2: Delete junk/system labels ───────────────────────────────
-    print("── Phase 2: Deleting junk/system labels ──")
-    for lid in LABELS_DELETE_ONLY:
-        deleted = delete_label(service, lid)
-        status = "deleted" if deleted else "skipped"
-        print(f"  {lid}: {status}")
+        # ── Phase 2: Delete junk/system labels ────────────────────────────
+        print("── Phase 2: Deleting junk/system labels ──")
+        for lid in LABELS_DELETE_ONLY:
+            deleted = delete_label(service, lid)
+            print(f"  {lid}: {'deleted' if deleted else 'skipped'}")
+    else:
+        total_moved = 0
+        print("Skipping Phase 1 & 2 (--archive-only)\n")
 
     # ── Phase 3: Archive everything left in INBOX ─────────────────────────
     archived = archive_inbox(service)
 
     print("\n" + "=" * 50)
     print("Done!")
-    print(f"  Labels consolidated: {len(LABEL_MAP)}")
-    print(f"  Threads re-labeled:  {total_moved}")
+    if not archive_only:
+        print(f"  Labels consolidated: {len(LABEL_MAP)}")
+        print(f"  Threads re-labeled:  {total_moved}")
     print(f"  Inbox archived:      {archived}")
-    print("\nYour Gmail now has 5 labels + NEEDS RESPONSE (red).")
-    print("All emails still exist — search anytime to find them.")
+    print("\nAll emails still exist — search anytime to find them.")
 
 
 if __name__ == "__main__":

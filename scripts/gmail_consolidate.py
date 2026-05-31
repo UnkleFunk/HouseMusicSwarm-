@@ -16,6 +16,7 @@ The first run opens a browser for OAuth. Token is cached in token.pickle.
 """
 
 import os
+import ssl
 import sys
 import pickle
 import time
@@ -287,7 +288,7 @@ def get_all_threads_for_label(service, label_id):
             kwargs["pageToken"] = page_token
         try:
             resp = service.users().threads().list(**kwargs).execute()
-        except HttpError as e:
+        except (HttpError, ssl.SSLError, OSError) as e:
             print(f"    [warn] list error for {label_id}: {e}")
             break
         threads.extend(t["id"] for t in resp.get("threads", []))
@@ -318,6 +319,10 @@ def modify_thread(service, thread_id, add_labels=None, remove_labels=None):
             else:
                 print(f"    [error] thread {thread_id}: {e}")
                 return False
+        except (ssl.SSLError, OSError) as e:
+            wait = 2 ** attempt
+            print(f"    [retry {attempt+1}] network error ({e}), waiting {wait}s")
+            time.sleep(wait)
     return False
 
 

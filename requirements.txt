@@ -50,7 +50,7 @@ httpx
 imageio-ffmpeg
 
 # Reference finder — audio analysis + vector DB
-librosa>=0.10.0
+# (librosa removed — uses scipy/numpy directly to avoid llvmlite compile issues on macOS)
 sounddevice>=0.4.6
 soundfile>=0.12.1
 pyloudnorm>=0.1.1

@@ -55,7 +55,7 @@ dependencies = [
     "imageio-ffmpeg",
     "httpx",
     # Reference Finder — audio analysis + vector DB
-    "librosa>=0.10.0",
+    # (librosa intentionally absent — scipy/numpy only, avoids llvmlite compile on macOS)
     "sounddevice>=0.4.6",
     "soundfile>=0.12.1",
     "pyloudnorm>=0.1.1",

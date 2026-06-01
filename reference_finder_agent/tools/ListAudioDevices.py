@@ -13,7 +13,13 @@ class ListAudioDevices(BaseTool):
         except Exception:
             hostapis = []
 
-        _loopback_keywords = {"loopback", "blackhole", "soundflower", "virtual", "aggregate", "multi-output"}
+        # Keywords that identify virtual / loopback / system-capture devices.
+        # These route playback (DAW, browser, player) back as a capture input.
+        _loopback_keywords = {
+            "loopback", "blackhole", "soundflower", "virtual", "aggregate",
+            "multi-output", "system audio", "recorder", "serato", "rekordbox",
+            "appvolume", "vb-audio", "vb-cable", "cable", "voicemeeter",
+        }
 
         results = []
         for i, d in enumerate(devices):

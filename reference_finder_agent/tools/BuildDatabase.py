@@ -19,7 +19,10 @@ import time
 from pathlib import Path
 from typing import Any
 
-from agency_swarm.tools import BaseTool
+try:
+    from agency_swarm.tools import BaseTool
+except ModuleNotFoundError:
+    from pydantic import BaseModel as BaseTool  # type: ignore[assignment]
 from pydantic import Field
 
 REFS_DIR = Path.home() / ".housemusic_refs"

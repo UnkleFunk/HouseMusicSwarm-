@@ -1,0 +1,42 @@
+{
+  "_comment": "Unkle Funk taste fingerprint — distilled from 139 analyzed favorite tracks vs 655 reference label tracks (Defected, Toolroom, HOUSEU). Generated from librosa feature analysis. The dream engine reads this to weight sketch generation toward Glenn's measurable sound.",
+  "source": "ableton_extensions/analysis/combined_all_labels.csv",
+  "favorites_count": 139,
+  "reference_counts": {
+    "Defected Records": 350,
+    "Toolroom Records": 200,
+    "HOUSEU Records": 105
+  },
+  "tempo": {
+    "home_bpm": 123,
+    "pocket_range": [122, 124],
+    "corrected_median": 123.0,
+    "note": "Raw librosa often half-times slow tracks; corrected median confirms 123 BPM is the center of gravity. The dream engine's 120-126 default is validated."
+  },
+  "signature_feature": {
+    "name": "mfcc_1 (overall spectral energy / dynamics)",
+    "favorites_mean": -156.5,
+    "defected_mean": -145.0,
+    "toolroom_mean": -104.6,
+    "houseu_mean": -46.2,
+    "interpretation": "Favorites are the MOST negative of all four labels = the warmest, most dynamic, least brick-walled/compressed tracks. Glenn's ear rejects loudness-war commercial masters. His taste sits at the opposite end of the spectrum from commercial 'HOUSEU' house. This is the single strongest measurable marker of his sound: depth and dynamic range over loudness."
+  },
+  "brightness": {
+    "spectral_centroid_mean": 3050,
+    "interpretation": "Moderate brightness — warmer than tech house (Toolroom 3172), brighter than the deepest Defected cuts (2708). Warm but clear, never harsh, never muddy."
+  },
+  "harmonic_content": {
+    "chroma_mean": 0.546,
+    "interpretation": "Moderate-to-rich harmonic content. Glenn favors tracks with real chord/melodic material — not bare drum tools, but not wall-to-wall pads either. Soul in the harmony."
+  },
+  "generation_weights": {
+    "humanize_intensity_bias": "loose",
+    "humanize_reason": "His sound is dynamic and organic, not tight/compressed — favor looser humanization for the analog feel.",
+    "bpm_center": 123,
+    "bpm_spread": 2,
+    "harmonic_density": "moderate-high",
+    "chord_presence": "always include chords — they're core to his taste",
+    "brightness_target": "warm-clear, avoid harsh hats / overly bright leads",
+    "dynamics_priority": "high — leave headroom, vary velocity widely, never flat-line"
+  }
+}

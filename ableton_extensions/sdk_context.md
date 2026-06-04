@@ -272,3 +272,99 @@ export const COLORS = {
 - Extensions only run while Ableton is open with GUI
 - Suite license required (not Standard, Intro, or Lite)
 - Session view clip creation API may differ from arrangement — verify in docs as SDK matures
+
+---
+
+## Dialog / HTML UI (Community-Confirmed)
+
+Extensions can open full HTML dialog windows with custom UIs. Pattern used by Track Creator, Chord Progression Helper, and PaulStretch:
+
+- Build the dialog as a **separate Vite app** (dialog/ subdirectory in the extension)
+- Detect Live vs dev mode: `if (window.__INITIAL_DATA__) { /* running in Live */ }`
+- The extension host opens the dialog via `api.ui` (exact method TBD — check latest SDK docs)
+- Dialog communicates with extension host via the `__INITIAL_DATA__` bridge
+- Bundle both the host (`esbuild`) and the dialog (`vite build`) in the same project
+
+```
+my-extension/
+├── src/index.ts          # host (esbuild → dist/extension.js)
+├── dialog/               # Vite app
+│   ├── index.html
+│   └── src/dialog.ts     # references window.__INITIAL_DATA__
+├── vendor/               # SDK tarballs (not on npm yet)
+└── package.json          # build:all script runs both
+```
+
+This is the pattern to use when an extension needs user input (key selection, sketch picker, intensity sliders, etc.).
+
+---
+
+## External HTTP API Access (Community-Confirmed)
+
+Extensions run in a full Node.js environment with unrestricted network access. Confirmed by:
+- **Freesound Sampler** (calls Freesound.org REST API at runtime)
+- **Spotify Basic Pitch** (loads neural network model — may fetch model weights)
+
+You can call any external REST API or local server:
+
+```typescript
+// Call a local backend (e.g. HouseMusicSwarm running on localhost)
+const response = await fetch("http://localhost:8080/generate-sketch", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ key: "C Minor", bpm: 123, vibe: "late night" }),
+});
+const sketch = await response.json();
+```
+
+**Implication:** The dream engine can generate patterns on-demand directly from inside Live, rather than relying solely on pre-generated files from a nightly cron.
+
+---
+
+## WASM Support (Community-Confirmed)
+
+Complex C++ algorithms can run inside extensions via WebAssembly. Confirmed by:
+- **PaulStretch for Live** (C++ libpaulstretch compiled to WASM)
+
+Build pattern: compile C++ → WASM, include `.wasm` file in the extension's dist, load via `WebAssembly.instantiateStreaming()` or similar.
+
+---
+
+## Session View Clips (Community-Confirmed)
+
+Session View clips are accessible and writable. Confirmed by the Session→Arrangement Bridge extension which reads Session View clips and writes them to Arrangement View.
+
+The Session clip API likely mirrors the Arrangement clip API (`clip.notes`, `clip.name`, etc.) — verify exact property names in SDK docs.
+
+---
+
+## Distribution Format
+
+Built extensions package as **`.ablx`** files:
+
+```bash
+npm run build     # compiles TypeScript + bundles
+npm run package   # → produces extension-name.ablx
+```
+
+The `.ablx` file is what you share / install. It bundles:
+- `dist/extension.js` (the compiled host code)
+- `dist/dialog/` (compiled dialog HTML/JS/CSS if present)
+- Any fonts, WASM modules, or static assets
+
+During development, install directly from the extension folder (unpackaged). For distribution, share the `.ablx`.
+
+---
+
+## Community Extensions Catalog
+
+See `knowledge/research/extensions-community.md` for a full list of community-built extensions and what API features they confirm. Key ones:
+
+| Extension | Key capability demonstrated |
+|---|---|
+| Spotify Basic Pitch | Offline neural network audio→MIDI inside an extension |
+| Chord Progression Helper | Full chord grid UI dialog, writes 4-note voicings |
+| Freesound Sampler | External HTTP API calls |
+| PaulStretch | WASM, complex DSP |
+| Session→Arrangement Bridge | Session View clip read/write |
+| Doom / Bird Game / Snake | Full game-level DOM, HTML canvas, unlimited JS |

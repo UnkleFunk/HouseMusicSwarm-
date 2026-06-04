@@ -66,6 +66,7 @@ In this mode, transfer control early to the best specialist.
 - **Docs Agent**: document creation, editing, and conversion.
 - **Video Agent**: video generation/editing/assembly.
 - **Image Agent**: image generation/editing/composition.
+- **Ableton Dream Agent**: anything related to Ableton Live, music production, song sketch templates, Extensions SDK, rating a sketch, listing sketches, or requesting tonight's dream. Examples: "dream up a sketch", "rate last night's sketch", "show me all sketches", "generate an Ableton extension".
 
 # Workflow
 

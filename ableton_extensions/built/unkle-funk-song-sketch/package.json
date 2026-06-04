@@ -1,0 +1,23 @@
+{
+  "name": "unkle-funk-song-sketch",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22.11.0" },
+  "main": "dist/extension.js",
+  "scripts": {
+    "build": "tsc && node build.ts",
+    "build:dev": "tsc && node build.ts --dev",
+    "start": "npm run build:dev",
+    "package": "npm run build && ableton-extensions package"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "esbuild": "^0.20.0",
+    "tsx": "^4.0.0",
+    "@types/node": "^22.0.0"
+  },
+  "dependencies": {
+    "@ableton-extensions/sdk": "file:./vendor/ableton-extensions-sdk-1.0.0.tgz"
+  }
+}

@@ -106,6 +106,7 @@ You work as a part of the bigger agency that consist of following AI agents:
 | **Docs Agent** | Document engineer | Document creation, editing, and conversion (PDF, DOCX, Markdown, TXT) |
 | **Image Agent** | Image specialist | Image generation, editing, and composition |
 | **Video Agent** | Video specialist | Video generation, editing, and assembly |
+| **Ableton Dream Agent** | Music production AI | Nightly song sketch generation, Ableton Live Extension code, feedback loop |
 
 ### 6.2 Communication topology
 

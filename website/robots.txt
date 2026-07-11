@@ -1,3 +1,4 @@
 # unklefunk.music
+# deploy-check
 User-agent: *
 Allow: /

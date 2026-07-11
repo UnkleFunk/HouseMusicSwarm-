@@ -19,7 +19,7 @@ jobs:
           host: 195.179.239.223
           port: 65002
           username: ${{ secrets.HOSTINGER_SSH_USER }}
-          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          password: ${{ secrets.HOSTINGER_SSH_PASS }}
           script: |
             mkdir -p ~/domains/unklefunk.music/public_html
             echo "=== web root before deploy ==="
@@ -34,7 +34,7 @@ jobs:
           host: 195.179.239.223
           port: 65002
           username: ${{ secrets.HOSTINGER_SSH_USER }}
-          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          password: ${{ secrets.HOSTINGER_SSH_PASS }}
           source: "website/index.html,website/style.css,website/main.js,website/.htaccess,website/favicon.svg,website/robots.txt,website/fonts,website/assets"
           target: "~/domains/unklefunk.music/public_html/"
           strip_components: 1
@@ -46,7 +46,7 @@ jobs:
           host: 195.179.239.223
           port: 65002
           username: ${{ secrets.HOSTINGER_SSH_USER }}
-          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          password: ${{ secrets.HOSTINGER_SSH_PASS }}
           script: |
             find ~/domains/unklefunk.music/public_html -type f -exec chmod 644 {} \;
             find ~/domains/unklefunk.music/public_html -type d -exec chmod 755 {} \;

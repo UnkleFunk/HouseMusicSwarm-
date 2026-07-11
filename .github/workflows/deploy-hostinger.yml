@@ -35,9 +35,10 @@ jobs:
           port: 65002
           username: ${{ secrets.HOSTINGER_SSH_USER }}
           key: ${{ secrets.HOSTINGER_SSH_KEY }}
-          source: "website/index.html,website/style.css,website/main.js,website/.htaccess"
+          source: "website/index.html,website/style.css,website/main.js,website/.htaccess,website/favicon.svg,website/robots.txt,website/fonts,website/assets"
           target: "~/domains/unklefunk.music/public_html/"
           strip_components: 1
+          overwrite: true
 
       - name: Verify deploy
         uses: appleboy/ssh-action@v1.2.4
@@ -47,12 +48,10 @@ jobs:
           username: ${{ secrets.HOSTINGER_SSH_USER }}
           key: ${{ secrets.HOSTINGER_SSH_KEY }}
           script: |
-            chmod 644 ~/domains/unklefunk.music/public_html/index.html ~/domains/unklefunk.music/public_html/style.css ~/domains/unklefunk.music/public_html/main.js ~/domains/unklefunk.music/public_html/.htaccess
-            echo "=== Deployed files ==="
-            ls -lh ~/domains/unklefunk.music/public_html/index.html ~/domains/unklefunk.music/public_html/style.css ~/domains/unklefunk.music/public_html/main.js ~/domains/unklefunk.music/public_html/.htaccess
-            echo ""
+            find ~/domains/unklefunk.music/public_html -type f -exec chmod 644 {} \;
+            find ~/domains/unklefunk.music/public_html -type d -exec chmod 755 {} \;
             echo "=== Full web root ==="
-            ls -la ~/domains/unklefunk.music/public_html/
+            find ~/domains/unklefunk.music/public_html -maxdepth 2
             echo ""
             echo "=== First 3 lines of index.html ==="
             head -3 ~/domains/unklefunk.music/public_html/index.html

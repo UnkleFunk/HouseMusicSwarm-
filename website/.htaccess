@@ -3,7 +3,7 @@ Options -Indexes
 
 # Gzip compression
 <IfModule mod_deflate.c>
-  AddOutputFilterByType DEFLATE text/html text/plain text/css application/javascript application/json image/svg+xml
+  AddOutputFilterByType DEFLATE text/html text/plain text/css application/javascript application/json image/svg+xml font/woff2
 </IfModule>
 
 # Browser caching
@@ -17,6 +17,7 @@ Options -Indexes
   ExpiresByType image/png              "access plus 1 year"
   ExpiresByType image/webp             "access plus 1 year"
   ExpiresByType font/woff2             "access plus 1 year"
+  ExpiresByType text/plain             "access plus 1 hour"
 </IfModule>
 
 # Security headers
@@ -24,4 +25,5 @@ Options -Indexes
   Header always set X-Content-Type-Options "nosniff"
   Header always set X-Frame-Options "SAMEORIGIN"
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
 </IfModule>

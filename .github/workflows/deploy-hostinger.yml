@@ -67,3 +67,14 @@ jobs:
           echo "HTTP status: $HTTP"
           BODY=$(curl -s -L --max-time 15 https://unklefunk.music/ | head -c 200 || echo "FETCH_FAILED")
           echo "Site preview: $BODY"
+          echo ""
+          echo "=== style.css: live vs repo ==="
+          curl -s -D - -o /tmp/live-style.css -L --max-time 15 "https://unklefunk.music/style.css?cachebust=$(date +%s)"
+          echo "Local repo size:"
+          wc -c website/style.css
+          echo "Live fetched size:"
+          wc -c /tmp/live-style.css
+          echo "MD5 local vs live:"
+          md5sum website/style.css /tmp/live-style.css
+          echo "First 5 lines of live style.css:"
+          head -5 /tmp/live-style.css

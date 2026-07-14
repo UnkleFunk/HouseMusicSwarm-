@@ -4,7 +4,7 @@
    ★ THE ONLY NUMBER YOU EVER NEED TO TOUCH ★
    Bump TALLY when a track crosses the line. Commit. Done.
    ============================================================ */
-const TALLY = 1;
+const TALLY = 0;
 
 (function () {
   "use strict";

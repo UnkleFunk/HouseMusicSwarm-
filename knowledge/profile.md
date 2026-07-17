@@ -16,10 +16,13 @@
 - **Anti-signals:** big-room EDM, festival tech house, mainstream progressive, formulaic anything
 
 ## Label Tiers (auto-updated by curation engine, seed values from July 2026 identity work)
-- **Tier 1 — dream labels (auto-consider):** HOUSEu (Hungary), Toolroom, Fools Paradise, Glasgow Underground, Jackie's, Defected, Jack
+- **Tier 1 — dream labels (auto-consider):** HOUSEu (Hungary), Toolroom, Fools Paradise, Glasgow Underground, Jackie's, Defected, Jack, Defined Records
 - **Tier 2 — respected (check candidates):** Nervous, Strictly Rhythm, Nurvous, Local Talk, Hot Creations (context-dependent), Snatch!
 - **Tier 3 — trust the artist, not the label:** everything else (fall back to per-artist scoring)
-- **Home labels (self):** Soulsupplement Records, Wulfpack, DOIN' WORK Records
+- **Home labels (self):** Caboose Records (first release + most releases to date — primary artist home), Soulsupplement Records, Wulfpack, DOIN' WORK Records
+
+## Formative collaborations & influences (historical, informs taste weights)
+- **Kinky Movement / John Symms — Defined Records:** Symms (1/2 of Kinky Movement) is a real influence on the Unkle Funk sound. Spent a week with him at WMC Miami; Symms remixed a Wrex Ed track and released it on Defined Records. Any release involving Symms or Kinky Movement gets auto-consider treatment.
 
 ## Working Style
 - Concise, expert-level responses. Skip beginner explanations.

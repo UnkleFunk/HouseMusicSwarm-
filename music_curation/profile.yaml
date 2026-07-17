@@ -53,6 +53,7 @@ labels:
         - Jackie's
         - Defected Records
         - Jack (Defected sub-label)
+        - Defined Records          # John Symms' label — real taste-aligned home
         - Simma Black
         - Cuttin' Headz
     tier_2:
@@ -94,6 +95,9 @@ artists:
     Dantiez Saunderson: 88    # Sunday Slackin' alum
     Stranger Danger: 85       # Sunday Slackin' alum
     Paul Johnson: 100         # in memoriam — auto-consider posthumous releases
+    John Symms: 98            # confirmed influence — WMC Miami week, remixed a Wrex Ed track on Defined
+    Kinky Movement: 98        # John Symms + partner; foundational to Unkle Funk taste
+    # TODO — other half of Kinky Movement: Glenn to fill in the name on break
   # Empty = neutral 50 until feedback moves them. The engine will
   # auto-populate this list as you thumbs-up or thumbs-down tracks.
   learn_from_feedback: true

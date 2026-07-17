@@ -1,0 +1,178 @@
+# Unkle Funk — Machine-Readable Taste Profile
+# ---------------------------------------------------------------
+# This is the source of truth for the scoring engine. Every weight
+# and range here is a knob. Edit it directly; the scorer reloads on
+# every run. All weights are relative — the final score is a weighted
+# sum, then normalized to 0-100.
+#
+# Version bumps trigger a re-score of the last 200 candidates so you
+# can see how the change moved things. Learning-loop updates (from
+# thumbs up/down feedback) auto-append weight overrides to
+# `profile.learned.yaml` — this file stays clean as your hand-tuned
+# baseline. Delete the learned file to reset.
+
+version: 1
+
+# ---------------------------------------------------------------
+# BPM — the strongest fast filter. Sharp preferred zone, soft tails.
+bpm:
+  weight: 20            # % of total score
+  preferred: [120, 123] # bullseye — full points
+  acceptable: [118, 125]
+  tolerated: [116, 127]
+  reject_below: 112
+  reject_above: 130
+
+# ---------------------------------------------------------------
+# Key — Camelot notation. Minor keys score higher by default;
+# majors get a small bonus if the track also passes the "soulful"
+# sonic descriptor check (see below).
+key:
+  weight: 5
+  prefer_minor: true
+  minor_bonus: 1.0      # multiplier applied to minor-key scores
+  major_penalty: 0.7    # unless soulful==true, then reset to 1.0
+  # Specific key strengths for harmonic mixing across a chart
+  favored_camelot: [4A, 5A, 6A, 7A, 8A, 9A, 10A, 11A]
+
+# ---------------------------------------------------------------
+# Label tiers — the biggest coarse filter. Tier 1 auto-considers,
+# Tier 2 checks with a small penalty, Tier 3 falls back to artist
+# scoring only. A track on Tier 1 with mid-scores still gets through;
+# a track on Tier 3 needs to earn it via artist + BPM + key.
+labels:
+  weight: 25
+  tiers:
+    tier_1:
+      score: 100
+      names:
+        - HOUSEu
+        - Toolroom Records
+        - Fool's Paradise
+        - Glasgow Underground
+        - Jackie's
+        - Defected Records
+        - Jack (Defected sub-label)
+        - Simma Black
+        - Cuttin' Headz
+    tier_2:
+      score: 65
+      names:
+        - Nervous Records
+        - Strictly Rhythm
+        - Local Talk
+        - Snatch! Records
+        - Nurvous Records
+        - Hot Creations       # context-dependent
+        - Solid Grooves
+        - Repopulate Mars
+        - Sola
+    tier_3_fallback:
+      score: 30
+      note: "Any label not listed above — score is 30, so the track must earn its way in via BPM + artist + sonic fit."
+  # Anti-labels — auto-reject regardless of other scores
+  reject_labels:
+    - Spinnin' Records
+    - Musical Freedom
+    - Revealed Recordings
+
+# ---------------------------------------------------------------
+# Artist — learned over time from feedback. Seed with known plays.
+# Score is 0-100; 50 = neutral (never heard). Positive delta on
+# thumbs-up, negative on thumbs-down (see scoring.py for the math).
+artists:
+  weight: 20
+  seed_scores:
+    # High-affinity — paste in artists you consistently play
+    Kerri Chandler: 95
+    Terrence Parker: 92
+    Louie Vega: 90
+    DJ Sneak: 88
+    Kevin Saunderson: 87
+    Chris Lorenzo: 82
+    Corduroy Mavericks: 90    # Sunday Slackin' alum
+    Dantiez Saunderson: 88    # Sunday Slackin' alum
+    Stranger Danger: 85       # Sunday Slackin' alum
+    Paul Johnson: 100         # in memoriam — auto-consider posthumous releases
+  # Empty = neutral 50 until feedback moves them. The engine will
+  # auto-populate this list as you thumbs-up or thumbs-down tracks.
+  learn_from_feedback: true
+
+# ---------------------------------------------------------------
+# Duration — DJ tools preferred over radio edits. Warehouse-length
+# tracks (>9min) also good.
+duration:
+  weight: 5
+  preferred_seconds: [400, 540]   # 6:40 – 9:00, prime DJ range
+  acceptable_seconds: [340, 660]
+  penalty_below: 300              # <5min is usually a radio edit
+  penalty_above: 720              # >12min is rare; check it's not filler
+
+# ---------------------------------------------------------------
+# Sonic descriptors — pulled from Sononym / audio analysis when
+# available, or from release-page tags. Fuzzy scoring: partial matches
+# count. Not required — track can score high without any tags.
+sonic:
+  weight: 15
+  positive_descriptors:
+    warm: 1.0
+    analog: 1.0
+    "tape saturation": 1.0
+    "vintage sample": 0.9
+    soulful: 1.0
+    "philly soul": 1.2
+    "paradise garage": 1.3
+    salsoul: 1.2
+    disco: 0.8
+    "jackin bassline": 1.0
+    "chicago house": 1.2
+    "detroit house": 1.1
+    "funky bassline": 1.1
+    stripped: 0.6
+    dubby: 0.7
+  negative_descriptors:
+    edm: -1.5
+    "festival tech": -1.2
+    "big room": -1.5
+    "future house": -0.8
+    bassline: -0.4     # UK bassline, not the good funky kind
+    "commercial pop": -1.3
+    "vocal chops": -0.5
+
+# ---------------------------------------------------------------
+# Vocal handling — high tolerance, but "diva vocal" and "vocal chops"
+# should be distinguished. Soulful spoken vocals + adlibs = green.
+vocal:
+  weight: 5
+  tolerance: high            # low / medium / high
+  penalize_types:
+    - "vocal chops"
+    - "diva runs"
+    - "guest-rapper feature"
+  reward_types:
+    - "soulful lead"
+    - "spoken word"
+    - "adlibs"
+    - "sample-based vocal"
+
+# ---------------------------------------------------------------
+# Release recency — charts are for current work. Reissues from labels
+# of note get partial credit even if old.
+recency:
+  weight: 5
+  preferred_days: 90         # released within last 3 months
+  acceptable_days: 180
+  reissue_bonus_labels:      # older is fine if it's a reissue on one of these
+    - Salsoul Records
+    - Nu Groove Records
+    - Trax Records
+
+# ---------------------------------------------------------------
+# Feedback loop settings
+learning:
+  # After N tracks scored, retrain weights from the feedback log
+  retrain_every: 25
+  # Confidence floor before a learned weight overrides a hand-set one
+  min_feedback_confidence: 0.65
+  # Cap on how much a single feedback event can shift a weight
+  max_weight_delta: 0.15

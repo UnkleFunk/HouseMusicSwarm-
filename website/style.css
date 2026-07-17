@@ -403,8 +403,49 @@ h3 {
 
 .about-grid {
   display: grid;
-  gap: 3rem;
-  align-items: start;
+  gap: 2.25rem;
+  align-items: center;
+}
+
+.bio-p {
+  color: var(--ink-muted);
+  font-size: 1.05rem;
+  line-height: 1.65;
+  max-width: 34em;
+}
+.bio-p:first-child {
+  color: var(--ink);
+  font-size: 1.12rem;
+}
+.bio-p strong { color: var(--ink); font-weight: 600; }
+.bio-p em { font-style: italic; }
+
+/* Polaroid — Bone paper frame around a square image with display-face caption.
+   Physical, tangible, no rotation gimmick. The stack becomes a visual
+   timeline paired to the story on the left. */
+.polaroid {
+  background: var(--ink);
+  padding: 0.7rem 0.7rem 1.15rem;
+  max-width: 280px;
+  justify-self: center;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.42), 0 2px 8px rgba(0, 0, 0, 0.28);
+  margin: 0;
+}
+.polaroid img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+.polaroid figcaption {
+  font-family: var(--display);
+  font-variation-settings: "opsz" 40, "wght" 480;
+  font-size: 0.86rem;
+  color: #121417;
+  text-align: center;
+  margin-top: 0.65rem;
+  letter-spacing: 0.05em;
 }
 
 .bio p + p { margin-top: 1.1rem; }
@@ -419,8 +460,52 @@ h3 {
 }
 
 @media (min-width: 820px) {
-  .about-grid { grid-template-columns: 1.25fr 0.75fr; }
+  .about-grid { grid-template-columns: 1.25fr 0.75fr; gap: 3rem 3rem; align-items: center; }
+  .polaroid { max-width: 100%; }
   .about-portrait { margin-top: 3.5rem; }
+}
+
+/* ---------- Mission full-bleed breaks ---------- */
+
+.mission-break {
+  /* Escape both .wrap max-width and .section side padding to hit viewport edges */
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  margin-block: 3rem;
+  aspect-ratio: 16 / 7;
+  max-height: 480px;
+  min-height: 220px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+}
+.mission-break::after {
+  /* Blend the top and bottom edges into the section bg so the image
+     reads as a chapter break, not a hard cut. */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(14,58,58,0.25) 0%, rgba(14,58,58,0) 18%, rgba(14,58,58,0) 78%, rgba(14,58,58,0.45) 100%);
+  pointer-events: none;
+}
+
+/* ---------- Sunday Slackin thumb ---------- */
+
+.slackin-thumb {
+  width: 52px;
+  height: 52px;
+  border-radius: 3px;
+  overflow: hidden;
+  flex: none;
+  border: 1px solid var(--line);
+}
+.slackin-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 /* ---------- Sunday Slackin' ---------- */

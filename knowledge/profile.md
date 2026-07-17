@@ -5,7 +5,7 @@
 - **Alias:** Unkle Funk
 - **Base:** La Grange / Louisville, Kentucky (Midwest USA positioning)
 - **Role:** House DJ (25+ years), producer (15+ years), curator, mailman by day
-- **Family:** Son (5, non-verbal autistic). Studio time = after son sleeps, before 5am route.
+- **Family:** Studio time is after-hours only (post-family, pre-route). Sessions measured in half-hours, not evenings.
 
 ## Musical DNA — the sound
 - **Genres:** Deep house, funky house, jackin' house, deep tech house (Chicago/Detroit/Philly/Garage lineage)

@@ -13,14 +13,19 @@
 }
 
 :root {
-  --bg: #0d0b09;
-  --bg-alt: #12100c;
-  --surface: #181410;
-  --line: #2b241c;
-  --ink: #ece5da;
-  --ink-muted: #b3a894;
-  --amber: #d4952a;
-  --amber-deep: #8a5a14;
+  /* Plaid palette — Midnight Teal night, Ember Rust accent, Bone paper.
+     Established in the July 4 identity work; deliberate departure from
+     the AI-default warm-cream+terracotta and near-black+amber looks. */
+  --bg: #0E3A3A;          /* Midnight Teal — the night */
+  --bg-alt: #0A2D2D;      /* deeper teal for section striping */
+  --surface: #0F3F45;     /* lifted teal — cards, embed facades */
+  --line: #1F5152;        /* subtle teal border */
+  --ink: #EFE9DD;         /* Bone — the paper */
+  --ink-muted: #7FB7AE;   /* Sea Glass — teal-family muted */
+  --amber: #C25B3A;       /* Ember Rust — the sanctioned accent (≤10%) */
+  --amber-deep: #8A3E23;  /* deeper ember, hover state depth */
+  --teal: #1F7A72;        /* Slack Teal — reserved secondary accent */
+  --indigo: #1B2A5B;      /* Deep Indigo — hero radial depth */
   --display: "Fraunces", Georgia, "Times New Roman", serif;
   --body: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --wrap: 68rem;
@@ -57,7 +62,7 @@ body::after {
 img { max-width: 100%; height: auto; display: block; }
 
 a { color: var(--amber); text-underline-offset: 3px; }
-a:hover { color: #e3ad4f; }
+a:hover { color: #D67A5C; }
 
 :focus-visible {
   outline: 2px solid var(--amber);
@@ -71,7 +76,7 @@ a:hover { color: #e3ad4f; }
   top: 0.75rem;
   z-index: 1001;
   background: var(--amber);
-  color: #1a1206;
+  color: #121417;
   padding: 0.5rem 1rem;
   border-radius: 3px;
   font-weight: 600;
@@ -132,9 +137,9 @@ a:hover { color: #e3ad4f; }
   inset: 0;
   z-index: -1;
   background:
-    linear-gradient(180deg, rgba(13,11,9,0.55) 0%, rgba(13,11,9,0.35) 55%, var(--bg) 100%),
+    linear-gradient(180deg, rgba(14,58,58,0.55) 0%, rgba(14,58,58,0.35) 55%, var(--bg) 100%),
     url("assets/hero.jpg") center / cover no-repeat,
-    radial-gradient(120% 90% at 20% 90%, #2a1c0a 0%, var(--bg) 60%);
+    radial-gradient(120% 90% at 20% 90%, #0F2144 0%, var(--bg) 60%);
 }
 
 .kicker {
@@ -181,7 +186,7 @@ a:hover { color: #e3ad4f; }
   width: 7px; height: 7px;
   border-radius: 50%;
   background: var(--amber);
-  box-shadow: 0 0 10px 1px rgba(212, 149, 42, 0.7);
+  box-shadow: 0 0 10px 1px rgba(194, 91, 58, 0.7);
 }
 
 .hero-ctas {
@@ -206,15 +211,15 @@ a:hover { color: #e3ad4f; }
 
 .btn-solid {
   background: var(--amber);
-  color: #1a1206;
+  color: #121417;
 }
-.btn-solid:hover { background: #e3ad4f; color: #1a1206; }
+.btn-solid:hover { background: #D67A5C; color: #121417; }
 
 .btn-ghost {
   background: transparent;
   color: var(--amber);
 }
-.btn-ghost:hover { background: rgba(212, 149, 42, 0.12); color: #e3ad4f; }
+.btn-ghost:hover { background: rgba(194, 91, 58, 0.14); color: #D67A5C; }
 
 .hero-scroll {
   position: absolute;
@@ -228,7 +233,15 @@ a:hover { color: #e3ad4f; }
 /* ---------- Sections ---------- */
 
 .section { padding: 5rem 1.25rem; }
-.section-alt { background: var(--bg-alt); }
+.section-alt {
+  /* The plaid weave — signature element. Slack Teal thin thread,
+     Deep Indigo medium thread, deeper-teal thick thread; woven on
+     an 80px repeat. Whisper-quiet on rest, catches the eye if you
+     look for it. This is where the plaid identity shows up. */
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cg fill='%231F7A72' fill-opacity='0.35'%3E%3Crect x='18' width='1' height='80'/%3E%3Crect y='18' width='80' height='1'/%3E%3C/g%3E%3Cg fill='%231B2A5B' fill-opacity='0.4'%3E%3Crect x='38' width='2' height='80'/%3E%3Crect y='38' width='80' height='2'/%3E%3C/g%3E%3Cg fill='%230A2D2D' fill-opacity='0.55'%3E%3Crect x='58' width='4' height='80'/%3E%3Crect y='58' width='80' height='4'/%3E%3C/g%3E%3C/svg%3E") repeat,
+    var(--bg-alt);
+}
 
 .wrap { max-width: var(--wrap); margin: 0 auto; }
 
@@ -284,7 +297,7 @@ h3 {
   border: 1px solid var(--line);
   border-radius: 4px;
   background:
-    radial-gradient(80% 100% at 50% 100%, rgba(138, 90, 20, 0.25) 0%, transparent 70%),
+    radial-gradient(80% 100% at 50% 100%, rgba(31, 122, 114, 0.22) 0%, transparent 70%),
     var(--surface);
   color: var(--ink-muted);
   font: inherit;
@@ -390,8 +403,49 @@ h3 {
 
 .about-grid {
   display: grid;
-  gap: 3rem;
-  align-items: start;
+  gap: 2.25rem;
+  align-items: center;
+}
+
+.bio-p {
+  color: var(--ink-muted);
+  font-size: 1.05rem;
+  line-height: 1.65;
+  max-width: 34em;
+}
+.bio-p:first-child {
+  color: var(--ink);
+  font-size: 1.12rem;
+}
+.bio-p strong { color: var(--ink); font-weight: 600; }
+.bio-p em { font-style: italic; }
+
+/* Polaroid — Bone paper frame around a square image with display-face caption.
+   Physical, tangible, no rotation gimmick. The stack becomes a visual
+   timeline paired to the story on the left. */
+.polaroid {
+  background: var(--ink);
+  padding: 0.7rem 0.7rem 1.15rem;
+  max-width: 280px;
+  justify-self: center;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.42), 0 2px 8px rgba(0, 0, 0, 0.28);
+  margin: 0;
+}
+.polaroid img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+.polaroid figcaption {
+  font-family: var(--display);
+  font-variation-settings: "opsz" 40, "wght" 480;
+  font-size: 0.86rem;
+  color: #121417;
+  text-align: center;
+  margin-top: 0.65rem;
+  letter-spacing: 0.05em;
 }
 
 .bio p + p { margin-top: 1.1rem; }
@@ -406,8 +460,52 @@ h3 {
 }
 
 @media (min-width: 820px) {
-  .about-grid { grid-template-columns: 1.25fr 0.75fr; }
+  .about-grid { grid-template-columns: 1.25fr 0.75fr; gap: 3rem 3rem; align-items: center; }
+  .polaroid { max-width: 100%; }
   .about-portrait { margin-top: 3.5rem; }
+}
+
+/* ---------- Mission full-bleed breaks ---------- */
+
+.mission-break {
+  /* Escape both .wrap max-width and .section side padding to hit viewport edges */
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  margin-block: 3rem;
+  aspect-ratio: 16 / 7;
+  max-height: 480px;
+  min-height: 220px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+}
+.mission-break::after {
+  /* Blend the top and bottom edges into the section bg so the image
+     reads as a chapter break, not a hard cut. */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(14,58,58,0.25) 0%, rgba(14,58,58,0) 18%, rgba(14,58,58,0) 78%, rgba(14,58,58,0.45) 100%);
+  pointer-events: none;
+}
+
+/* ---------- Sunday Slackin thumb ---------- */
+
+.slackin-thumb {
+  width: 52px;
+  height: 52px;
+  border-radius: 3px;
+  overflow: hidden;
+  flex: none;
+  border: 1px solid var(--line);
+}
+.slackin-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 /* ---------- Sunday Slackin' ---------- */
@@ -434,7 +532,7 @@ h3 {
   color: var(--ink);
 }
 
-.twitch-glyph { color: #8b8172; flex: none; }
+.twitch-glyph { color: #5A8A83; flex: none; }
 
 /* ---------- Connect ---------- */
 
@@ -484,7 +582,7 @@ h3 {
   border: 1px solid var(--line);
   border-radius: 3px;
 }
-.list-row input::placeholder { color: #8b8172; }
+.list-row input::placeholder { color: #5A8A83; }
 .list-row input:focus { border-color: var(--amber); outline: none; }
 
 @media (min-width: 820px) {
@@ -499,7 +597,7 @@ h3 {
   color: var(--ink-muted);
   font-size: 0.9rem;
 }
-.foot-note { margin-top: 0.5rem; font-size: 0.8rem; color: #8b8172; }
+.foot-note { margin-top: 0.5rem; font-size: 0.8rem; color: #5A8A83; }
 
 /* ---------- Scroll reveal (JS adds .reveal-ready; no-JS stays visible) ---------- */
 

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reference Finder</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
+</head>
+<body>
+<div class="app">
+
+  <!-- ── Header ─────────────────────────────────────────────────────────── -->
+  <header class="header">
+    <div class="logo">
+      <div class="logo-dot"></div>
+      REF FINDER
+    </div>
+    <div style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim);margin-left:8px;">
+      HOUSE MUSIC PRODUCTION TOOL
+    </div>
+    <div class="db-badge">
+      <span>DB</span>
+      <span id="db-count" class="db-count">—</span>
+      <button class="btn btn-refresh" id="btn-refresh" title="Refresh reference database">
+        ↻ REFRESH DB
+      </button>
+    </div>
+  </header>
+
+  <div class="body">
+
+    <!-- ── Controls strip ───────────────────────────────────────────────── -->
+    <div class="controls">
+      <div class="control-group">
+        <span class="control-label">Device</span>
+        <select id="device-select">
+          <option value="">Loading devices…</option>
+        </select>
+      </div>
+
+      <div class="control-group" style="margin-left:8px;">
+        <span class="control-label">Duration</span>
+        <input type="range" id="duration-slider" min="10" max="90" value="30" step="5" style="width:80px;">
+        <span class="duration-label" id="duration-label">30s</span>
+      </div>
+
+      <div class="control-group" style="margin-left:8px;">
+        <span class="control-label">Genre</span>
+        <select id="genre-filter-ctrl" style="min-width:130px;">
+          <option value="">All genres</option>
+          <option value="house">House</option>
+          <option value="deep-house">Deep House</option>
+          <option value="tech-house">Tech House</option>
+          <option value="funky-minimal">Funky / Minimal</option>
+        </select>
+      </div>
+
+      <div class="controls-right">
+        <button class="btn btn-record" id="btn-record">
+          <div class="rec-dot"></div>
+          <span id="btn-record-label">RECORD</span>
+        </button>
+        <button class="btn btn-analyze" id="btn-analyze" disabled>
+          <span id="btn-analyze-label">ANALYZE</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ── Main panels ───────────────────────────────────────────────────── -->
+    <div class="main-panels">
+
+      <!-- Left: Analysis panel -->
+      <div class="analysis-panel">
+
+        <div class="panel-section">
+          <div class="section-title">Waveform</div>
+          <canvas id="waveform-canvas" width="308" height="60"></canvas>
+          <div class="capture-status" id="capture-status">—</div>
+        </div>
+
+        <div class="panel-section">
+          <div class="section-title">Audio Profile</div>
+          <div class="stats-grid" id="stats-grid">
+            <div class="stat-cell"><div class="stat-key">BPM</div><div class="stat-val" id="stat-bpm">—</div></div>
+            <div class="stat-cell"><div class="stat-key">LUFS</div><div class="stat-val" id="stat-lufs">—</div></div>
+            <div class="stat-cell"><div class="stat-key">Centroid</div><div class="stat-val" id="stat-centroid">—</div></div>
+            <div class="stat-cell"><div class="stat-key">Dynamics</div><div class="stat-val" id="stat-dynamics">—</div></div>
+          </div>
+        </div>
+
+        <div class="panel-section">
+          <div class="section-title">Low-End Profile</div>
+          <div class="band-bars">
+            <div class="band-row">
+              <span class="band-name">Sub-bass</span>
+              <div class="band-track"><div class="band-fill sub-bass" id="bar-sub" style="width:0%"></div></div>
+              <span class="band-pct" id="pct-sub">—</span>
+            </div>
+            <div class="band-row">
+              <span class="band-name">Bass</span>
+              <div class="band-track"><div class="band-fill bass" id="bar-bass" style="width:0%"></div></div>
+              <span class="band-pct" id="pct-bass">—</span>
+            </div>
+            <div class="band-row">
+              <span class="band-name">Low-mid</span>
+              <div class="band-track"><div class="band-fill low-mid" id="bar-lowmid" style="width:0%"></div></div>
+              <span class="band-pct" id="pct-lowmid">—</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-section" style="flex:1;display:flex;flex-direction:column;">
+          <div class="section-title">Sonic Fingerprint</div>
+          <canvas id="radar-canvas" width="280" height="180"></canvas>
+        </div>
+
+      </div>
+
+      <!-- Right: Results panel -->
+      <div class="results-panel">
+        <div class="results-header">
+          <span class="results-title">Reference Tracks</span>
+          <span class="results-count" id="results-count"></span>
+        </div>
+        <div class="results-list" id="results-list">
+          <div class="empty-state">
+            <div class="icon">⬡</div>
+            <div>Select a device and hit RECORD<br>to capture audio for analysis</div>
+            <div class="hint">
+              LoopBack or BlackHole routes your DAW / player output<br>
+              through as an input device
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── Spectrum overlay ──────────────────────────────────────────────── -->
+    <div class="spectrum-panel">
+      <div class="spectrum-header">
+        <span class="spectrum-title">Frequency Spectrum</span>
+        <div class="spectrum-legend" id="spectrum-legend">
+          <div class="legend-item">
+            <div class="legend-dot" style="background:var(--cyan)"></div>
+            Your Track
+          </div>
+        </div>
+      </div>
+      <canvas id="spectrum-canvas"></canvas>
+    </div>
+
+  </div><!-- /body -->
+</div><!-- /app -->
+
+<!-- Hidden audio element for preview playback -->
+<audio id="preview-player" preload="none"></audio>
+
+<!-- Toast container -->
+<div class="toast-container" id="toast-container"></div>
+
+<script src="app.js"></script>
+</body>
+</html>

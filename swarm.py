@@ -32,6 +32,7 @@ def create_agency(load_threads_callback=None):
     from docs_agent import create_docs_agent
     from video_generation_agent import create_video_generation_agent
     from image_generation_agent import create_image_generation_agent
+    from reference_finder_agent import create_reference_finder
 
     orchestrator = create_orchestrator()
     virtual_assistant = create_virtual_assistant()
@@ -41,6 +42,7 @@ def create_agency(load_threads_callback=None):
     docs_agent = create_docs_agent()
     video_generation_agent = create_video_generation_agent()
     image_generation_agent = create_image_generation_agent()
+    reference_finder = create_reference_finder()
 
     all_agents = [
         orchestrator,
@@ -51,6 +53,7 @@ def create_agency(load_threads_callback=None):
         docs_agent,
         video_generation_agent,
         image_generation_agent,
+        reference_finder,
     ]
 
     send_message_flows = [

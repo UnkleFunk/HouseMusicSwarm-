@@ -188,9 +188,11 @@ class BuildDatabase(BaseTool):
 
         page = await context.new_page()
         try:
-            await page.goto(url, wait_until="domcontentloaded", timeout=45000)
-            await page.wait_for_selector("#__NEXT_DATA__", timeout=15000)
-            raw = await page.locator("#__NEXT_DATA__").text_content()
+            await page.goto(url, wait_until="domcontentloaded", timeout=60000)
+            # <script> tags are never "visible" — use state="attached"
+            await page.wait_for_selector("#__NEXT_DATA__", state="attached", timeout=20000)
+            el = await page.query_selector("#__NEXT_DATA__")
+            raw = await el.text_content() if el else None
         finally:
             await page.close()
 

@@ -141,12 +141,57 @@ swarm writes website/index.html
 - [x] Taste profile documented here
 
 ### Phase 2 — Next Session
-- [ ] Create `music_profile_agent/` with `music_profile.md`
+- [ ] Create `music_profile_agent/` — reads from `knowledge/music_context.md` as its taste source
 - [ ] Add `SearchTraxsource` + `SearchBeatport` tools
 - [ ] Create `music_curation_agent/`
 - [ ] Add `PublishChart` tool to VirtualAssistant
+- [ ] Create `ableton_dreamer_agent/` (see architecture below)
 - [ ] Wire all into `swarm.py` + `orchestrator/instructions.md`
 - [ ] Test with one month of new Traxsource releases
+
+---
+
+## Ableton Dreamer Agent Architecture
+
+### Role
+A full creative stack agent that knows Unkle Funk's sonic identity deeply enough to:
+1. Generate track concepts / arrangement ideas (co-writer)
+2. Build Max for Live devices, Ableton racks, and device chains (engineering)
+3. Create presets, drum kits, and sample packs in his sonic palette (sound design)
+4. Explore the Ableton Extensions framework (Python-based scripting) to invent new workflows — co-inventor, not just executor
+
+### Context Foundation
+All taste decisions are grounded in **`knowledge/music_context.md`**. The agent reads this file before any creative task. The Ableton-specific sections (Section 4: Production DNA, Section 5: Extensions) are its primary reference.
+
+### Communication Flow
+```
+User
+  └─► Orchestrator
+        └─► AbletonDreamerAgent
+              ├── Reads: knowledge/music_context.md (taste + production DNA)
+              ├── Reads: knowledge/agent_lessons.md (framework patterns)
+              ├── Output: Ableton project files, racks, M4L devices, presets
+              └── Feeds back: "this worked / this missed" → updates music_context.md
+```
+
+### Agent Spec
+- **Model:** Latest Claude (Opus preferred for creative depth)
+- **Instructions file:** `ableton_dreamer_agent/instructions.md`
+- **Key tools to build:**
+  - `GenerateAbletonClip` — creates MIDI clips matching taste profile
+  - `BuildDrumRack` — assembles drum racks from specified one-shots
+  - `ExportAbletonPreset` — generates `.adv` / `.adg` preset files
+  - `ScaffoldExtension` — scaffolds Ableton Extensions Python boilerplate
+  - `LogTasteSignal` — writes approve/reject signals back to `music_context.md`
+
+### The Creative Contract
+The agent is a collaborator, not a butler. Every output should:
+1. Explain *why* it fits the aesthetic (not just what it is)
+2. Be willing to surprise — the unexpected-but-right is the goal
+3. Flag when it's pushing the taste boundary (invite yes/no)
+4. Learn from approvals and rejections via `LogTasteSignal`
+
+---
 
 ### Phase 3 — Full Automation
 - [ ] Monthly chart cron via GitHub Actions

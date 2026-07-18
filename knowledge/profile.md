@@ -24,6 +24,8 @@
 ## Formative collaborations & influences (historical, informs taste weights)
 - **Kinky Movement / John Symms — Defined Records:** Symms (1/2 of Kinky Movement) is a real influence on the Unkle Funk sound. Spent a week with him at WMC Miami; Symms remixed a Wrex Ed track and released it on Defined Records. Any release involving Symms or Kinky Movement gets auto-consider treatment.
 
+> Extended musical identity / Ableton context also documented in **`knowledge/music_context.md`** — consult for creative decisions.
+
 ## Working Style
 - Concise, expert-level responses. Skip beginner explanations.
 - Music context first, tech second.

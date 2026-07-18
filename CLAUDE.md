@@ -1,192 +1,248 @@
-# Agency Builder
+# HouseMusicSwarm — Codebase Guide
 
-You are a specialized agent that coordinates specialized sub-agents to build production-ready Agency Swarm v1.0.0 agencies.
+HouseMusicSwarm is a fork of **OpenSwarm**, a production-ready multi-agent AI system built on Agency Swarm v1.9.7+. It is customized for Unkle Funk, a Chicago house music DJ/producer, with a running artist website at unklefunk.music and a roadmap for AI-powered music curation (Phase 2).
 
-Before proceeding with agent creation, please read the following instructions carefully:
+**Stack**: Python 3.12+, Agency Swarm framework, OpenAI/Anthropic/Google via LiteLLM, Composio for external integrations.
 
-- `.cursor/rules/agency-swarm-workflow.mdc` - your primary guide for creating agents and agencies
+---
 
-The following files can be read on demand, depending on the task at hand:
+## Directory Layout
 
-- `.cursor/commands/add-mcp.md` - how to add MCP servers to an agent
-- `.cursor/commands/mcp-code-exec.md` - how to convert an MCP server into the Code Execution Pattern (progressive tool disclosure, 98% token reduction)
-- `.cursor/commands/write-instructions.md` - how to write effective instructions for AI agents
-- `.cursor/commands/create-prd.md` - how to create a PRD for an agent (use for complex multi agent systems)
-
-## Background
-
-Agency Swarm is an open-source framework designed for orchestrating and managing multiple AI agents, built upon the OpenAI Assistants API. Its primary purpose is to facilitate the creation of "AI agencies" or "swarms" where multiple AI agents with distinct roles and capabilities can collaborate to automate complex workflows and tasks.
-
-### A Note on Communication Flow Patterns
-
-In Agency Swarm, communication flows are uniform, meaning you can define them in any way you want. Below are some examples:
-
-#### Orchestrator-Workers (Most Common)
-
-```python
-agency = Agency(
-    ceo,  # Entry point for user communication
-    communication_flows=[
-        (ceo, worker1),
-        (ceo, worker2),
-        (ceo, worker3),
-    ],
-    shared_instructions="agency_manifesto.md",
-)
+```
+HouseMusicSwarm-/
+├── swarm.py                  # Agency factory — wires all 8 agents together
+├── config.py                 # Model selection helpers (get_default_model, is_openai_provider)
+├── helpers.py                # Composio client utilities
+├── run_utils.py              # Bootstrap + CLI entry point (auto-installs deps)
+├── shared_instructions.md    # Runtime rules shared across all agents
+├── pyproject.toml            # Python dependencies (entry: openswarm)
+├── requirements.txt          # Pip-compatible deps mirror
+├── .env.example              # Environment variable template
+│
+├── orchestrator/             # Agent 1: Router/coordinator (no tools)
+├── virtual_assistant/        # Agent 2: 25+ tools — email, calendar, file ops, Slack
+├── deep_research/            # Agent 3: Web + Scholar research, high reasoning
+├── data_analyst_agent/       # Agent 4: IPython analysis, visualization, Composio
+├── slides_agent/             # Agent 5: HTML → PPTX, 30+ tools
+├── docs_agent/               # Agent 6: HTML → PDF/DOCX, document versioning
+├── image_generation_agent/   # Agent 7: Gemini/GPT image generation + editing
+├── video_generation_agent/   # Agent 8: Veo/Sora/Seedance video generation
+│
+├── shared_tools/             # Cross-agent Composio utilities (auto-loaded)
+├── patches/                  # Agency Swarm framework monkey-patches (applied in swarm.py)
+├── knowledge/                # Persistent knowledge base (agent lessons, profiles, logs)
+├── scripts/                  # Utility scripts (consolidate_knowledge.py, save_insight.sh)
+├── website/                  # Static SPA for unklefunk.music (HTML/CSS/JS)
+├── assets/                   # Static assets
+└── .github/workflows/        # CI/CD (deploy-hostinger.yml, build-tui.yml)
 ```
 
-#### Sequential Pipeline (handoffs)
+---
 
-```python
-from agency_swarm.tools.send_message import SendMessageHandoff
+## The 8 Agents
 
-# Each agent needs SendMessageHandoff as their send_message_tool_class
-agent1 = Agent(..., send_message_tool_class=SendMessageHandoff)
-agent2 = Agent(..., send_message_tool_class=SendMessageHandoff)
-
-agency = Agency(
-    agent1,
-    communication_flows=[
-        (agent1, agent2),
-        (agent2, agent3),
-    ],
-    shared_instructions="agency_manifesto.md",
-)
+Each agent lives in its own folder with a consistent structure:
+```
+agent_name/
+  __init__.py          # from .agent_name import create_agent_name
+  agent_name.py        # Agent factory function create_<agent_name>()
+  instructions.md      # System prompt for this agent
+  tools/               # Auto-loaded custom tools (BaseTool subclasses)
 ```
 
-#### Collaborative Network
+### 1. Orchestrator (`orchestrator/`)
+**Role**: Entry point and router only — never executes tasks itself.
+
+- Routes tasks to specialists via `SendMessage` (parallel) or `Handoff` (single specialist — prefer this)
+- Has no tools; uses routing logic exclusively
+- Key rule: if only one specialist needed, always `Handoff` so the specialist gets full conversation context
+
+### 2. Virtual Assistant (`virtual_assistant/`)
+**Role**: Executive assistant for productivity and administrative tasks.
+
+- 25+ tools in `tools/`: `DraftEmail`, `ReadEmail`, `SendDraft`, `CreateCalendarEvent`, `CheckEventsForDate`, `RescheduleCalendarEvent`, `DeleteCalendarEvent`, `ReadFile`, `WriteFile`, `EditFile`, `ListDirectory`, `SendSlackMessage`, `ReadSlackMessages`, `CheckUnreadSlackMessages`, `GetSlackUserInfo`, `AddLabelToEmail`, `RemoveLabelFromEmail`, `ProductSearch`, `ScholarSearch`, `GetCurrentTime`, `ListSkills`
+- Also has `WebSearchTool`, `PersistentShellTool`, `IPythonInterpreter`, and Composio shared tools
+- Model: medium reasoning (extended if OpenAI provider)
+
+### 3. Deep Research Agent (`deep_research/`)
+**Role**: Thorough evidence-based research with citations.
+
+- Tools: `WebSearchTool`, `ScholarSearch`, `IPythonInterpreter`
+- Model: HIGH reasoning effort
+- Output format: executive summary → key findings → evidence → options → recommendation → risks
+- Minimum 3–5 different search queries per request
+
+### 4. Data Analyst (`data_analyst_agent/`)
+**Role**: Data analysis, KPI tracking, visualization, business intelligence.
+
+- Tools: `IPythonInterpreter`, `PersistentShellTool`, `WebSearchTool`, `LoadFileAttachment`, Composio shared tools
+- Libraries available: pandas, numpy, scipy, scikit-learn, statsmodels, matplotlib, seaborn, plotly
+- Outputs to `./mnt/outputs/`
+- `test_files/` contains sample datasets for validation
+
+### 5. Slides Agent (`slides_agent/`)
+**Role**: Professional presentation creation via HTML → PPTX pipeline.
+
+- 30+ tools in `tools/`: `InsertNewSlides`, `ModifySlide`, `DeleteSlide`, `ManageTheme`, `SlideScreenshot`, `ReadSlide`, `CheckSlide`, `CheckSlideCanvasOverflow`, `BuildPptxFromHtmlSlides`, `RestoreSnapshot`, `CreatePptxThumbnailGrid`, `ImageSearch`, `GenerateImage`, `DownloadImage`, `EnsureRasterImage`, plus `IPythonInterpreter`, `PersistentShellTool`, `WebSearchTool`
+- Output path: `./mnt/<project_name>/presentations/` (HTML slides + `_theme.css` + `assets/` + `.pptx`)
+- `pptx/` folder contains HTML-to-PPTX conversion libraries
+- Instructions are 27KB — the most detailed in the codebase
+
+### 6. Docs Agent (`docs_agent/`)
+**Role**: Professional document creation and format conversion (HTML as canonical source).
+
+- Tools: `CreateDocument`, `ViewDocument`, `ModifyDocument`, `ConvertDocument`, `ListDocuments`, `RestoreDocument`
+- Also: `WebSearchTool`, `IPythonInterpreter`, `CopyFile`
+- Output path: `./mnt/<project_name>/documents/`
+- `files/` folder for document project storage
+- Converts HTML → DOCX (auto), PDF, Markdown, TXT
+
+### 7. Image Generation Agent (`image_generation_agent/`)
+**Role**: Image generation, editing, composition, and background removal.
+
+- Tools: `GenerateImages`, `EditImages`, `CombineImages`, `RemoveBackground`
+- Models: `gemini-2.5-flash-image` (default), `gemini-3-pro-image-preview` (precision), `gpt-image-1.5` (when requested)
+- Mandatory QC checklist after generation (composition, scale, lighting, artifacts)
+
+### 8. Video Generation Agent (`video_generation_agent/`)
+**Role**: Video generation, editing, and assembly.
+
+- Tools: `GenerateVideo`, `EditVideoContent`, `TrimVideo`, `EditAudio`, `CombineVideos`, `AddSubtitles`, `GenerateImage`, `EditImage`, `CombineImages`, `LoadFileAttachment`
+- Models: `veo-3.1` (default, Google), `sora` (OpenAI, highest fidelity), `seedance-1.5-pro` (ByteDance, budget)
+- Strategy: text-to-video for generic scenes; image-to-video for branded/continuity needs
+
+---
+
+## Communication Architecture
+
+`swarm.py` applies 4 patches then builds the agency with two communication layers:
+
+**Hub-and-spoke**: Orchestrator → any specialist via `SendMessage`
+**Full mesh**: Any agent → any other agent via `Handoff`
 
 ```python
-agency = Agency(
-    ceo,
-    communication_flows=[
-        (ceo, developer),
-        (ceo, designer),
-        (developer, designer),
-    ],
-    shared_instructions="agency_manifesto.md",
-)
+# Simplified view of swarm.py
+send_message_flows = [(orchestrator, specialist) for specialist in all_specialists]
+handoff_flows = [(a, b) for a in all_agents for b in all_agents if a is not b]
 ```
 
-See documentation for more details.
+- `SendMessage` = parallel delegation (orchestrator waits, collects, synthesizes)
+- `Handoff` = full-context transfer (user iterates directly with specialist; prefer this for single-agent tasks)
 
-## Available Sub-Agents
+**Patches applied** (`patches/`):
+- `patch_agency_swarm_dual_comms.py` — enables both SendMessage and Handoff simultaneously
+- `patch_file_attachment_refs.py` — file reference tracking across tool calls
+- `patch_ipython_interpreter_composio.py` — Composio context in IPython sessions
+- `patch_utf8_file_reads.py` — UTF-8 encoding compatibility
 
-- **api-researcher**: Researches MCP servers and APIs, saves docs locally
-- **prd-creator**: Transforms concepts into PRDs using saved API docs
-- **agent-creator**: Creates complete agent modules with folder structure
-- **tools-creator**: Implements tools prioritizing MCP servers over custom APIs
-- **instructions-writer**: Write optimized instructions using prompt engineering best practices
-- **qa-tester**: Test agents with actual interactions and tool validation
+---
 
-## Orchestration Responsibilities
+## Key Conventions
 
-1. **User Clarification**: Ask questions one at a time when idea is vague
-2. **Research Delegation**: Launch api-researcher to find MCP servers/APIs
-3. **Documentation Management**: Download Agency Swarm docs if needed
-4. **Parallel Agent Creation**: Launch agent-creator, tools-creator, and instructions-writer simultaneously
-5. **API Key Collection**: ALWAYS ask for API keys before testing
-6. **Issue Escalation**: Relay agent escalations to user
-7. **Test Result Routing**: Pass test failure files to relevant agents
-8. **Communication Flow Decisions**: Determine agent communication patterns
-9. **Workflow Updates**: Update this file when improvements discovered
+### Adding a New Agent
 
-## Workflows
+1. Create the folder structure:
+   ```
+   agent_name/
+     __init__.py
+     agent_name.py        # def create_agent_name() -> Agent
+     instructions.md
+     tools/
+   ```
+   Use `agency-swarm create-agent-template` CLI helper.
+2. Register in `swarm.py`: import `create_agent_name`, instantiate, add to communication flows.
+3. See `.cursor/rules/agency-swarm-workflow.mdc` for the full step-by-step process.
+4. Default model: `get_default_model()` from `config.py`.
 
-### 1. When user has vague idea:
+### Adding a New Tool
 
-1. Ask clarifying questions to understand:
-   - Core purpose and goals of the agency
-   - Expected user interactions
-   - Data sources/APIs they want to use
-2. **WAIT FOR USER FEEDBACK** before proceeding to next steps
-3. Launch api-researcher with concept → saves to `agency_name/api_docs.md` with API key instructions
-4. Launch prd-creator with concept + API docs path → returns PRD path
-5. **CRITICAL: Present PRD to user for confirmation**
-   - Show PRD summary with agent count and tool distribution
-   - Ask: "Does this architecture look good? Should we proceed?"
-   - **WAIT FOR USER APPROVAL** before continuing
-6. **Collect API keys BEFORE development** (with instructions from api-researcher):
-   - OPENAI_API_KEY (required) - Show instructions how to get it
-   - Tool-specific keys - Show instructions for each
-   - **WAIT FOR USER TO PROVIDE ALL KEYS**
-7. **PHASED EXECUTION**:
-   - **Phase 1** (Parallel): Launch simultaneously:
-     - agent-creator with PRD → creates agent modules and folders
-     - instructions-writer with PRD → creates instructions.md files
-   - **Phase 2** (After Phase 1 completes):
-     - tools-creator with PRD + API docs + API keys → implements and tests tools
-8. Launch qa-tester → sends 5 test queries, returns results + improvement suggestions
-9. **Iteration based on QA results**:
-   - Read `qa_test_results.md` for specific suggestions
-   - Prioritize top 3 improvements from qa-tester
-   - Delegate with specific instructions:
-     - Instruction improvements → instructions-writer with exact changes
-     - Tool fixes → tools-creator with specific issues to fix
-     - Communication flow → update agency.py directly
-   - Track changes made for each iteration
-10. Re-run qa-tester with same 5 queries to verify improvements
-11. Continue iterations until:
-    - All 5 test queries pass
-    - Response quality score ≥8/10
-    - No critical issues remain
+- Prefer MCP servers over custom tools (see `.cursor/commands/add-mcp.md`)
+- Custom tool: subclass `BaseTool`, define Pydantic fields, implement `run() -> str`
+- Drop `.py` in `agent_name/tools/` — auto-loaded by the framework
+- Cross-agent tools go in `shared_tools/` and are imported explicitly in agent `.py` files
 
-### 2. When user has detailed specs:
+### Model Selection
 
-1. Launch api-researcher if APIs mentioned → saves docs with API key instructions
-2. Create PRD from specs if not provided
-3. **Get user confirmation on architecture**
-4. **Collect all API keys upfront** (with instructions)
-5. **PHASED EXECUTION**:
-   - Phase 1: agent-creator + instructions-writer (parallel)
-   - Phase 2: tools-creator (after Phase 1)
-6. Launch qa-tester with 5 test queries
-7. Iterate based on qa-tester suggestions
+- `DEFAULT_MODEL` env var sets the default (e.g., `gpt-5.2` or `anthropic/claude-sonnet-4-6`)
+- OpenAI models: no slash (`gpt-5.2`, `o3`)
+- LiteLLM-routed models: slash prefix (`anthropic/claude-sonnet-4-6`, `google/gemini-2.5-flash`)
+- `config.py::is_openai_provider()` gates OpenAI-specific features (reasoning effort, etc.)
 
-### 3. When adding new agent to existing agency:
+### Output Paths
 
-1. Update PRD with new agent specs (follow 4-16 tools rule)
-2. **Get user confirmation on updated PRD**
-3. Research new APIs if needed via api-researcher
-4. **Collect any new API keys** (with instructions)
-5. **PHASED EXECUTION** for new agent:
-   - Phase 1: agent-creator + instructions-writer
-   - Phase 2: tools-creator (tests each tool)
-6. Update agency.py with new communication flows
-7. Launch qa-tester to validate integration
+| Agent | Output path |
+|-------|-------------|
+| Slides Agent | `./mnt/<project_name>/presentations/` |
+| Docs Agent | `./mnt/<project_name>/documents/` |
+| Data Analyst | `./mnt/outputs/` |
+| Image/Video Agents | `./mnt/<project_name>/` |
 
-### 4. When refining existing agency:
+### Composio Tool Discovery Pattern
 
-1. Launch qa-tester → creates test results with improvement suggestions
-2. Review suggestions and prioritize top issues
-3. Pass specific fixes to agents:
-   - instructions-writer: "Update agent X instructions, line Y"
-   - tools-creator: "Fix tool Z error handling"
-4. Re-test with same queries to track improvement
-5. Document improvement metrics after each iteration
+When an agent needs external integrations:
+```
+ManageConnections → SearchTools → FindTools → ExecuteTool
+```
 
-## Key Patterns
+---
 
-- **Phased Execution**: agent-creator + instructions-writer first, THEN tools-creator
-- **PRD Confirmation**: Always get user approval before development
-- **API Keys First**: Collect ALL keys with instructions before any development
-- **File Ownership**: Each agent owns specific files to prevent conflicts
-- **MCP Priority**: Always prefer MCP servers over custom tools
-- **Tool Testing**: tools-creator tests each tool individually
-- **QA Testing**: qa-tester sends 5 example queries and suggests improvements
-- **Iteration**: Use qa-tester feedback to improve agents
-- **Progress Tracking**: Use TodoWrite extensively
+## Environment Setup
 
-## Context for Sub-Agents
+```bash
+cp .env.example .env   # fill in keys
+python run_utils.py    # or: openswarm
+# run_utils.py bootstraps venv, installs deps, downloads TUI binary automatically
+```
 
-When calling sub-agents, always provide:
+**Required** (pick one): `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, or `GOOGLE_API_KEY`
 
-- Clear task description
-- Relevant file paths (PRD, API docs, test results)
-- Reference to online Agency Swarm docs: https://agency-swarm.ai
-- Expected output format (usually file path + summary)
-- Framework version (Agency Swarm v1.0.0)
-- Communication flow pattern for the agency
-- For phased execution: Which phase we're in
-- API keys already collected (don't ask agents to get them)
-- For iterations: Specific improvements needed from qa-tester feedback
+**Optional**:
+| Variable | Purpose |
+|----------|---------|
+| `DEFAULT_MODEL` | Override default model (e.g., `gpt-5.2`) |
+| `COMPOSIO_API_KEY` + `COMPOSIO_USER_ID` | 10,000+ external integrations |
+| `SEARCH_API_KEY` | Web search + Scholar search (SearchAPI.io) |
+| `FAL_KEY` | Seedance video, video editing, background removal |
+| `PEXELS_API_KEY` / `PIXABAY_API_KEY` / `UNSPLASH_ACCESS_KEY` | Stock photos |
+| `GOOGLE_API_KEY` | Gemini image gen (Gemini 2.5 Flash) + Veo video |
+
+---
+
+## Website (Separate Concern)
+
+`website/` contains a standalone static SPA for unklefunk.music:
+- `index.html` (918 lines) — single-page artist hub with SoundCloud/Spotify embeds, podcast, releases
+- `style.css` (2199 lines) — dark/gold theme (`#09090b` bg, `#c9a84c` accent)
+- `main.js` (501 lines) — canvas equalizer animation, mobile nav, scroll reveals
+- `.htaccess` — gzip compression + browser caching headers
+
+**Auto-deploy**: `.github/workflows/deploy-hostinger.yml` fires on push to `main` when `website/**` changes. SSH + SCP to Hostinger (`~/domains/unklefunk.music/public_html/`). No build step.
+
+---
+
+## Phase 2 Roadmap (Pending)
+
+The music curation automation layer is defined in `VISION.md` but not yet implemented:
+
+- [ ] `music_profile_agent/` — living taste DNA document (sub-genres, BPM 118–128, artist network)
+- [ ] `SearchTraxsource` + `SearchBeatport` tools for new release discovery
+- [ ] `music_curation_agent/` — discover, score, and rank tracks against taste profile
+- [ ] `PublishChart` tool wired into Virtual Assistant → auto-update website
+- [ ] Register new agents in `swarm.py` + update orchestrator routing
+- [ ] Test with one month of Traxsource releases
+
+---
+
+## Key Reference Files
+
+| File | Purpose |
+|------|---------|
+| `.cursor/rules/agency-swarm-workflow.mdc` | Primary guide for adding agents and tools |
+| `.cursor/commands/add-mcp.md` | How to integrate MCP servers |
+| `.cursor/commands/mcp-code-exec.md` | Code Execution Pattern (98% token reduction) |
+| `.cursor/commands/write-instructions.md` | Effective agent instructions best practices |
+| `.cursor/commands/create-prd.md` | PRD template for complex multi-agent systems |
+| `shared_instructions.md` | Runtime rules shared by all agents |
+| `VISION.md` | Music curation roadmap (Phase 2–3) |
+| `STATUS.md` | Current live state of the project |
+| `AGENTS.md` | Quick reference table for all 8 agents |

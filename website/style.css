@@ -383,6 +383,43 @@ h3 {
     0 0 44px rgba(59,167,224,0.08);
 }
 
+/* Widescreen hero-weight photo — the first striking image after the
+   mission lede. Runs wider than the standard mission-img measure. */
+.mission-img--wide {
+  width: min(980px, 100%);
+  box-shadow:
+    0 0 0 1px rgba(59,167,224,0.18),
+    0 24px 64px rgba(0,0,0,0.7),
+    0 0 70px rgba(59,167,224,0.12);
+}
+
+/* ---------- The Start (2001 duo, closing) ---------- */
+#the-start .wrap { text-align: center; }
+.legacy-duo {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 1.75rem;
+}
+.legacy-img {
+  width: min(320px, 44%);
+  min-width: 220px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow:
+    0 0 0 1px rgba(59,167,224,0.12),
+    0 14px 38px rgba(0,0,0,0.6),
+    0 0 30px rgba(59,167,224,0.06);
+}
+.legacy-caption {
+  max-width: 36em;
+  margin-inline: auto;
+  color: var(--ink-muted);
+  font-size: 0.98rem;
+  line-height: 1.6;
+}
+
 .section-note { color: var(--ink-muted); max-width: 38em; margin-bottom: 1rem; }
 
 /* ---------- Embeds (click-to-load facades) ---------- */

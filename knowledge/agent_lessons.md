@@ -19,3 +19,10 @@
 - consolidate_knowledge.py — reads daily_logs/, merges into knowledge files, archives
 - save_insight.sh — quick CLI shortcut to log a tagged insight
 - setup_cron.sh — installs the 5am cron job (run once)
+- render_trend_pdf.py — renders a daily_logs/*.md log to knowledge/daily_logs/pdf/*.pdf (uses reportlab, already in requirements.txt)
+
+## Trend Scout Runs
+- Every trend-scout run (the "scout trending sounds" scheduled task) should end with
+  `python3 scripts/render_trend_pdf.py knowledge/daily_logs/<date>.md` so the user gets
+  a printable/downloadable PDF alongside the markdown log, instead of hunting through
+  the PR diff for results.

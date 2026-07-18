@@ -33,6 +33,7 @@ def create_agency(load_threads_callback=None):
     from video_generation_agent import create_video_generation_agent
     from image_generation_agent import create_image_generation_agent
     from reference_finder_agent import create_reference_finder
+    from ableton_dream_agent import create_ableton_dream_agent
 
     orchestrator = create_orchestrator()
     virtual_assistant = create_virtual_assistant()
@@ -43,6 +44,7 @@ def create_agency(load_threads_callback=None):
     video_generation_agent = create_video_generation_agent()
     image_generation_agent = create_image_generation_agent()
     reference_finder = create_reference_finder()
+    ableton_dream_agent = create_ableton_dream_agent()
 
     all_agents = [
         orchestrator,
@@ -54,6 +56,7 @@ def create_agency(load_threads_callback=None):
         video_generation_agent,
         image_generation_agent,
         reference_finder,
+        ableton_dream_agent,
     ]
 
     send_message_flows = [

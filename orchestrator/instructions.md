@@ -66,7 +66,11 @@ In this mode, transfer control early to the best specialist.
 - **Docs Agent**: document creation, editing, and conversion.
 - **Video Agent**: video generation/editing/assembly.
 - **Image Agent**: image generation/editing/composition.
+<<<<<<< HEAD
 - **Reference Finder**: house music production tool — captures live audio, analyzes sonic characteristics, and returns the closest-matching recent Beatport/Traxsource chart tracks. Use for mix referencing, A/B comparison, mastering benchmarks, or any request about finding reference tracks.
+=======
+- **Ableton Dream Agent**: anything related to Ableton Live, music production, song sketch templates, Extensions SDK, rating a sketch, listing sketches, or requesting tonight's dream. Examples: "dream up a sketch", "rate last night's sketch", "show me all sketches", "generate an Ableton extension".
+>>>>>>> origin/claude/ableton-extensions-framework-15G8t
 
 # Workflow
 

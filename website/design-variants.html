@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Design Variants — unklefunk.music (working doc)</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#000000">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mr+Dafoe&family=Archivo+Black&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #000; --surface: #0B0B11; --line: #1A1A24;
+      --ink: #F4F7FA; --muted: #9AA7B4;
+      --blue: #3BA7E0; --neon: #AEDCF7; --mint: #35D9A6;
+      --mono: "Space Mono", ui-monospace, monospace;
+      --body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--ink); font-family: var(--body); line-height: 1.65; padding-bottom: 6rem; }
+    .doc-head { text-align: center; padding: 4rem 1.25rem 2.5rem; }
+    .doc-head h1 {
+      font-family: "Mr Dafoe", cursive; font-weight: 400; font-size: clamp(2.6rem, 8vw, 4.2rem); color: #EAF6FF;
+      text-shadow: 0 0 4px rgba(234,246,255,.9), 0 0 14px rgba(174,220,247,.7), 0 0 34px rgba(59,167,224,.5);
+    }
+    .doc-head p { font-family: var(--mono); font-size: .78rem; letter-spacing: .24em; text-transform: uppercase; color: var(--muted); margin-top: .8rem; }
+    .wrap { max-width: 62rem; margin: 0 auto; padding: 0 1.25rem; }
+    section { padding: 3.5rem 0; border-top: 1px solid var(--line); }
+    .tag {
+      display: inline-block; font-family: var(--mono); font-weight: 700; font-size: .8rem; letter-spacing: .2em;
+      color: var(--mint); border: 1px solid var(--mint); border-radius: 999px; padding: .35rem 1rem; margin-bottom: 1rem;
+    }
+    h2 { font-family: "Archivo Black", var(--body); font-size: clamp(1.5rem, 4vw, 2.1rem); letter-spacing: .02em; margin-bottom: .6rem;
+         text-shadow: 0 0 24px rgba(174,220,247,.25); }
+    .note { color: var(--muted); max-width: 44em; margin-bottom: 2.25rem; }
+    .note strong { color: var(--ink); }
+
+    /* ---- Copy color lab ---- */
+    .lab { display: grid; gap: 1.5rem; }
+    @media (min-width: 900px) { .lab { grid-template-columns: 1fr 1fr 1fr; } }
+    .swatch { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 1.6rem; }
+    .swatch h3 { font-family: var(--mono); font-size: .8rem; letter-spacing: .22em; text-transform: uppercase; margin-bottom: 1rem; }
+    .swatch p { font-size: .96rem; }
+    .swatch .verdict { margin-top: 1.1rem; padding-top: 1rem; border-top: 1px dashed var(--line); font-size: .82rem; color: var(--muted); }
+    .v-white h3 { color: var(--ink); }   .v-white p { color: #E9EEF3; }
+    .v-blue  h3 { color: var(--blue); }  .v-blue p { color: var(--blue); }
+    .v-hybrid h3 { color: var(--mint); }
+    .v-hybrid p { color: #E9EEF3; }
+    .v-hybrid p em { font-style: normal; color: var(--blue); }
+    .v-hybrid p strong { color: var(--neon); font-weight: 600; text-shadow: 0 0 12px rgba(174,220,247,.35); }
+
+    /* ---- Gallery variants ---- */
+    .variant { margin-bottom: 4.5rem; }
+    .variant-label { font-family: var(--mono); font-weight: 700; color: var(--blue); letter-spacing: .18em; font-size: .85rem; margin-bottom: .4rem; }
+    .variant-desc { color: var(--muted); font-size: .9rem; max-width: 44em; margin-bottom: 1.75rem; }
+    .g-img { display: block; width: 100%; height: auto; border-radius: 8px;
+             box-shadow: 0 0 0 1px rgba(59,167,224,.12), 0 16px 44px rgba(0,0,0,.65), 0 0 36px rgba(59,167,224,.07); }
+
+    .g-stack { display: flex; flex-direction: column; align-items: center; gap: 2.25rem; }
+    .g-stack .g-img { width: min(440px, 88%); }
+
+    .g-row { display: grid; gap: 1.25rem; }
+    @media (min-width: 760px) { .g-row { grid-template-columns: 1fr 1fr 1fr; align-items: start; } }
+    .g-row .g-img { aspect-ratio: 1/1; object-fit: cover; }
+
+    .g-stagger { display: flex; flex-direction: column; gap: 2.5rem; }
+    .g-stagger .g-img { width: min(480px, 92%); }
+    .g-stagger .g-img:nth-child(odd)  { align-self: flex-start; margin-left: 6%; }
+    .g-stagger .g-img:nth-child(even) { align-self: flex-end; margin-right: 6%; }
+    @media (max-width: 700px) { .g-stagger .g-img { align-self: center !important; margin: 0 !important; } }
+
+    .g-feature { display: grid; gap: 1.25rem; }
+    @media (min-width: 760px) {
+      .g-feature { grid-template-columns: 2fr 1fr; }
+      .g-feature .g-side { display: grid; gap: 1.25rem; }
+      .g-feature .g-main { aspect-ratio: 4/5; object-fit: cover; height: 100%; }
+      .g-feature .g-side .g-img { aspect-ratio: 1/1; object-fit: cover; }
+    }
+
+    .pool { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 1rem; }
+    .pool figure { margin: 0; }
+    .pool img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 6px; border: 1px solid var(--line); display: block; }
+    .pool figcaption { font-family: var(--mono); font-size: .68rem; letter-spacing: .1em; color: var(--muted); margin-top: .45rem; text-align: center; }
+
+    .how { background: var(--surface); border: 1px solid var(--mint); border-radius: 10px; padding: 1.5rem 1.75rem; margin-top: 1rem; }
+    .how p { font-size: .92rem; color: var(--ink); }
+    .how code { font-family: var(--mono); color: var(--mint); }
+  </style>
+</head>
+<body>
+  <header class="doc-head">
+    <h1>Design Variants</h1>
+    <p>Working doc · not linked from the site · noindex</p>
+  </header>
+
+  <div class="wrap">
+
+    <section>
+      <span class="tag">PART 1</span>
+      <h2>Copy color lab</h2>
+      <p class="note">Same paragraph, three schemes. <strong>The live site currently runs the Hybrid.</strong> All-blue body copy fails contrast over long reads (your instinct was right — it strains); all-white is safe but flat. Hybrid keeps white for reading and spends the blue where it earns attention.</p>
+      <div class="lab">
+        <div class="swatch v-white">
+          <h3>A — All white</h3>
+          <p>Unkle Funk makes deep, sexy, funky underground house — the warm, late-night kind built for the floor, not the algorithm. Twenty-five years behind the decks, fifteen in the studio.</p>
+          <p class="verdict">Max readability. Zero personality in the copy itself — the neon has to do all the work.</p>
+        </div>
+        <div class="swatch v-blue">
+          <h3>B — All blue</h3>
+          <p>Unkle Funk makes deep, sexy, funky underground house — the warm, late-night kind built for the floor, not the algorithm. Twenty-five years behind the decks, fifteen in the studio.</p>
+          <p class="verdict">Looks cohesive for two lines, fatigues fast at paragraph length. #3BA7E0 on black is ~4.6:1 — passes AA for large text only.</p>
+        </div>
+        <div class="swatch v-hybrid">
+          <h3>C — Hybrid (live)</h3>
+          <p>Unkle Funk makes <strong>deep, sexy, funky underground house</strong> — the warm, late-night kind built for the floor, not the algorithm. <em>Twenty-five years behind the decks</em>, fifteen in the studio.</p>
+          <p class="verdict">White body, blue for links/emphasis/labels, neon glow reserved for headings. Reads clean, still feels like the sign's on.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <span class="tag">PART 2</span>
+      <h2>Gallery layout variants</h2>
+      <p class="note">Four ways to run the About photo stack — all borderless, all captionless until you write the real lines. Currently live: <strong>Variant A</strong> with about1 → about2 → portrait. The Louisville DJ's United shot is out entirely.</p>
+
+      <div class="variant">
+        <p class="variant-label">VARIANT A — Centered column (live now)</p>
+        <p class="variant-desc">Classic 3×1 stack down the center axis, alternating with the bio paragraphs. Calm, editorial, matches the centered rhythm of the whole page.</p>
+        <div class="g-stack">
+          <img class="g-img" src="assets/about1.jpg" alt="" loading="lazy">
+          <img class="g-img" src="assets/about2.jpg" alt="" loading="lazy">
+          <img class="g-img" src="assets/portrait.jpg" alt="" loading="lazy">
+        </div>
+      </div>
+
+      <div class="variant">
+        <p class="variant-label">VARIANT B — Contact strip</p>
+        <p class="variant-desc">Three square crops in a row after the full bio — reads like frames off a contact sheet. Tightest option; the photos become one object.</p>
+        <div class="g-row">
+          <img class="g-img" src="assets/about1.jpg" alt="" loading="lazy">
+          <img class="g-img" src="assets/about2.jpg" alt="" loading="lazy">
+          <img class="g-img" src="assets/portrait.jpg" alt="" loading="lazy">
+        </div>
+      </div>
+
+      <div class="variant">
+        <p class="variant-label">VARIANT C — Staggered offset</p>
+        <p class="variant-desc">Alternating left/right offsets down the page — more motion, more magazine. Collapses to centered on mobile.</p>
+        <div class="g-stagger">
+          <img class="g-img" src="assets/about1.jpg" alt="" loading="lazy">
+          <img class="g-img" src="assets/about2.jpg" alt="" loading="lazy">
+          <img class="g-img" src="assets/portrait.jpg" alt="" loading="lazy">
+        </div>
+      </div>
+
+      <div class="variant">
+        <p class="variant-label">VARIANT D — Feature + pair</p>
+        <p class="variant-desc">One hero-sized shot (best pro photo here) with two supporting squares. Strongest if one image clearly outclasses the others.</p>
+        <div class="g-feature">
+          <img class="g-img g-main" src="assets/portrait.jpg" alt="" loading="lazy">
+          <div class="g-side">
+            <img class="g-img" src="assets/about1.jpg" alt="" loading="lazy">
+            <img class="g-img" src="assets/about2.jpg" alt="" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <span class="tag">PART 3</span>
+      <h2>Photo pool on the server</h2>
+      <p class="note">Every image currently deployed, by filename — so you can call your picks by name. If the pro black-and-white event shots you mean aren't in this pool, upload them to the project and I'll slot them in.</p>
+      <div class="pool">
+        <figure><img src="assets/about1.jpg" alt="" loading="lazy"><figcaption>about1.jpg</figcaption></figure>
+        <figure><img src="assets/about2.jpg" alt="" loading="lazy"><figcaption>about2.jpg</figcaption></figure>
+        <figure><img src="assets/about3.jpg" alt="" loading="lazy"><figcaption>about3.jpg (benched)</figcaption></figure>
+        <figure><img src="assets/portrait.jpg" alt="" loading="lazy"><figcaption>portrait.jpg</figcaption></figure>
+        <figure><img src="assets/hero.jpg" alt="" loading="lazy"><figcaption>hero.jpg</figcaption></figure>
+        <figure><img src="assets/hero_alt.jpg" alt="" loading="lazy"><figcaption>hero_alt.jpg</figcaption></figure>
+        <figure><img src="assets/break_needle.jpg" alt="" loading="lazy"><figcaption>break_needle.jpg</figcaption></figure>
+        <figure><img src="assets/break_smoke.jpg" alt="" loading="lazy"><figcaption>break_smoke.jpg</figcaption></figure>
+      </div>
+      <div class="how">
+        <p>To lock it in, just tell me: <code>variant letter</code> + <code>three filenames in order</code> + your captions when ready. Example: “C — portrait, about2, about1 — captions coming.” One message, I handle the rest.</p>
+      </div>
+    </section>
+
+  </div>
+</body>
+</html>

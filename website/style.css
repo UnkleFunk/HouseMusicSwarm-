@@ -13,20 +13,25 @@
 }
 
 :root {
-  /* Plaid palette — Midnight Teal night, Ember Rust accent, Bone paper.
-     Established in the July 4 identity work; deliberate departure from
-     the AI-default warm-cream+terracotta and near-black+amber looks. */
-  --bg: #0E3A3A;          /* Midnight Teal — the night */
-  --bg-alt: #0A2D2D;      /* deeper teal for section striping */
-  --surface: #0F3F45;     /* lifted teal — cards, embed facades */
-  --line: #1F5152;        /* subtle teal border */
-  --ink: #EFE9DD;         /* Bone — the paper */
-  --ink-muted: #7FB7AE;   /* Sea Glass — teal-family muted */
-  --amber: #C25B3A;       /* Ember Rust — the sanctioned accent (≤10%) */
-  --amber-deep: #8A3E23;  /* deeper ember, hover state depth */
-  --teal: #1F7A72;        /* Slack Teal — reserved secondary accent */
-  --indigo: #1B2A5B;      /* Deep Indigo — hero radial depth */
+  /* Neon Nights palette — AMOLED true black, ice-blue neon tubes,
+     sky-blue accent (#3BA7E0, pulled from the Movement Detroit hero sky),
+     mint tally. This is the canonical unklefunk.music look Glenn signed
+     off on — do NOT recolor without his explicit call. Copy scheme is
+     the approved HYBRID: white body copy, blue accents/headings glow. */
+  --bg: #000000;          /* AMOLED true black */
+  --bg-alt: #060609;      /* barely-lifted black for section striping */
+  --surface: #0B0B11;     /* cards, embed facades */
+  --line: #1A1A24;        /* subtle border */
+  --ink: #F4F7FA;         /* white copy */
+  --ink-muted: #9AA7B4;   /* cool slate for secondary copy */
+  --amber: #3BA7E0;       /* sky-blue accent (legacy var name kept for refs) */
+  --amber-deep: #7FC5EE;  /* brighter blue for hover glow-up */
+  --neon: #AEDCF7;        /* ice-blue neon tube color */
+  --teal: #35D9A6;        /* mint — tally pill + live states */
+  --indigo: #081420;      /* deep blue-black for radial depth */
   --display: "Fraunces", Georgia, "Times New Roman", serif;
+  --script: "Mr Dafoe", "Brush Script MT", cursive;
+  --mono: "Space Mono", ui-monospace, "SF Mono", Menlo, monospace;
   --body: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --wrap: 68rem;
 }
@@ -62,7 +67,7 @@ body::after {
 img { max-width: 100%; height: auto; display: block; }
 
 a { color: var(--amber); text-underline-offset: 3px; }
-a:hover { color: #D67A5C; }
+a:hover { color: #63BCEC; }
 
 :focus-visible {
   outline: 2px solid var(--amber);
@@ -76,7 +81,7 @@ a:hover { color: #D67A5C; }
   top: 0.75rem;
   z-index: 1001;
   background: var(--amber);
-  color: #121417;
+  color: #00131F;
   padding: 0.5rem 1rem;
   border-radius: 3px;
   font-weight: 600;
@@ -99,19 +104,24 @@ a:hover { color: #D67A5C; }
 }
 
 .wordmark {
-  font-family: var(--display);
-  font-variation-settings: "opsz" 144, "wght" 620;
-  letter-spacing: 0.08em;
-  font-size: 1.05rem;
-  color: var(--ink);
+  font-family: var(--script);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  font-size: 1.35rem;
+  color: #CFEAFB;
   text-decoration: none;
+  text-shadow:
+    0 0 4px rgba(174,220,247,0.7),
+    0 0 12px rgba(59,167,224,0.5),
+    0 0 26px rgba(59,167,224,0.35);
 }
 
 .site-head nav {
   display: flex;
   gap: 1.25rem;
-  font-size: 0.8rem;
-  letter-spacing: 0.14em;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
 }
 .site-head nav a {
@@ -137,33 +147,96 @@ a:hover { color: #D67A5C; }
   inset: 0;
   z-index: -1;
   background:
-    linear-gradient(180deg, rgba(14,58,58,0.55) 0%, rgba(14,58,58,0.35) 55%, var(--bg) 100%),
-    url("assets/hero.jpg") center / cover no-repeat,
-    radial-gradient(120% 90% at 20% 90%, #0F2144 0%, var(--bg) 60%);
+    radial-gradient(60% 42% at 50% 32%, rgba(30,111,184,0.16) 0%, rgba(30,111,184,0) 70%),
+    radial-gradient(120% 90% at 50% 100%, var(--indigo) 0%, var(--bg) 55%);
+}
+/* faint CRT scanlines over the void */
+.hero-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    180deg,
+    rgba(255,255,255,0.022) 0px,
+    rgba(255,255,255,0.022) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+  pointer-events: none;
 }
 
 .kicker {
-  font-size: 0.75rem;
-  letter-spacing: 0.32em;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.36em;
   text-transform: uppercase;
-  color: var(--amber);
-  margin-bottom: 1.5rem;
+  color: var(--ink-muted);
+  margin-bottom: 0.9rem;
 }
 
+/* Neon-tube script wordmark. Double stroke via text-stroke-ish shadow
+   layering; glow via stacked blue shadows; flicker via keyframes. */
 .hero h1 {
-  font-family: var(--display);
-  font-variation-settings: "opsz" 144, "wght" 640;
-  font-size: clamp(4rem, 17vw, 10.5rem);
-  line-height: 0.92;
-  letter-spacing: 0.015em;
-  margin-bottom: 1.5rem;
+  font-family: var(--script);
+  font-weight: 400;
+  font-size: clamp(3.6rem, 13vw, 8.5rem);
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+  color: #EAF6FF;
+  margin: 0 0 1.6rem;
+  text-shadow:
+    0 0 3px rgba(234,246,255,0.95),
+    0 0 10px rgba(174,220,247,0.85),
+    0 0 22px rgba(122,197,238,0.65),
+    0 0 46px rgba(59,167,224,0.5),
+    0 0 90px rgba(59,167,224,0.4),
+    0 0 140px rgba(30,111,184,0.3);
+  animation: neonFlicker 9s linear infinite;
+}
+
+@keyframes neonFlicker {
+  0%, 6.9%, 7.3%, 22.9%, 23.2%, 54.9%, 55.4%, 55.8%, 56.2%, 100% {
+    opacity: 1;
+    text-shadow:
+      0 0 3px rgba(234,246,255,0.95),
+      0 0 10px rgba(174,220,247,0.85),
+      0 0 22px rgba(122,197,238,0.65),
+      0 0 46px rgba(59,167,224,0.5),
+      0 0 90px rgba(59,167,224,0.4),
+      0 0 140px rgba(30,111,184,0.3);
+  }
+  7%, 7.2%, 23%, 23.1%, 55%, 55.3%, 55.9%, 56.1% {
+    opacity: 0.82;
+    text-shadow:
+      0 0 2px rgba(234,246,255,0.5),
+      0 0 6px rgba(174,220,247,0.35),
+      0 0 14px rgba(59,167,224,0.2);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero h1 { animation: none; }
+}
+
+/* "75 DEEP" display line — heavy sans, soft white-blue bloom */
+.hero-75 {
+  font-family: "Archivo Black", var(--body);
+  font-size: clamp(2.6rem, 9vw, 5.6rem);
+  line-height: 1;
+  letter-spacing: 0.04em;
+  color: #F2FAFF;
+  margin: 0 0 1.4rem;
+  text-shadow:
+    0 0 14px rgba(242,250,255,0.55),
+    0 0 40px rgba(174,220,247,0.4),
+    0 0 80px rgba(59,167,224,0.28);
 }
 
 .tagline {
   max-width: 26em;
   margin: 0 auto 2rem;
   font-size: clamp(1.05rem, 2.6vw, 1.3rem);
-  color: var(--ink-muted);
+  color: var(--amber);
   text-wrap: balance;
 }
 
@@ -171,22 +244,23 @@ a:hover { color: #D67A5C; }
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  border: 1px solid var(--amber);
+  border: 1px solid var(--teal);
   border-radius: 999px;
-  padding: 0.55rem 1.3rem;
+  padding: 0.6rem 1.4rem;
   margin-bottom: 2.5rem;
-  font-family: var(--display);
-  font-variation-settings: "opsz" 60, "wght" 560;
-  font-size: 0.95rem;
-  letter-spacing: 0.18em;
-  color: var(--amber);
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 0.92rem;
+  letter-spacing: 0.22em;
+  color: var(--teal);
+  box-shadow: 0 0 18px rgba(53,217,166,0.14), inset 0 0 14px rgba(53,217,166,0.06);
 }
 
 .tally-dot {
   width: 7px; height: 7px;
   border-radius: 50%;
-  background: var(--amber);
-  box-shadow: 0 0 10px 1px rgba(194, 91, 58, 0.7);
+  background: var(--teal);
+  box-shadow: 0 0 10px 1px rgba(53,217,166,0.85);
 }
 
 .hero-ctas {
@@ -211,15 +285,15 @@ a:hover { color: #D67A5C; }
 
 .btn-solid {
   background: var(--amber);
-  color: #121417;
+  color: #00131F;
 }
-.btn-solid:hover { background: #D67A5C; color: #121417; }
+.btn-solid:hover { background: #63BCEC; color: #00131F; }
 
 .btn-ghost {
   background: transparent;
   color: var(--amber);
 }
-.btn-ghost:hover { background: rgba(194, 91, 58, 0.14); color: #D67A5C; }
+.btn-ghost:hover { background: rgba(59,167,224,0.14); color: #63BCEC; }
 
 .hero-scroll {
   position: absolute;
@@ -246,6 +320,7 @@ a:hover { color: #D67A5C; }
 .wrap { max-width: var(--wrap); margin: 0 auto; }
 
 .label {
+  font-family: var(--mono);
   font-size: 0.72rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
@@ -275,9 +350,26 @@ h3 {
   color: var(--ink);
 }
 
-.mission-copy { max-width: 40em; }
+/* Centered mid-line rhythm: headers centered, copy in a centered measure,
+   images centered wider than the copy — same axis the 2x2 track grid sits on. */
+#mission .label, #mission h2, #about .label, #about h2 { text-align: center; }
+
+.mission-copy { max-width: 42em; margin-inline: auto; }
 .mission-copy p + p { margin-top: 1.1rem; }
 .mission-copy p:not(.lede) { color: var(--ink-muted); }
+.mission-copy .lede { text-align: center; margin-inline: auto; }
+
+/* Centered photo between paragraphs — borderless, rounded, faint blue halo */
+.mission-img {
+  display: block;
+  width: min(720px, 100%);
+  margin: 3rem auto;
+  border-radius: 10px;
+  box-shadow:
+    0 0 0 1px rgba(59,167,224,0.14),
+    0 18px 48px rgba(0,0,0,0.65),
+    0 0 44px rgba(59,167,224,0.08);
+}
 
 .section-note { color: var(--ink-muted); max-width: 38em; margin-bottom: 1rem; }
 
@@ -401,17 +493,22 @@ h3 {
 
 /* ---------- About ---------- */
 
-.about-grid {
-  display: grid;
-  gap: 2.25rem;
+/* About — single centered flow: paragraph, photo, paragraph, photo…
+   Photos are borderless and captionless (captions return when Glenn
+   picks the final three + writes the lines himself). */
+.about-flow {
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  gap: 2.5rem;
 }
 
 .bio-p {
   color: var(--ink-muted);
   font-size: 1.05rem;
-  line-height: 1.65;
-  max-width: 34em;
+  line-height: 1.7;
+  max-width: 38em;
+  margin-inline: auto;
 }
 .bio-p:first-child {
   color: var(--ink);
@@ -420,32 +517,15 @@ h3 {
 .bio-p strong { color: var(--ink); font-weight: 600; }
 .bio-p em { font-style: italic; }
 
-/* Polaroid — Bone paper frame around a square image with display-face caption.
-   Physical, tangible, no rotation gimmick. The stack becomes a visual
-   timeline paired to the story on the left. */
-.polaroid {
-  background: var(--ink);
-  padding: 0.7rem 0.7rem 1.15rem;
-  max-width: 280px;
-  justify-self: center;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.42), 0 2px 8px rgba(0, 0, 0, 0.28);
-  margin: 0;
-}
-.polaroid img {
+.about-img {
   display: block;
-  width: 100%;
+  width: min(440px, 88%);
   height: auto;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-}
-.polaroid figcaption {
-  font-family: var(--display);
-  font-variation-settings: "opsz" 40, "wght" 480;
-  font-size: 0.86rem;
-  color: #121417;
-  text-align: center;
-  margin-top: 0.65rem;
-  letter-spacing: 0.05em;
+  border-radius: 8px;
+  box-shadow:
+    0 0 0 1px rgba(59,167,224,0.12),
+    0 16px 44px rgba(0,0,0,0.65),
+    0 0 36px rgba(59,167,224,0.07);
 }
 
 .bio p + p { margin-top: 1.1rem; }
@@ -459,37 +539,7 @@ h3 {
   max-width: 26rem;
 }
 
-@media (min-width: 820px) {
-  .about-grid { grid-template-columns: 1.25fr 0.75fr; gap: 3rem 3rem; align-items: center; }
-  .polaroid { max-width: 100%; }
-  .about-portrait { margin-top: 3.5rem; }
-}
 
-/* ---------- Mission full-bleed breaks ---------- */
-
-.mission-break {
-  /* Escape both .wrap max-width and .section side padding to hit viewport edges */
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
-  margin-block: 3rem;
-  aspect-ratio: 16 / 7;
-  max-height: 480px;
-  min-height: 220px;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  position: relative;
-}
-.mission-break::after {
-  /* Blend the top and bottom edges into the section bg so the image
-     reads as a chapter break, not a hard cut. */
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(180deg, rgba(14,58,58,0.25) 0%, rgba(14,58,58,0) 18%, rgba(14,58,58,0) 78%, rgba(14,58,58,0.45) 100%);
-  pointer-events: none;
-}
 
 /* ---------- Sunday Slackin thumb ---------- */
 
@@ -532,7 +582,7 @@ h3 {
   color: var(--ink);
 }
 
-.twitch-glyph { color: #5A8A83; flex: none; }
+.twitch-glyph { color: #5E7488; flex: none; }
 
 /* ---------- Connect ---------- */
 
@@ -582,7 +632,7 @@ h3 {
   border: 1px solid var(--line);
   border-radius: 3px;
 }
-.list-row input::placeholder { color: #5A8A83; }
+.list-row input::placeholder { color: #5E7488; }
 .list-row input:focus { border-color: var(--amber); outline: none; }
 
 @media (min-width: 820px) {
@@ -597,7 +647,7 @@ h3 {
   color: var(--ink-muted);
   font-size: 0.9rem;
 }
-.foot-note { margin-top: 0.5rem; font-size: 0.8rem; color: #5A8A83; }
+.foot-note { margin-top: 0.5rem; font-size: 0.8rem; color: #5E7488; }
 
 /* ---------- Scroll reveal (JS adds .reveal-ready; no-JS stays visible) ---------- */
 

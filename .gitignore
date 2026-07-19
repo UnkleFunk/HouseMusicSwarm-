@@ -183,4 +183,4 @@ cython_debug/
 
 .agency_swarm/
 third_party/
-.claude/
+.claude/website/assets/audio/

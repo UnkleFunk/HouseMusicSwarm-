@@ -506,12 +506,126 @@ h3 {
 
 .track-title { margin-bottom: 1.1rem; }
 
-.track-card .embed-facade { aspect-ratio: 16 / 10; }
-.track-card .embed-live { aspect-ratio: 16 / 10; }
-
 @media (min-width: 640px) {
   .track-grid { grid-template-columns: 1fr 1fr; }
 }
+
+/* ---------- WIP waveform player (self-hosted, no third party) ---------- */
+
+.wip-player {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.9rem 1rem;
+  background: var(--indigo);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+
+.wip-play {
+  flex: none;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--amber);
+  background: transparent;
+  position: relative;
+  cursor: pointer;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.wip-play:hover { border-color: var(--amber-deep); box-shadow: 0 0 16px rgba(59,167,224,0.35); }
+.wip-play::after {
+  content: "";
+  position: absolute;
+  left: 56%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-style: solid;
+  border-width: 7px 0 7px 12px;
+  border-color: transparent transparent transparent var(--amber);
+}
+.wip-play[data-playing="true"]::after {
+  border-width: 0;
+  width: 10px;
+  height: 12px;
+  left: 50%;
+  background:
+    linear-gradient(90deg, var(--amber) 0 3px, transparent 3px 7px, var(--amber) 7px 10px);
+}
+
+.wip-waveform { flex: 1 1 auto; min-width: 0; height: 52px; cursor: pointer; }
+.wip-time {
+  flex: none;
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  color: var(--ink-muted);
+  min-width: 3.6em;
+  text-align: right;
+}
+.wip-player.is-loading .wip-waveform { opacity: 0.35; }
+.wip-player.is-missing { opacity: 0.55; }
+.wip-player.is-missing .wip-play { cursor: not-allowed; border-color: var(--line); }
+.wip-player.is-missing .wip-play::after { border-color: transparent transparent transparent var(--ink-muted); }
+.wip-missing-note {
+  flex: none;
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  letter-spacing: 0.05em;
+  color: var(--ink-muted);
+}
+.wip-player-note {
+  font-size: 0.76rem;
+  color: var(--ink-muted);
+  margin-top: 0.5rem;
+}
+
+/* ---------- WIP Q&A ---------- */
+
+.wip-qa {
+  margin-top: 1.25rem;
+  padding-top: 1.1rem;
+  border-top: 1px dashed var(--line);
+}
+
+.wip-qa-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: 0.9rem;
+  max-height: 9.5rem;
+  overflow-y: auto;
+}
+.wip-qa-list:empty { display: none; }
+.wip-qa-item { font-size: 0.88rem; line-height: 1.5; }
+.wip-qa-item .who {
+  font-family: var(--mono);
+  color: var(--teal);
+  margin-right: 0.4em;
+}
+.wip-qa-item .msg { color: var(--ink); }
+.wip-qa-empty { font-size: 0.85rem; color: var(--ink-muted); font-style: italic; margin-bottom: 0.9rem; }
+
+.wip-qa-form { display: flex; flex-direction: column; gap: 0.5rem; }
+.wip-qa-row { display: flex; gap: 0.5rem; }
+.wip-qa-form input,
+.wip-qa-form textarea {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.88rem;
+  padding: 0.55rem 0.7rem;
+}
+.wip-qa-form textarea { resize: vertical; min-height: 3.2rem; }
+.wip-qa-form input:focus,
+.wip-qa-form textarea:focus { outline: 2px solid var(--amber); outline-offset: 1px; }
+.wip-qa-form .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.wip-qa-submit { align-self: flex-end; }
+.wip-qa-status { font-size: 0.8rem; color: var(--teal); min-height: 1.1em; }
+.wip-qa-status[data-state="error"] { color: #FF9B7A; }
 
 .wip-tally {
   margin-top: 3rem;

@@ -35,7 +35,7 @@ jobs:
           port: 65002
           username: ${{ secrets.HOSTINGER_SSH_USER }}
           password: ${{ secrets.HOSTINGER_SSH_PASS }}
-          source: "website/index.html,website/design-variants.html,website/style.css,website/main.js,website/.htaccess,website/favicon.svg,website/robots.txt,website/fonts,website/assets"
+          source: "website/index.html,website/design-variants.html,website/style.css,website/main.js,website/wip.js,website/.htaccess,website/favicon.svg,website/robots.txt,website/fonts,website/assets"
           target: "~/domains/unklefunk.music/public_html/"
           strip_components: 1
           overwrite: true

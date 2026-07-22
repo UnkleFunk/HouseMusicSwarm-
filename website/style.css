@@ -618,3 +618,40 @@ h3 {
     transition: none;
   }
 }
+
+/* ---------- Charts ---------- */
+.chart-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 720px) {
+  .chart-grid { grid-template-columns: 1fr 1fr; align-items: start; }
+}
+.chart-slot-label {
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin: 0 0 0.6rem;
+}
+.chart-track-card {
+  display: block;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 1.1rem 1.2rem;
+  text-decoration: none;
+  color: var(--ink);
+  transition: border-color 0.2s ease;
+}
+.chart-track-card:hover { border-color: var(--amber); }
+.chart-track-title { display: block; font-weight: 600; }
+.chart-track-artist { display: block; color: var(--ink-muted); font-size: 0.88rem; margin-top: 0.2rem; }
+.chart-track-link { display: block; margin-top: 0.55rem; font-size: 0.82rem; color: var(--amber); }
+.chart-linkout {
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

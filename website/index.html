@@ -104,10 +104,55 @@
       </div>
     </section>
 
-    <!-- ============ 3. MUSIC ============ -->
+    <!-- ============ 2b. CHARTS ============
+         Two slots, one per platform. Both use the existing embed-facade
+         click-to-load pattern (protects initial page load — nothing
+         fetches until tapped).
+
+         BEATPORT: create your DJ Chart at beatport.com/dj/charts/new,
+         publish it, then open the chart page and use Beatport's Embed/
+         Share option to grab the iframe src URL. Paste that URL into
+         data-embed below, replacing the placeholder.
+
+         TRAXSOURCE: Traxsource doesn't offer an official iframe embed
+         for charts as of this writing, so this slot is a styled
+         link-out card instead of a facade button. Replace href="#"
+         with your actual Traxsource chart or profile URL. -->
+    <section class="section" id="charts">
+      <div class="wrap">
+        <p class="label reveal">02 — The Chart</p>
+        <h2 class="reveal">What's spinning right now.</h2>
+        <p class="section-note reveal">Ten tracks, hand-picked, updated regularly. Not a curated best-of — the actual chart.</p>
+
+        <div class="chart-grid">
+          <div class="chart-slot reveal">
+            <p class="chart-slot-label">Beatport DJ Chart</p>
+            <div class="embed-slot">
+              <!-- TODO: replace with your real Beatport chart embed URL -->
+              <button class="embed-facade" type="button"
+                      data-embed="https://embed.beatport.com/chart?id=REPLACE_WITH_CHART_ID&color=1F7A72"
+                      data-title="Unkle Funk — Beatport DJ Chart">
+                <span class="facade-play" aria-hidden="true"></span>
+                <span class="facade-text">Load chart</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="chart-slot reveal">
+            <p class="chart-slot-label">Traxsource Chart</p>
+            <!-- TODO: replace href with your real Traxsource chart/profile URL -->
+            <a class="chart-track-card chart-linkout" href="#" target="_blank" rel="noopener">
+              <span class="chart-track-title">View the chart on Traxsource</span>
+              <span class="chart-track-artist">No embed widget on their end yet — this opens in a new tab.</span>
+              <span class="chart-track-link">Open on Traxsource →</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
     <section class="section section-alt" id="music">
       <div class="wrap">
-        <p class="label reveal">02 — The Music</p>
+        <p class="label reveal">03 — The Music</p>
         <h2 class="reveal">Nothing's finished. Everything's moving.</h2>
         <p class="section-note reveal">These are works in progress. Tell me what one of them needs — you might be the reason it gets finished next. Full back catalog on
           <a href="https://soundcloud.com/unklefunkssounds">SoundCloud</a> and
@@ -179,7 +224,7 @@
     <!-- ============ 4. ABOUT ============ -->
     <section class="section" id="about">
       <div class="wrap">
-        <p class="label reveal">03 — About</p>
+        <p class="label reveal">04 — About</p>
         <h2 class="reveal">The mailman with the record bag.</h2>
 
         <div class="about-grid">
@@ -218,7 +263,7 @@
     <!-- ============ 6. CONNECT ============ -->
     <section class="section section-alt" id="connect">
       <div class="wrap">
-        <p class="label reveal">04 — Connect</p>
+        <p class="label reveal">05 — Connect</p>
         <h2 class="reveal">Bookings, labels, and the list.</h2>
 
         <div class="connect-grid">

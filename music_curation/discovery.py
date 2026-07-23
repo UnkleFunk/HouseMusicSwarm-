@@ -44,6 +44,7 @@ import requests
 
 from scoring import Track, Scorer
 
+LABEL_IDS_PATH = Path(__file__).parent / "label_ids.json"
 RAW_CANDIDATES_PATH = Path(__file__).parent / "raw_candidates.json"
 RANKED_OUTPUT_PATH = Path(__file__).parent / "ranked_top_30.json"
 
@@ -182,16 +183,71 @@ def _to_track(tj: dict) -> Track | None:
     )
 
 
-def run_discovery(pages: int = 1, days_back: int | None = None) -> list[Track]:
-    """Fetch across all configured genres. Free — no API calls, no key."""
-    print(f"Fetching {len(GENRES)} Beatport genre pages "
-          f"({pages} page{'s' if pages > 1 else ''} each)...")
-    print("No API key, no per-request cost.\n")
+def fetch_label_page(slug: str, label_id: int, page: int = 1) -> list[dict]:
+    """Fetch one Beatport label page. Same structure as genre pages."""
+    url = f"https://www.beatport.com/label/{slug}/{label_id}/tracks"
+    if page > 1:
+        url += f"?page={page}"
+    try:
+        resp = requests.get(url, headers={"User-Agent": UA}, timeout=20)
+    except Exception as e:
+        print(f"    fetch failed for {slug} p{page}: {e}")
+        return []
+    if resp.status_code != 200:
+        print(f"    HTTP {resp.status_code} for {slug} p{page}")
+        return []
+    m = NEXT_DATA_RE.search(resp.text)
+    if not m:
+        return []
+    try:
+        return _find_all_tracks(json.loads(m.group(1)))
+    except json.JSONDecodeError:
+        return []
 
+
+def load_label_ids() -> dict:
+    if LABEL_IDS_PATH.exists():
+        return json.loads(LABEL_IDS_PATH.read_text()).get("labels", {})
+    return {}
+
+
+def run_discovery(pages: int = 1, days_back: int | None = None,
+                  source: str = "labels") -> list[Track]:
+    """Fetch across all configured genres. Free — no API calls, no key."""
     all_tracks: list[Track] = []
     seen_ids: set[str] = set()
     cutoff = (date.today() - timedelta(days=days_back)) if days_back else None
 
+    if source in ("labels", "both"):
+        labels = load_label_ids()
+        print(f"Fetching {len(labels)} target label pages "
+              f"({pages} page{'s' if pages > 1 else ''} each)... free, no API key.\n")
+        for name, meta in labels.items():
+            for page in range(1, pages + 1):
+                raw = fetch_label_page(meta["slug"], meta["id"], page)
+                added = 0
+                for tj in raw:
+                    t = _to_track(tj)
+                    if not t or t.id in seen_ids:
+                        continue
+                    if cutoff:
+                        try:
+                            if datetime.fromisoformat(str(t.release_date)).date() < cutoff:
+                                continue
+                        except (ValueError, TypeError):
+                            pass
+                    seen_ids.add(t.id)
+                    all_tracks.append(t)
+                    added += 1
+                print(f"  {name[:28]:28s} p{page}: +{added}")
+                time.sleep(1.0)
+
+    if source not in ("genres", "both"):
+        print(f"\nFound {len(all_tracks)} unique candidates.")
+        RAW_CANDIDATES_PATH.write_text(json.dumps([asdict(t) for t in all_tracks], indent=2))
+        return all_tracks
+
+    print(f"\nFetching {len(GENRES)} genre pages...")
     for slug, gid in GENRES:
         for page in range(1, pages + 1):
             raw = fetch_genre_page(slug, gid, page)
@@ -244,9 +300,10 @@ def main():
     ap.add_argument("--pages", type=int, default=1)
     ap.add_argument("--days", type=int, default=None)
     ap.add_argument("--top", type=int, default=30)
+    ap.add_argument("--source", default="labels", choices=["labels","genres","both"])
     args = ap.parse_args()
 
-    tracks = run_discovery(pages=args.pages, days_back=args.days)
+    tracks = run_discovery(pages=args.pages, days_back=args.days, source=args.source)
     if not tracks:
         print("No candidates found.")
         return

@@ -5,8 +5,8 @@
 
    ★ SETUP — fill these in once Supabase is ready, then commit ★
    ============================================================ */
-const SUPABASE_URL = "";       // e.g. "https://xxxxx.supabase.co"
-const SUPABASE_ANON_KEY = "";  // Project Settings → API → anon public key
+const SUPABASE_URL = "https://cmwuqeoktldliomlbxlk.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_FiS1O9-TGJFfKe_lTHBDhA_nfALplOd";
 
 (function () {
   "use strict";

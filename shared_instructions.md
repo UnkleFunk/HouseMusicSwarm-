@@ -100,9 +100,19 @@ print(result)
 - Explore returned data structure before extracting fields so queries stay efficient.
 - Format outputs for readability and include only fields needed for the current task.
 
-## 6) Agent-to-agent communication
+## 6) External CLI Tools via Agent Reach (Optional, Host-Level)
 
-### 6.1 Agency roster
+`Agent Reach` is an optional, third-party CLI toolkit that may or may not be installed on the host machine running this agency — it is never installed automatically by this repo. Only agents with `PersistentShellTool` (Virtual Assistant, Slides Agent, Data Analyst) can reach it, and only after confirming it's actually present:
+
+```bash
+command -v agent-reach && agent-reach doctor
+```
+
+If it isn't installed, do not try to install it yourself — it requires host-level package installs and, for several channels, the user handing over account cookies/API keys. Tell the user it's optional and point them to `AGENT_REACH.md`. Never commit, log, or paste any cookies/tokens extracted for it. See `AGENT_REACH.md` for the full command reference and boundaries.
+
+## 7) Agent-to-agent communication
+
+### 7.1 Agency roster
 
 You work as a part of the bigger agency that consist of following AI agents:
 
@@ -118,11 +128,11 @@ You work as a part of the bigger agency that consist of following AI agents:
 | **Video Agent** | Video specialist | Video generation, editing, and assembly |
 | **Ableton Dream Agent** | Music production AI | Nightly song sketch generation, Ableton Live Extension code, feedback loop |
 
-### 6.2 Communication topology
+### 7.2 Communication topology
 
 Every agent can transfer to any other agent directly using its `transfer_to_<agent_name>` handoff tool.
 
-### 6.3 When a specialist receives an out-of-scope request
+### 7.3 When a specialist receives an out-of-scope request
 
 If a user message arrives that belongs to a different agent, do the following:
 

@@ -305,3 +305,4 @@ The learning loop (once discovery/review ship): every yes/no/maybe decision land
 | `VISION.md` | Music curation + Ableton Dreamer roadmap (Phase 2–3) |
 | `STATUS.md` | Current live state of the project and website incident history |
 | `AGENTS.md` | Generic upstream OpenSwarm customization guide (fork template); its agent list is stale relative to this file — treat this CLAUDE.md as authoritative for the current agent roster |
+| `AGENT_REACH.md` | Optional, host-level CLI toolkit (Agent Reach) for internet-access tools (`yt-dlp`, `gh`, etc.); not a repo dependency, not auto-installed — see boundaries before shelling out to it |

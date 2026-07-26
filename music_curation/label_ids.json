@@ -1,0 +1,77 @@
+{
+  "artists": {},
+  "labels": {
+    "Cuttin' Headz": {
+      "id": 45307,
+      "slug": "cuttin-headz"
+    },
+    "Defected Records": {
+      "id": 1354,
+      "slug": "defected"
+    },
+    "Defined Records": {
+      "id": 96261,
+      "slug": "defined-records"
+    },
+    "Fool's Paradise": {
+      "id": 113804,
+      "slug": "fools-paradise"
+    },
+    "Glasgow Underground": {
+      "id": 14542,
+      "slug": "glasgow-underground"
+    },
+    "HOUSEu": {
+      "id": 62748,
+      "slug": "houseu"
+    },
+    "Hot Creations": {
+      "id": 15781,
+      "slug": "hot-creations"
+    },
+    "Jackie's": {
+      "id": 291648,
+      "slug": "jackies"
+    },
+    "Local Talk": {
+      "id": 21856,
+      "slug": "local-talk"
+    },
+    "Nervous Records": {
+      "id": 2752,
+      "slug": "nervous-records"
+    },
+    "Nurvous Records": {
+      "id": 20953,
+      "slug": "nurvous-records"
+    },
+    "Repopulate Mars": {
+      "id": 54131,
+      "slug": "repopulate-mars"
+    },
+    "Simma Black": {
+      "id": 31807,
+      "slug": "simma-black"
+    },
+    "Snatch! Records": {
+      "id": 15225,
+      "slug": "snatch-records"
+    },
+    "Sola": {
+      "id": 63883,
+      "slug": "sola"
+    },
+    "Solid Grooves": {
+      "id": 31451,
+      "slug": "solid-grooves"
+    },
+    "Strictly Rhythm": {
+      "id": 24446,
+      "slug": "strictly-rhythm"
+    },
+    "Toolroom Records": {
+      "id": 495,
+      "slug": "toolroom"
+    }
+  }
+}

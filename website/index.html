@@ -111,10 +111,49 @@
       </div>
     </section>
 
+    <!-- ============ 2b. CHARTS ============
+         Two slots, one per platform. Beatport uses the same embed-facade
+         click-to-load pattern as the trailer (nothing loads until tapped).
+         Traxsource has no public chart embed widget, so it's a styled
+         link-out card.
+
+         BEATPORT: publish a DJ Chart at beatport.com/dj/charts/new, open
+         it, use the Embed/Share option, paste the iframe src into
+         data-embed (replace REPLACE_WITH_CHART_ID).
+         TRAXSOURCE: replace href="#" with your chart/profile URL. -->
+    <section class="section" id="charts">
+      <div class="wrap">
+        <p class="label reveal">02 — The Chart</p>
+        <h2 class="reveal">What's spinning right now.</h2>
+        <p class="section-note reveal">The tracks in current rotation, pulled from the crates. Updated regularly.</p>
+
+        <div class="chart-grid">
+          <div class="chart-slot reveal">
+            <p class="chart-slot-label">Beatport DJ Chart</p>
+            <button class="embed-facade" type="button"
+                    data-embed="https://embed.beatport.com/chart?id=REPLACE_WITH_CHART_ID&color=3BA7E0"
+                    data-title="Unkle Funk — Beatport DJ Chart">
+              <span class="facade-play" aria-hidden="true"></span>
+              <span class="facade-text">Load Beatport chart</span>
+            </button>
+          </div>
+
+          <div class="chart-slot reveal">
+            <p class="chart-slot-label">Traxsource Chart</p>
+            <a class="chart-linkout" href="#" target="_blank" rel="noopener">
+              <span class="chart-linkout-title">View the chart on Traxsource</span>
+              <span class="chart-linkout-sub">Opens in a new tab</span>
+              <span class="chart-linkout-cta">Open on Traxsource →</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ============ 3. MUSIC ============ -->
     <section class="section section-alt" id="music">
       <div class="wrap">
-        <p class="label reveal">02 — The Music</p>
+        <p class="label reveal">03 — The Music</p>
         <h2 class="reveal">Nothing's finished. Everything's moving.</h2>
         <p class="section-note reveal">Works in progress. Tell me what one needs — you might be why it finishes next. Full catalog on
           <a href="https://soundcloud.com/unklefunkssounds">SoundCloud</a> and
@@ -231,7 +270,7 @@
     <!-- ============ 4. ABOUT ============ -->
     <section class="section" id="about">
       <div class="wrap">
-        <p class="label reveal">03 — About</p>
+        <p class="label reveal">04 — About</p>
         <h2 class="reveal">The mailman with the record bag.</h2>
 
         <div class="about-flow">
@@ -261,7 +300,7 @@
     <!-- ============ 6. CONNECT ============ -->
     <section class="section section-alt" id="connect">
       <div class="wrap">
-        <p class="label reveal">04 — Connect</p>
+        <p class="label reveal">05 — Connect</p>
         <h2 class="reveal">Bookings, labels, and the list.</h2>
         <img class="connect-headshot reveal" src="assets/artist_headshot_bw.jpg" alt="Unkle Funk" width="577" height="824" loading="lazy" decoding="async">
 

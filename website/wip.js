@@ -115,7 +115,7 @@ const SUPABASE_ANON_KEY = "sb_publishable_FiS1O9-TGJFfKe_lTHBDhA_nfALplOd";
     if (!rows || rows.length === 0) {
       var empty = document.createElement("li");
       empty.className = "wip-qa-item wip-qa-empty";
-      empty.textContent = "No answers yet — be the first.";
+      empty.textContent = "No answers yet — be the first to tell me what this one needs.";
       listEl.appendChild(empty);
       return;
     }

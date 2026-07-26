@@ -1,0 +1,1342 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Chart Candidates — Unkle Funk</title>
+<style>
+:root{--bg:#0E3A3A;--alt:#0A2D2D;--surf:#0F3F45;--line:#1F5152;
+--ink:#EFE9DD;--mut:#7FB7AE;--amber:#C25B3A;--teal:#1F7A72}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);margin:0;padding:1rem 0.75rem 5rem;
+font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+h1{font-size:1.25rem;margin:0 0 .2rem}
+.sub{color:var(--mut);font-size:.85rem;margin:0 0 1rem}
+.filters{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1rem}
+.fbtn{background:transparent;border:1px solid var(--line);color:var(--mut);
+border-radius:999px;padding:.35rem .75rem;font-size:.78rem;cursor:pointer}
+.fbtn.on{background:var(--teal);color:#121417;border-color:var(--teal)}
+.row{display:flex;gap:.6rem;align-items:flex-start;background:var(--surf);
+border:1px solid var(--line);border-radius:7px;padding:.7rem .75rem;margin-bottom:.5rem}
+.row.picked{border-color:var(--amber);background:#12474b}
+.chk{flex:none;width:26px;height:26px;margin-top:.15rem;accent-color:var(--amber)}
+.meta{flex:1;min-width:0}
+.t{font-weight:600;font-size:.95rem;line-height:1.3}
+.a{color:var(--mut);font-size:.85rem;margin-top:.1rem}
+.d{color:var(--mut);font-size:.75rem;margin-top:.3rem;letter-spacing:.02em}
+.d b{color:var(--ink);font-weight:600}
+.sc{flex:none;font-weight:700;color:var(--amber);font-size:.95rem;
+min-width:2.6rem;text-align:right}
+.lnk{display:inline-block;margin-top:.4rem;color:var(--amber);
+text-decoration:none;font-size:.8rem;font-weight:600}
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--alt);
+border-top:1px solid var(--line);padding:.7rem .9rem;display:flex;
+justify-content:space-between;align-items:center;font-size:.85rem}
+.bar b{color:var(--amber);font-size:1.05rem}
+.copy{background:var(--amber);color:#121417;border:none;border-radius:5px;
+padding:.5rem .9rem;font-weight:700;font-size:.82rem;cursor:pointer}
+</style></head><body>
+<h1>Chart Candidates</h1>
+<p class="sub">Sorted by taste score. Tap a title to preview on Beatport. Tick the ones you want.</p>
+<div class="filters">
+<button class="fbtn on" data-f="all">All</button>
+<button class="fbtn" data-f="70">70+</button>
+<button class="fbtn" data-f="60">60+</button>
+<button class="fbtn" data-f="picked">Picked</button>
+</div>
+
+<div class="row" data-score="79.0"
+ data-artist="Barberio" data-title="Touch In The Heavy Night (Extended Mix)" data-label="Glasgow Underground">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/touch-in-the-heavy-night/29393020" target="_blank">Touch In The Heavy Night (Extended Mix)</a></div>
+<div class="a">Barberio</div>
+<div class="d"><b>Glasgow Underground</b> &middot; 123 BPM &middot; 5A &middot; 6:02 &middot; 2026-07-10 &middot; Organic House</div>
+<a class="lnk" href="https://www.beatport.com/track/touch-in-the-heavy-night/29393020" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">79</div>
+</div>
+<div class="row" data-score="79.0"
+ data-artist="JOHANNSON" data-title="Enchantment (Extended Mix)" data-label="Glasgow Underground">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/enchantment/29468921" target="_blank">Enchantment (Extended Mix)</a></div>
+<div class="a">JOHANNSON</div>
+<div class="d"><b>Glasgow Underground</b> &middot; 121 BPM &middot; 4A &middot; 6:06 &middot; 2026-07-03 &middot; Organic House</div>
+<a class="lnk" href="https://www.beatport.com/track/enchantment/29468921" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">79</div>
+</div>
+<div class="row" data-score="79.0"
+ data-artist="Steve Reason, Mallin" data-title="Venez (Extended Mix)" data-label="Glasgow Underground">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/venez/29468927" target="_blank">Venez (Extended Mix)</a></div>
+<div class="a">Steve Reason, Mallin</div>
+<div class="d"><b>Glasgow Underground</b> &middot; 122 BPM &middot; 8A &middot; 6:37 &middot; 2026-07-03 &middot; Organic House</div>
+<a class="lnk" href="https://www.beatport.com/track/venez/29468927" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">79</div>
+</div>
+<div class="row" data-score="78.3"
+ data-artist="Kevin McKay" data-title="Karma (Extended Mix)" data-label="Glasgow Underground">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/karma/29619137" target="_blank">Karma (Extended Mix)</a></div>
+<div class="a">Kevin McKay</div>
+<div class="d"><b>Glasgow Underground</b> &middot; 122 BPM &middot; 7B &middot; 6:53 &middot; 2026-07-24 &middot; Organic House</div>
+<a class="lnk" href="https://www.beatport.com/track/karma/29619137" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">78</div>
+</div>
+<div class="row" data-score="78.2"
+ data-artist="Simon Ellis, DE SOFFER" data-title="Walking On A Dream (Extended Mix)" data-label="Glasgow Underground">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/walking-on-a-dream/29393330" target="_blank">Walking On A Dream (Extended Mix)</a></div>
+<div class="a">Simon Ellis, DE SOFFER</div>
+<div class="d"><b>Glasgow Underground</b> &middot; 123 BPM &middot; 4A &middot; 5:00 &middot; 2026-07-10 &middot; Nu Disco / Disco</div>
+<a class="lnk" href="https://www.beatport.com/track/walking-on-a-dream/29393330" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">78</div>
+</div>
+<div class="row" data-score="76.8"
+ data-artist="CHANDNI" data-title="Miami (Extended Mix)" data-label="Glasgow Underground">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/miami/29548631" target="_blank">Miami (Extended Mix)</a></div>
+<div class="a">CHANDNI</div>
+<div class="d"><b>Glasgow Underground</b> &middot; 122 BPM &middot; 8B &middot; 6:05 &middot; 2026-07-17 &middot; Organic House</div>
+<a class="lnk" href="https://www.beatport.com/track/miami/29548631" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">77</div>
+</div>
+<div class="row" data-score="76.8"
+ data-artist="Presi On, Spijker" data-title="What Remains (Extended Mix)" data-label="Glasgow Underground">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/what-remains/29468931" target="_blank">What Remains (Extended Mix)</a></div>
+<div class="a">Presi On, Spijker</div>
+<div class="d"><b>Glasgow Underground</b> &middot; 122 BPM &middot; 11B &middot; 6:37 &middot; 2026-07-03 &middot; Afro House</div>
+<a class="lnk" href="https://www.beatport.com/track/what-remains/29468931" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">77</div>
+</div>
+<div class="row" data-score="76.5"
+ data-artist="O.L.D, Hacelen Royer" data-title="Luz (Extended Mix)" data-label="Glasgow Underground">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/luz/29468915" target="_blank">Luz (Extended Mix)</a></div>
+<div class="a">O.L.D, Hacelen Royer</div>
+<div class="d"><b>Glasgow Underground</b> &middot; 120 BPM &middot; 5A &middot; 4:02 &middot; 2026-07-03 &middot; Deep House</div>
+<a class="lnk" href="https://www.beatport.com/track/luz/29468915" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">76</div>
+</div>
+<div class="row" data-score="76.0"
+ data-artist="Kevin McKay, JOHANNSON" data-title="Do It All For You (Extended Mix)" data-label="Glasgow Underground">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/do-it-all-for-you/29468902" target="_blank">Do It All For You (Extended Mix)</a></div>
+<div class="a">Kevin McKay, JOHANNSON</div>
+<div class="d"><b>Glasgow Underground</b> &middot; 122 BPM &middot; 2B &middot; 5:38 &middot; 2026-07-03 &middot; Organic House</div>
+<a class="lnk" href="https://www.beatport.com/track/do-it-all-for-you/29468902" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">76</div>
+</div>
+<div class="row" data-score="74.3"
+ data-artist="Kevin McKay" data-title="All I Do (Extended Mix)" data-label="Glasgow Underground">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/all-i-do/29576104" target="_blank">All I Do (Extended Mix)</a></div>
+<div class="a">Kevin McKay</div>
+<div class="d"><b>Glasgow Underground</b> &middot; 123 BPM &middot; 1B &middot; 4:42 &middot; 2026-07-17 &middot; Nu Disco / Disco</div>
+<a class="lnk" href="https://www.beatport.com/track/all-i-do/29576104" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">74</div>
+</div>
+<div class="row" data-score="73.2"
+ data-artist="Alex Gewer" data-title="Sweet Disposition (Extended Mix)" data-label="Glasgow Underground">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/sweet-disposition/29468899" target="_blank">Sweet Disposition (Extended Mix)</a></div>
+<div class="a">Alex Gewer</div>
+<div class="d"><b>Glasgow Underground</b> &middot; 124 BPM &middot; 10A &middot; 5:27 &middot; 2026-07-03 &middot; Nu Disco / Disco</div>
+<a class="lnk" href="https://www.beatport.com/track/sweet-disposition/29468899" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">73</div>
+</div>
+<div class="row" data-score="71.8"
+ data-artist="Roland Clark, Tenacious" data-title="Alright (Extended Mix)" data-label="Fool's Paradise">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/alright/29143943" target="_blank">Alright (Extended Mix)</a></div>
+<div class="a">Roland Clark, Tenacious</div>
+<div class="d"><b>Fool's Paradise</b> &middot; 124 BPM &middot; 8B &middot; 6:22 &middot; 2026-07-10 &middot; House</div>
+<a class="lnk" href="https://www.beatport.com/track/alright/29143943" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">72</div>
+</div>
+<div class="row" data-score="71.8"
+ data-artist="Cee ElAssaad" data-title="Jump In " data-label="Local Talk">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/jump-in/29171905" target="_blank">Jump In </a></div>
+<div class="a">Cee ElAssaad</div>
+<div class="d"><b>Local Talk</b> &middot; 123 BPM &middot; 7A &middot; 6:49 &middot; 2026-06-26 &middot; House</div>
+<a class="lnk" href="https://www.beatport.com/track/jump-in/29171905" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">72</div>
+</div>
+<div class="row" data-score="71.5"
+ data-artist="Baccus" data-title="Bad Girls (Extended Mix)" data-label="Glasgow Underground">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/bad-girls/29468912" target="_blank">Bad Girls (Extended Mix)</a></div>
+<div class="a">Baccus</div>
+<div class="d"><b>Glasgow Underground</b> &middot; 124 BPM &middot; 7A &middot; 4:03 &middot; 2026-07-03 &middot; Nu Disco / Disco</div>
+<a class="lnk" href="https://www.beatport.com/track/bad-girls/29468912" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">72</div>
+</div>
+<div class="row" data-score="71.0"
+ data-artist="Joe Diem, Guezmark" data-title="Hands Up (Extended Mix)" data-label="Glasgow Underground">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/hands-up/29468906" target="_blank">Hands Up (Extended Mix)</a></div>
+<div class="a">Joe Diem, Guezmark</div>
+<div class="d"><b>Glasgow Underground</b> &middot; 124 BPM &middot; 5B &middot; 5:29 &middot; 2026-07-03 &middot; Tech House</div>
+<a class="lnk" href="https://www.beatport.com/track/hands-up/29468906" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">71</div>
+</div>
+<div class="row" data-score="70.5"
+ data-artist="Kevin McKay, AJIM" data-title="I Disappear Again (Extended Mix)" data-label="Glasgow Underground">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/i-disappear-again/29391313" target="_blank">I Disappear Again (Extended Mix)</a></div>
+<div class="a">Kevin McKay, AJIM</div>
+<div class="d"><b>Glasgow Underground</b> &middot; 124 BPM &middot; 12A &middot; 4:58 &middot; 2026-07-03 &middot; Organic House</div>
+<a class="lnk" href="https://www.beatport.com/track/i-disappear-again/29391313" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">70</div>
+</div>
+<div class="row" data-score="69.5"
+ data-artist="Cee ElAssaad" data-title="Jump In  (Marcel Vogel Remix)" data-label="Local Talk">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/jump-in/29171906" target="_blank">Jump In  (Marcel Vogel Remix)</a></div>
+<div class="a">Cee ElAssaad</div>
+<div class="d"><b>Local Talk</b> &middot; 123 BPM &middot; 6A &middot; 5:37 &middot; 2026-06-26 &middot; House</div>
+<a class="lnk" href="https://www.beatport.com/track/jump-in/29171906" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">70</div>
+</div>
+<div class="row" data-score="68.0"
+ data-artist="Carta, Mixed Signals 021" data-title="Love Dancing (Groove P Extended Mix)" data-label="Fool's Paradise">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/love-dancing/29050242" target="_blank">Love Dancing (Groove P Extended Mix)</a></div>
+<div class="a">Carta, Mixed Signals 021</div>
+<div class="d"><b>Fool's Paradise</b> &middot; 127 BPM &middot; 7A &middot; 6:06 &middot; 2026-06-19 &middot; House</div>
+<a class="lnk" href="https://www.beatport.com/track/love-dancing/29050242" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">68</div>
+</div>
+<div class="row" data-score="68.0"
+ data-artist="Jaegerossa" data-title="Shining (Extended Mix)" data-label="Fool's Paradise">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/shining/28784857" target="_blank">Shining (Extended Mix)</a></div>
+<div class="a">Jaegerossa</div>
+<div class="d"><b>Fool's Paradise</b> &middot; 126 BPM &middot; 8A &middot; 6:07 &middot; 2026-06-12 &middot; House</div>
+<a class="lnk" href="https://www.beatport.com/track/shining/28784857" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">68</div>
+</div>
+<div class="row" data-score="68.0"
+ data-artist="Kevin McKay, Terri-Anne" data-title="Rhythm Is Gonna Get You (Extended Mix)" data-label="Glasgow Underground">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/rhythm-is-gonna-get-you/29468922" target="_blank">Rhythm Is Gonna Get You (Extended Mix)</a></div>
+<div class="a">Kevin McKay, Terri-Anne</div>
+<div class="d"><b>Glasgow Underground</b> &middot; 126 BPM &middot; 9A &middot; 5:54 &middot; 2026-07-03 &middot; Deep House</div>
+<a class="lnk" href="https://www.beatport.com/track/rhythm-is-gonna-get-you/29468922" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">68</div>
+</div>
+<div class="row" data-score="67.8"
+ data-artist="Mark Di Meo, Jesus Fernandez" data-title="A Fuego (Extended Mix)" data-label="Nervous Records">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/a-fuego/29741306" target="_blank">A Fuego (Extended Mix)</a></div>
+<div class="a">Mark Di Meo, Jesus Fernandez</div>
+<div class="d"><b>Nervous Records</b> &middot; 123 BPM &middot; 7A &middot; 3:46 &middot; 2026-07-31 &middot; Latin Electronic</div>
+<a class="lnk" href="https://www.beatport.com/track/a-fuego/29741306" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">68</div>
+</div>
+<div class="row" data-score="67.8"
+ data-artist="Mark Di Meo, Jesus Fernandez" data-title="A Fuego (Radio Edit)" data-label="Nervous Records">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/a-fuego/29741305" target="_blank">A Fuego (Radio Edit)</a></div>
+<div class="a">Mark Di Meo, Jesus Fernandez</div>
+<div class="d"><b>Nervous Records</b> &middot; 123 BPM &middot; 7A &middot; 2:50 &middot; 2026-07-31 &middot; Latin Electronic</div>
+<a class="lnk" href="https://www.beatport.com/track/a-fuego/29741305" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">68</div>
+</div>
+<div class="row" data-score="67.3"
+ data-artist="MARINA TRENCH" data-title="Balliamo " data-label="Snatch! Records">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/balliamo/29072716" target="_blank">Balliamo </a></div>
+<div class="a">MARINA TRENCH</div>
+<div class="d"><b>Snatch! Records</b> &middot; 122 BPM &middot; 4B &middot; 5:00 &middot; 2026-06-18 &middot; Indie Dance</div>
+<a class="lnk" href="https://www.beatport.com/track/balliamo/29072716" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">67</div>
+</div>
+<div class="row" data-score="67.2"
+ data-artist="Mōiqe" data-title="Criminal (Extended Mix)" data-label="Glasgow Underground">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/criminal/29468895" target="_blank">Criminal (Extended Mix)</a></div>
+<div class="a">Mōiqe</div>
+<div class="d"><b>Glasgow Underground</b> &middot; 127 BPM &middot; 6A &middot; 5:23 &middot; 2026-07-03 &middot; Tech House</div>
+<a class="lnk" href="https://www.beatport.com/track/criminal/29468895" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">67</div>
+</div>
+<div class="row" data-score="65.0"
+ data-artist="Mōiqe" data-title="Addicted (Extended Mix)" data-label="Glasgow Underground">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/addicted/29468916" target="_blank">Addicted (Extended Mix)</a></div>
+<div class="a">Mōiqe</div>
+<div class="d"><b>Glasgow Underground</b> &middot; 127 BPM &middot; 1B &middot; 5:18 &middot; 2026-07-03 &middot; Tech House</div>
+<a class="lnk" href="https://www.beatport.com/track/addicted/29468916" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">65</div>
+</div>
+<div class="row" data-score="65.0"
+ data-artist="DJ Kone &amp; Marc Palacios" data-title="Sex Machine (Extended Mix)" data-label="Glasgow Underground">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/sex-machine/29468926" target="_blank">Sex Machine (Extended Mix)</a></div>
+<div class="a">DJ Kone &amp; Marc Palacios</div>
+<div class="d"><b>Glasgow Underground</b> &middot; 126 BPM &middot; 10B &middot; 5:23 &middot; 2026-07-03 &middot; Tech House</div>
+<a class="lnk" href="https://www.beatport.com/track/sex-machine/29468926" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">65</div>
+</div>
+<div class="row" data-score="63.0"
+ data-artist="Chasing Kurt" data-title="From The Inside (Reznik Extended Remix)" data-label="Defected">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/from-the-inside/29656830" target="_blank">From The Inside (Reznik Extended Remix)</a></div>
+<div class="a">Chasing Kurt</div>
+<div class="d"><b>Defected</b> &middot; 122 BPM &middot; 5A &middot; 7:39 &middot; 2026-07-17 &middot; Melodic House &amp; Techno</div>
+<a class="lnk" href="https://www.beatport.com/track/from-the-inside/29656830" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">63</div>
+</div>
+<div class="row" data-score="63.0"
+ data-artist="Teddy Douglas, Fast Eddie" data-title="House Music (feat. Fast Eddie) (Gabss House Musiq Remix)" data-label="Nervous Records">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/house-music-feat-fast-eddie/29740769" target="_blank">House Music (feat. Fast Eddie) (Gabss House Musiq Remix)</a></div>
+<div class="a">Teddy Douglas, Fast Eddie</div>
+<div class="d"><b>Nervous Records</b> &middot; 124 BPM &middot; 3B &middot; 5:40 &middot; 2026-07-24 &middot; House</div>
+<a class="lnk" href="https://www.beatport.com/track/house-music-feat-fast-eddie/29740769" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">63</div>
+</div>
+<div class="row" data-score="63.0"
+ data-artist="Berin, STEIN (US)" data-title="See Me (Extended Mix)" data-label="Nervous Records">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/see-me/29569438" target="_blank">See Me (Extended Mix)</a></div>
+<div class="a">Berin, STEIN (US)</div>
+<div class="d"><b>Nervous Records</b> &middot; 124 BPM &middot; 5B &middot; 6:27 &middot; 2026-07-10 &middot; Tech House</div>
+<a class="lnk" href="https://www.beatport.com/track/see-me/29569438" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">63</div>
+</div>
+<div class="row" data-score="62.3"
+ data-artist="Hannah Wants, Trace (UZ)" data-title="Badman Sound (Instrumental)" data-label="Nervous Records">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/badman-sound/29568775" target="_blank">Badman Sound (Instrumental)</a></div>
+<div class="a">Hannah Wants, Trace (UZ)</div>
+<div class="d"><b>Nervous Records</b> &middot; 125 BPM &middot; 8B &middot; 5:11 &middot; 2026-07-17 &middot; Tech House</div>
+<a class="lnk" href="https://www.beatport.com/track/badman-sound/29568775" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">62</div>
+</div>
+<div class="row" data-score="62.0"
+ data-artist="Byron Stingily, Weiss" data-title="Love You (Extended Mix)" data-label="Fool's Paradise">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/love-you/29581569" target="_blank">Love You (Extended Mix)</a></div>
+<div class="a">Byron Stingily, Weiss</div>
+<div class="d"><b>Fool's Paradise</b> &middot; 128 BPM &middot; 5A &middot; 6:32 &middot; 2026-07-24 &middot; House</div>
+<a class="lnk" href="https://www.beatport.com/track/love-you/29581569" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">62</div>
+</div>
+<div class="row" data-score="61.8"
+ data-artist="Teddy Douglas, Fast Eddie" data-title="House Music (feat. Fast Eddie) (Teddy's Acid Crash Remix)" data-label="Nervous Records">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/house-music-feat-fast-eddie/29740770" target="_blank">House Music (feat. Fast Eddie) (Teddy's Acid Crash Remix)</a></div>
+<div class="a">Teddy Douglas, Fast Eddie</div>
+<div class="d"><b>Nervous Records</b> &middot; 124 BPM &middot; 12A &middot; 4:40 &middot; 2026-07-24 &middot; House</div>
+<a class="lnk" href="https://www.beatport.com/track/house-music-feat-fast-eddie/29740770" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">62</div>
+</div>
+<div class="row" data-score="61.5"
+ data-artist="Jonas Rathsman, Grigoré, Bensy, Serve Cold" data-title="Tobago (Serve Cold, Bensy &amp; Grigoré Extended Remix)" data-label="Defected">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/tobago/29283013" target="_blank">Tobago (Serve Cold, Bensy &amp; Grigoré Extended Remix)</a></div>
+<div class="a">Jonas Rathsman, Grigoré, Bensy, Serve Cold</div>
+<div class="d"><b>Defected</b> &middot; 122 BPM &middot; 7A &middot; 5:46 &middot; 2026-06-26 &middot; House</div>
+<a class="lnk" href="https://www.beatport.com/track/tobago/29283013" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">62</div>
+</div>
+<div class="row" data-score="61.3"
+ data-artist="Solardo" data-title="Outta Space (Extended Mix)" data-label="Glasgow Underground">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/outta-space/29468890" target="_blank">Outta Space (Extended Mix)</a></div>
+<div class="a">Solardo</div>
+<div class="d"><b>Glasgow Underground</b> &middot; 130 BPM &middot; 7B &middot; 7:04 &middot; 2026-07-03 &middot; Indie Dance</div>
+<a class="lnk" href="https://www.beatport.com/track/outta-space/29468890" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">61</div>
+</div>
+<div class="row" data-score="61.2"
+ data-artist="Alanas Chosnau, Alev Tav" data-title="Golden Sun (Extended Mix)" data-label="Glasgow Underground">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/golden-sun/29468937" target="_blank">Golden Sun (Extended Mix)</a></div>
+<div class="a">Alanas Chosnau, Alev Tav</div>
+<div class="d"><b>Glasgow Underground</b> &middot; 128 BPM &middot; 6A &middot; 5:02 &middot; 2026-07-03 &middot; Deep House</div>
+<a class="lnk" href="https://www.beatport.com/track/golden-sun/29468937" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">61</div>
+</div>
+<div class="row" data-score="61.2"
+ data-artist="Earth n Days" data-title="Start the Change (Extended Mix)" data-label="HouseU">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/start-the-change/29245574" target="_blank">Start the Change (Extended Mix)</a></div>
+<div class="a">Earth n Days</div>
+<div class="d"><b>HouseU</b> &middot; 128 BPM &middot; 5A &middot; 5:01 &middot; 2026-06-19 &middot; House</div>
+<a class="lnk" href="https://www.beatport.com/track/start-the-change/29245574" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">61</div>
+</div>
+<div class="row" data-score="60.5"
+ data-artist="Jeremy Bass, All Fred" data-title="Tribalk (Radio Edit)" data-label="Nervous Records">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/tribalk/29740670" target="_blank">Tribalk (Radio Edit)</a></div>
+<div class="a">Jeremy Bass, All Fred</div>
+<div class="d"><b>Nervous Records</b> &middot; 124 BPM &middot; 2B &middot; 3:00 &middot; 2026-07-24 &middot; Tech House</div>
+<a class="lnk" href="https://www.beatport.com/track/tribalk/29740670" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">60</div>
+</div>
+<div class="row" data-score="60.5"
+ data-artist="Jeremy Bass, All Fred" data-title="Tribalk (Extended Mix)" data-label="Nervous Records">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/tribalk/29740671" target="_blank">Tribalk (Extended Mix)</a></div>
+<div class="a">Jeremy Bass, All Fred</div>
+<div class="d"><b>Nervous Records</b> &middot; 124 BPM &middot; 2B &middot; 4:25 &middot; 2026-07-24 &middot; Tech House</div>
+<a class="lnk" href="https://www.beatport.com/track/tribalk/29740671" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">60</div>
+</div>
+<div class="row" data-score="60.5"
+ data-artist="Hannah Wants, Trace (UZ)" data-title="Badman Sound" data-label="Nervous Records">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/badman-sound/29568773" target="_blank">Badman Sound</a></div>
+<div class="a">Hannah Wants, Trace (UZ)</div>
+<div class="d"><b>Nervous Records</b> &middot; 125 BPM &middot; 8B &middot; 3:08 &middot; 2026-07-17 &middot; Tech House</div>
+<a class="lnk" href="https://www.beatport.com/track/badman-sound/29568773" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">60</div>
+</div>
+<div class="row" data-score="60.5"
+ data-artist="Byron Stingily, X-Coast" data-title="You Make Me Feel (Mighty Real) (Funky Playa Mix)" data-label="Nervous Records">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/you-make-me-feel-mighty-real/29569037" target="_blank">You Make Me Feel (Mighty Real) (Funky Playa Mix)</a></div>
+<div class="a">Byron Stingily, X-Coast</div>
+<div class="d"><b>Nervous Records</b> &middot; 124 BPM &middot; 7B &middot; 3:09 &middot; 2026-07-17 &middot; House</div>
+<a class="lnk" href="https://www.beatport.com/track/you-make-me-feel-mighty-real/29569037" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">60</div>
+</div>
+<div class="row" data-score="60.5"
+ data-artist="Berin, STEIN (US)" data-title="See Me" data-label="Nervous Records">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/see-me/29569437" target="_blank">See Me</a></div>
+<div class="a">Berin, STEIN (US)</div>
+<div class="d"><b>Nervous Records</b> &middot; 124 BPM &middot; 5B &middot; 3:09 &middot; 2026-07-10 &middot; Tech House</div>
+<a class="lnk" href="https://www.beatport.com/track/see-me/29569437" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">60</div>
+</div>
+<div class="row" data-score="60.5"
+ data-artist="MARINA TRENCH" data-title="En La Discoteca " data-label="Snatch! Records">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/en-la-discoteca/29072717" target="_blank">En La Discoteca </a></div>
+<div class="a">MARINA TRENCH</div>
+<div class="d"><b>Snatch! Records</b> &middot; 125 BPM &middot; 8B &middot; 3:41 &middot; 2026-06-18 &middot; House</div>
+<a class="lnk" href="https://www.beatport.com/track/en-la-discoteca/29072717" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">60</div>
+</div>
+<div class="row" data-score="60.2"
+ data-artist="Travis Emmons, Modgirl" data-title="Sing It Back (Extended Mix)" data-label="Glasgow Underground">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/sing-it-back/29850569" target="_blank">Sing It Back (Extended Mix)</a></div>
+<div class="a">Travis Emmons, Modgirl</div>
+<div class="d"><b>Glasgow Underground</b> &middot; 128 BPM &middot; 2A &middot; 5:30 &middot; 2026-07-31 &middot; Deep House</div>
+<a class="lnk" href="https://www.beatport.com/track/sing-it-back/29850569" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">60</div>
+</div>
+<div class="row" data-score="60.2"
+ data-artist="DJ Kone &amp; Marc Palacios, ROMBE4T" data-title="Press Play (Extended Mix)" data-label="HouseU">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/press-play/29311291" target="_blank">Press Play (Extended Mix)</a></div>
+<div class="a">DJ Kone &amp; Marc Palacios, ROMBE4T</div>
+<div class="d"><b>HouseU</b> &middot; 128 BPM &middot; 3A &middot; 5:30 &middot; 2026-07-17 &middot; House</div>
+<a class="lnk" href="https://www.beatport.com/track/press-play/29311291" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">60</div>
+</div>
+<div class="row" data-score="59.5"
+ data-artist="Kevin McKay, Pressure Rhythm" data-title="Together (Extended Mix)" data-label="Glasgow Underground">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/together/29735813" target="_blank">Together (Extended Mix)</a></div>
+<div class="a">Kevin McKay, Pressure Rhythm</div>
+<div class="d"><b>Glasgow Underground</b> &middot; 130 BPM &middot; 9A &middot; 4:57 &middot; 2026-07-31 &middot; House</div>
+<a class="lnk" href="https://www.beatport.com/track/together/29735813" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">60</div>
+</div>
+<div class="row" data-score="59.3"
+ data-artist="Liva K" data-title="Track With The Organ (Extended Mix)" data-label="Defected">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/track-with-the-organ/29283012" target="_blank">Track With The Organ (Extended Mix)</a></div>
+<div class="a">Liva K</div>
+<div class="d"><b>Defected</b> &middot; 123 BPM &middot; 6B &middot; 5:59 &middot; 2026-06-26 &middot; Melodic House &amp; Techno</div>
+<a class="lnk" href="https://www.beatport.com/track/track-with-the-organ/29283012" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">59</div>
+</div>
+<div class="row" data-score="59.0"
+ data-artist="Route 94" data-title="4Get The Girl (Extended Mix)" data-label="Defected">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/4get-the-girl/29283005" target="_blank">4Get The Girl (Extended Mix)</a></div>
+<div class="a">Route 94</div>
+<div class="d"><b>Defected</b> &middot; 122 BPM &middot; 11A &middot; 4:45 &middot; 2026-06-26 &middot; House</div>
+<a class="lnk" href="https://www.beatport.com/track/4get-the-girl/29283005" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">59</div>
+</div>
+<div class="row" data-score="59.0"
+ data-artist="Kevin McKay, Fab Massimo, Chantal Lewis Brown" data-title="How Will I Know (Extended Mix)" data-label="Glasgow Underground">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/how-will-i-know/29468917" target="_blank">How Will I Know (Extended Mix)</a></div>
+<div class="a">Kevin McKay, Fab Massimo, Chantal Lewis Brown</div>
+<div class="d"><b>Glasgow Underground</b> &middot; 128 BPM &middot; 5B &middot; 5:15 &middot; 2026-07-03 &middot; Tech House</div>
+<a class="lnk" href="https://www.beatport.com/track/how-will-i-know/29468917" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">59</div>
+</div>
+<div class="row" data-score="59.0"
+ data-artist="Kevin McKay, Fab Massimo" data-title="Gimme More (Extended Mix)" data-label="Glasgow Underground">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/gimme-more/29468905" target="_blank">Gimme More (Extended Mix)</a></div>
+<div class="a">Kevin McKay, Fab Massimo</div>
+<div class="d"><b>Glasgow Underground</b> &middot; 128 BPM &middot; 7B &middot; 5:16 &middot; 2026-07-03 &middot; Tech House</div>
+<a class="lnk" href="https://www.beatport.com/track/gimme-more/29468905" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">59</div>
+</div>
+<div class="row" data-score="59.0"
+ data-artist="Antoine Clamaran, Agua Sin Gas, Da Coona" data-title="Anymore (Extended Mix)" data-label="HouseU">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/anymore/29577087" target="_blank">Anymore (Extended Mix)</a></div>
+<div class="a">Antoine Clamaran, Agua Sin Gas, Da Coona</div>
+<div class="d"><b>HouseU</b> &middot; 128 BPM &middot; 6B &middot; 5:37 &middot; 2026-07-31 &middot; House</div>
+<a class="lnk" href="https://www.beatport.com/track/anymore/29577087" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">59</div>
+</div>
+<div class="row" data-score="58.5"
+ data-artist="Nautik (US)" data-title="Get Busy (Extended Mix)" data-label="Sola">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/get-busy/29486288" target="_blank">Get Busy (Extended Mix)</a></div>
+<div class="a">Nautik (US)</div>
+<div class="d"><b>Sola</b> &middot; 127 BPM &middot; 6A &middot; 5:08 &middot; 2026-07-17 &middot; Tech House</div>
+<a class="lnk" href="https://www.beatport.com/track/get-busy/29486288" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">58</div>
+</div>
+<div class="row" data-score="58.0"
+ data-artist="Sidney Charles" data-title="Controoler" data-label="Defected">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/controoler/29283049" target="_blank">Controoler</a></div>
+<div class="a">Sidney Charles</div>
+<div class="d"><b>Defected</b> &middot; 124 BPM &middot; 10A &middot; 6:54 &middot; 2026-06-26 &middot; Tech House</div>
+<a class="lnk" href="https://www.beatport.com/track/controoler/29283049" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">58</div>
+</div>
+<div class="row" data-score="58.0"
+ data-artist="John Tejada" data-title="Sweat (On The Walls) (Franky Rizardo Remix)" data-label="Defected">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/sweat-on-the-walls/29283025" target="_blank">Sweat (On The Walls) (Franky Rizardo Remix)</a></div>
+<div class="a">John Tejada</div>
+<div class="d"><b>Defected</b> &middot; 125 BPM &middot; 7A &middot; 6:51 &middot; 2026-06-26 &middot; House</div>
+<a class="lnk" href="https://www.beatport.com/track/sweat-on-the-walls/29283025" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">58</div>
+</div>
+<div class="row" data-score="57.3"
+ data-artist="Groove Delight" data-title="Kickback (Extended Mix)" data-label="Glasgow Underground">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/kickback/29468925" target="_blank">Kickback (Extended Mix)</a></div>
+<div class="a">Groove Delight</div>
+<div class="d"><b>Glasgow Underground</b> &middot; 130 BPM &middot; 5B &middot; 4:40 &middot; 2026-07-03 &middot; Indie Dance</div>
+<a class="lnk" href="https://www.beatport.com/track/kickback/29468925" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">57</div>
+</div>
+<div class="row" data-score="57.3"
+ data-artist="Luis Rodriguez, Nausica" data-title="On the Floor (Extended Mix)" data-label="HouseU">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/on-the-floor/29052384" target="_blank">On the Floor (Extended Mix)</a></div>
+<div class="a">Luis Rodriguez, Nausica</div>
+<div class="d"><b>HouseU</b> &middot; 129 BPM &middot; 2B &middot; 4:57 &middot; 2026-07-03 &middot; Tech House</div>
+<a class="lnk" href="https://www.beatport.com/track/on-the-floor/29052384" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">57</div>
+</div>
+<div class="row" data-score="56.8"
+ data-artist="Jonas Blue, Malive" data-title="Edge of Desire (Extended Mix)" data-label="Defected">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/edge-of-desire/29283004" target="_blank">Edge of Desire (Extended Mix)</a></div>
+<div class="a">Jonas Blue, Malive</div>
+<div class="d"><b>Defected</b> &middot; 123 BPM &middot; 9B &middot; 4:12 &middot; 2026-06-26 &middot; House</div>
+<a class="lnk" href="https://www.beatport.com/track/edge-of-desire/29283004" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">57</div>
+</div>
+<div class="row" data-score="56.5"
+ data-artist="Hardsoul, Ron Carroll" data-title="Back Together (Copyright Vocal Edit)" data-label="Defected">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/back-together/29283022" target="_blank">Back Together (Copyright Vocal Edit)</a></div>
+<div class="a">Hardsoul, Ron Carroll</div>
+<div class="d"><b>Defected</b> &middot; 125 BPM &middot; 9A &middot; 9:22 &middot; 2026-06-26 &middot; House</div>
+<a class="lnk" href="https://www.beatport.com/track/back-together/29283022" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">56</div>
+</div>
+<div class="row" data-score="56.5"
+ data-artist="Groove Armada" data-title="Love's Theme (Extended Mix)" data-label="Defected">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/loves-theme/29283020" target="_blank">Love's Theme (Extended Mix)</a></div>
+<div class="a">Groove Armada</div>
+<div class="d"><b>Defected</b> &middot; 124 BPM &middot; 4A &middot; 6:09 &middot; 2026-06-26 &middot; House</div>
+<a class="lnk" href="https://www.beatport.com/track/loves-theme/29283020" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">56</div>
+</div>
+<div class="row" data-score="55.8"
+ data-artist="Michael Gray" data-title="Universe (Extended Mix)" data-label="Toolroom">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/universe/29038162" target="_blank">Universe (Extended Mix)</a></div>
+<div class="a">Michael Gray</div>
+<div class="d"><b>Toolroom</b> &middot; 124 BPM &middot; 10A &middot; 5:29 &middot; 2026-06-19 &middot; House</div>
+<a class="lnk" href="https://www.beatport.com/track/universe/29038162" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">56</div>
+</div>
+<div class="row" data-score="54.5"
+ data-artist="MARINA TRENCH" data-title="Let's Dance " data-label="Snatch! Records">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/lets-dance/29072715" target="_blank">Let's Dance </a></div>
+<div class="a">MARINA TRENCH</div>
+<div class="d"><b>Snatch! Records</b> &middot; 127 BPM &middot; 8B &middot; 4:39 &middot; 2026-06-18 &middot; Nu Disco / Disco</div>
+<a class="lnk" href="https://www.beatport.com/track/lets-dance/29072715" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">54</div>
+</div>
+<div class="row" data-score="54.3"
+ data-artist="ANOTR" data-title="Stop The Music" data-label="Defected">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/stop-the-music/29283033" target="_blank">Stop The Music</a></div>
+<div class="a">ANOTR</div>
+<div class="d"><b>Defected</b> &middot; 125 BPM &middot; 6B &middot; 6:11 &middot; 2026-06-26 &middot; House</div>
+<a class="lnk" href="https://www.beatport.com/track/stop-the-music/29283033" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">54</div>
+</div>
+<div class="row" data-score="54.0"
+ data-artist="Mele, Wonky Logic, Jords" data-title="So High (Extended Mix)" data-label="Defected">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/so-high/29283009" target="_blank">So High (Extended Mix)</a></div>
+<div class="a">Mele, Wonky Logic, Jords</div>
+<div class="d"><b>Defected</b> &middot; 125 BPM &middot; 10A &middot; 3:35 &middot; 2026-06-26 &middot; House</div>
+<a class="lnk" href="https://www.beatport.com/track/so-high/29283009" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">54</div>
+</div>
+<div class="row" data-score="54.0"
+ data-artist="Adam Ten" data-title="I Never Knew (Extended Mix)" data-label="Defected">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/i-never-knew/29283008" target="_blank">I Never Knew (Extended Mix)</a></div>
+<div class="a">Adam Ten</div>
+<div class="d"><b>Defected</b> &middot; 125 BPM &middot; 7A &middot; 4:59 &middot; 2026-06-26 &middot; House</div>
+<a class="lnk" href="https://www.beatport.com/track/i-never-knew/29283008" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">54</div>
+</div>
+<div class="row" data-score="53.2"
+ data-artist="Ronnie Spiteri" data-title="Becca's Booty" data-label="Hot Creations">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/beccas-booty/29717591" target="_blank">Becca's Booty</a></div>
+<div class="a">Ronnie Spiteri</div>
+<div class="d"><b>Hot Creations</b> &middot; 128 BPM &middot; 7A &middot; 6:04 &middot; 2026-08-07 &middot; House</div>
+<a class="lnk" href="https://www.beatport.com/track/beccas-booty/29717591" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">53</div>
+</div>
+<div class="row" data-score="53.2"
+ data-artist="Deltech" data-title="Voices" data-label="Hot Creations">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/voices/29344600" target="_blank">Voices</a></div>
+<div class="a">Deltech</div>
+<div class="d"><b>Hot Creations</b> &middot; 129 BPM &middot; 8A &middot; 6:27 &middot; 2026-07-10 &middot; Tech House</div>
+<a class="lnk" href="https://www.beatport.com/track/voices/29344600" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">53</div>
+</div>
+<div class="row" data-score="53.2"
+ data-artist="Balanka" data-title="BodyLang" data-label="Hot Creations">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/bodylang/29182937" target="_blank">BodyLang</a></div>
+<div class="a">Balanka</div>
+<div class="d"><b>Hot Creations</b> &middot; 128 BPM &middot; 6A &middot; 6:00 &middot; 2026-06-26 &middot; Tech House</div>
+<a class="lnk" href="https://www.beatport.com/track/bodylang/29182937" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">53</div>
+</div>
+<div class="row" data-score="53.2"
+ data-artist="Jason Detox" data-title="Braindead" data-label="Repopulate Mars">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/braindead/29355984" target="_blank">Braindead</a></div>
+<div class="a">Jason Detox</div>
+<div class="d"><b>Repopulate Mars</b> &middot; 129 BPM &middot; 8A &middot; 5:59 &middot; 2026-07-10 &middot; Tech House</div>
+<a class="lnk" href="https://www.beatport.com/track/braindead/29355984" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">53</div>
+</div>
+<div class="row" data-score="53.2"
+ data-artist="Jason Detox" data-title="Shake That" data-label="Repopulate Mars">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/shake-that/29355986" target="_blank">Shake That</a></div>
+<div class="a">Jason Detox</div>
+<div class="d"><b>Repopulate Mars</b> &middot; 130 BPM &middot; 9A &middot; 5:41 &middot; 2026-07-10 &middot; Tech House</div>
+<a class="lnk" href="https://www.beatport.com/track/shake-that/29355986" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">53</div>
+</div>
+<div class="row" data-score="53.2"
+ data-artist="Lee Foss, ERASR" data-title="Crazy" data-label="Repopulate Mars">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/crazy/29085257" target="_blank">Crazy</a></div>
+<div class="a">Lee Foss, ERASR</div>
+<div class="d"><b>Repopulate Mars</b> &middot; 129 BPM &middot; 8A &middot; 5:58 &middot; 2026-06-19 &middot; Dance / Pop</div>
+<a class="lnk" href="https://www.beatport.com/track/crazy/29085257" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">53</div>
+</div>
+<div class="row" data-score="53.2"
+ data-artist="Masino" data-title="The Sound Of Love  (Extended Mix)" data-label="Snatch! Records">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/the-sound-of-love/29705900" target="_blank">The Sound Of Love  (Extended Mix)</a></div>
+<div class="a">Masino</div>
+<div class="d"><b>Snatch! Records</b> &middot; 128 BPM &middot; 4A &middot; 6:15 &middot; 2026-07-23 &middot; House</div>
+<a class="lnk" href="https://www.beatport.com/track/the-sound-of-love/29705900" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">53</div>
+</div>
+<div class="row" data-score="53.2"
+ data-artist="Sonata Collective" data-title="Now Drop (Extended Mix)" data-label="Sola">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/now-drop/29853698" target="_blank">Now Drop (Extended Mix)</a></div>
+<div class="a">Sonata Collective</div>
+<div class="d"><b>Sola</b> &middot; 129 BPM &middot; 7A &middot; 5:58 &middot; 2026-08-07 &middot; Deep House</div>
+<a class="lnk" href="https://www.beatport.com/track/now-drop/29853698" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">53</div>
+</div>
+<div class="row" data-score="53.2"
+ data-artist="Sonata Collective" data-title="Too Hot (Extended Mix)" data-label="Sola">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/too-hot/29853700" target="_blank">Too Hot (Extended Mix)</a></div>
+<div class="a">Sonata Collective</div>
+<div class="d"><b>Sola</b> &middot; 130 BPM &middot; 10A &middot; 6:34 &middot; 2026-08-07 &middot; Deep House</div>
+<a class="lnk" href="https://www.beatport.com/track/too-hot/29853700" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">53</div>
+</div>
+<div class="row" data-score="52.5"
+ data-artist="Ronnie Spiteri" data-title="Double Up" data-label="Hot Creations">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/double-up/29717590" target="_blank">Double Up</a></div>
+<div class="a">Ronnie Spiteri</div>
+<div class="d"><b>Hot Creations</b> &middot; 128 BPM &middot; 5A &middot; 5:27 &middot; 2026-08-07 &middot; House</div>
+<a class="lnk" href="https://www.beatport.com/track/double-up/29717590" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">52</div>
+</div>
+<div class="row" data-score="52.5"
+ data-artist="Luke DuBose" data-title="Freak Me Baby" data-label="Hot Creations">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/freak-me-baby/29431802" target="_blank">Freak Me Baby</a></div>
+<div class="a">Luke DuBose</div>
+<div class="d"><b>Hot Creations</b> &middot; 130 BPM &middot; 8A &middot; 5:03 &middot; 2026-07-17 &middot; Tech House</div>
+<a class="lnk" href="https://www.beatport.com/track/freak-me-baby/29431802" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">52</div>
+</div>
+<div class="row" data-score="52.5"
+ data-artist="Volkoder" data-title="Bassline Hits" data-label="Hot Creations">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/bassline-hits/28971965" target="_blank">Bassline Hits</a></div>
+<div class="a">Volkoder</div>
+<div class="d"><b>Hot Creations</b> &middot; 130 BPM &middot; 5A &middot; 5:10 &middot; 2026-06-12 &middot; Tech House</div>
+<a class="lnk" href="https://www.beatport.com/track/bassline-hits/28971965" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">52</div>
+</div>
+<div class="row" data-score="52.5"
+ data-artist="Funky Green Dogs" data-title="Fired Up! (Arapu Remix)" data-label="Nervous Records">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/fired-up/29741255" target="_blank">Fired Up! (Arapu Remix)</a></div>
+<div class="a">Funky Green Dogs</div>
+<div class="d"><b>Nervous Records</b> &middot; 129 BPM &middot; 9B &middot; 6:55 &middot; 2026-07-31 &middot; Tech House</div>
+<a class="lnk" href="https://www.beatport.com/track/fired-up/29741255" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">52</div>
+</div>
+<div class="row" data-score="52.5"
+ data-artist="Lee Foss, GS5" data-title="Separation" data-label="Repopulate Mars">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/separation/29752167" target="_blank">Separation</a></div>
+<div class="a">Lee Foss, GS5</div>
+<div class="d"><b>Repopulate Mars</b> &middot; 128 BPM &middot; 6A &middot; 5:21 &middot; 2026-08-07 &middot; Tech House</div>
+<a class="lnk" href="https://www.beatport.com/track/separation/29752167" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">52</div>
+</div>
+<div class="row" data-score="52.5"
+ data-artist="Doozie, 3Beat" data-title="Roll With Me" data-label="Repopulate Mars">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/roll-with-me/28971587" target="_blank">Roll With Me</a></div>
+<div class="a">Doozie, 3Beat</div>
+<div class="d"><b>Repopulate Mars</b> &middot; 130 BPM &middot; 4A &middot; 5:06 &middot; 2026-06-12 &middot; Tech House</div>
+<a class="lnk" href="https://www.beatport.com/track/roll-with-me/28971587" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">52</div>
+</div>
+<div class="row" data-score="52.5"
+ data-artist="Doozie, 3Beat" data-title="Roll With Me" data-label="Repopulate Mars">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/roll-with-me/29301998" target="_blank">Roll With Me</a></div>
+<div class="a">Doozie, 3Beat</div>
+<div class="d"><b>Repopulate Mars</b> &middot; 130 BPM &middot; 4A &middot; 5:06 &middot; 2026-06-12 &middot; Tech House</div>
+<a class="lnk" href="https://www.beatport.com/track/roll-with-me/29301998" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">52</div>
+</div>
+<div class="row" data-score="52.5"
+ data-artist="Reboot" data-title="Silk  (Mike The Connector &amp; Daaeeru Extended Remix)" data-label="Snatch! Records">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/silk/29537482" target="_blank">Silk  (Mike The Connector &amp; Daaeeru Extended Remix)</a></div>
+<div class="a">Reboot</div>
+<div class="d"><b>Snatch! Records</b> &middot; 128 BPM &middot; 5B &middot; 6:41 &middot; 2026-07-09 &middot; House</div>
+<a class="lnk" href="https://www.beatport.com/track/silk/29537482" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">52</div>
+</div>
+<div class="row" data-score="52.5"
+ data-artist="Amedeo Picone" data-title="Samba Love  (Extended Mix)" data-label="Snatch! Records">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/samba-love/29083165" target="_blank">Samba Love  (Extended Mix)</a></div>
+<div class="a">Amedeo Picone</div>
+<div class="d"><b>Snatch! Records</b> &middot; 128 BPM &middot; 11A &middot; 5:37 &middot; 2026-06-25 &middot; House</div>
+<a class="lnk" href="https://www.beatport.com/track/samba-love/29083165" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">52</div>
+</div>
+<div class="row" data-score="52.5"
+ data-artist="Amedeo Picone" data-title="Hot Shot  (Extended Mix)" data-label="Snatch! Records">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/hot-shot/29083166" target="_blank">Hot Shot  (Extended Mix)</a></div>
+<div class="a">Amedeo Picone</div>
+<div class="d"><b>Snatch! Records</b> &middot; 128 BPM &middot; 8A &middot; 5:05 &middot; 2026-06-25 &middot; Tech House</div>
+<a class="lnk" href="https://www.beatport.com/track/hot-shot/29083166" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">52</div>
+</div>
+<div class="row" data-score="52.2"
+ data-artist="Balanka" data-title="F To This Beat" data-label="Hot Creations">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/f-to-this-beat/29182936" target="_blank">F To This Beat</a></div>
+<div class="a">Balanka</div>
+<div class="d"><b>Hot Creations</b> &middot; 128 BPM &middot; 12A &middot; 6:00 &middot; 2026-06-26 &middot; Tech House</div>
+<a class="lnk" href="https://www.beatport.com/track/f-to-this-beat/29182936" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">52</div>
+</div>
+<div class="row" data-score="52.2"
+ data-artist="Lowderz, Haluem" data-title="TooDance" data-label="Nervous Records">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/toodance/29511966" target="_blank">TooDance</a></div>
+<div class="a">Lowderz, Haluem</div>
+<div class="d"><b>Nervous Records</b> &middot; 130 BPM &middot; 1A &middot; 5:54 &middot; 2026-07-10 &middot; Tech House</div>
+<a class="lnk" href="https://www.beatport.com/track/toodance/29511966" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">52</div>
+</div>
+<div class="row" data-score="52.2"
+ data-artist="Lee Foss, ERASR" data-title="Party Monster" data-label="Repopulate Mars">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/party-monster/29085256" target="_blank">Party Monster</a></div>
+<div class="a">Lee Foss, ERASR</div>
+<div class="d"><b>Repopulate Mars</b> &middot; 128 BPM &middot; 3A &middot; 6:00 &middot; 2026-06-19 &middot; Tech House</div>
+<a class="lnk" href="https://www.beatport.com/track/party-monster/29085256" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">52</div>
+</div>
+<div class="row" data-score="52.2"
+ data-artist="Sonata Collective" data-title="Hard 4 U (Extended Mix)" data-label="Sola">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/hard-4-u/29853697" target="_blank">Hard 4 U (Extended Mix)</a></div>
+<div class="a">Sonata Collective</div>
+<div class="d"><b>Sola</b> &middot; 130 BPM &middot; 2A &middot; 5:47 &middot; 2026-08-07 &middot; Deep House</div>
+<a class="lnk" href="https://www.beatport.com/track/hard-4-u/29853697" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">52</div>
+</div>
+<div class="row" data-score="51.8"
+ data-artist="Sergio Mendes, Simon Fava" data-title="Magalenha (Extended Mix)" data-label="Toolroom">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/magalenha/29607356" target="_blank">Magalenha (Extended Mix)</a></div>
+<div class="a">Sergio Mendes, Simon Fava</div>
+<div class="d"><b>Toolroom</b> &middot; 125 BPM &middot; 11B &middot; 4:26 &middot; 2026-07-31 &middot; House</div>
+<a class="lnk" href="https://www.beatport.com/track/magalenha/29607356" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">52</div>
+</div>
+<div class="row" data-score="51.0"
+ data-artist="Volkoder" data-title="My House" data-label="Hot Creations">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/my-house/28971964" target="_blank">My House</a></div>
+<div class="a">Volkoder</div>
+<div class="d"><b>Hot Creations</b> &middot; 128 BPM &middot; 11B &middot; 5:45 &middot; 2026-06-12 &middot; Tech House</div>
+<a class="lnk" href="https://www.beatport.com/track/my-house/28971964" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">51</div>
+</div>
+<div class="row" data-score="51.0"
+ data-artist="Victor Castello, FUSTER" data-title="Cigalera" data-label="Nervous Records">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/cigalera/29568891" target="_blank">Cigalera</a></div>
+<div class="a">Victor Castello, FUSTER</div>
+<div class="d"><b>Nervous Records</b> &middot; 130 BPM &middot; 8B &middot; 5:47 &middot; 2026-07-17 &middot; Tech House</div>
+<a class="lnk" href="https://www.beatport.com/track/cigalera/29568891" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">51</div>
+</div>
+<div class="row" data-score="51.0"
+ data-artist="Victor Castello, FUSTER" data-title="Cigalera (Dub Version)" data-label="Nervous Records">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/cigalera/29568892" target="_blank">Cigalera (Dub Version)</a></div>
+<div class="a">Victor Castello, FUSTER</div>
+<div class="d"><b>Nervous Records</b> &middot; 130 BPM &middot; 8B &middot; 5:47 &middot; 2026-07-17 &middot; Tech House</div>
+<a class="lnk" href="https://www.beatport.com/track/cigalera/29568892" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">51</div>
+</div>
+<div class="row" data-score="51.0"
+ data-artist="Jason Detox" data-title="Tag Poppin" data-label="Repopulate Mars">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/tag-poppin/29355985" target="_blank">Tag Poppin</a></div>
+<div class="a">Jason Detox</div>
+<div class="d"><b>Repopulate Mars</b> &middot; 129 BPM &middot; 11B &middot; 5:46 &middot; 2026-07-10 &middot; Tech House</div>
+<a class="lnk" href="https://www.beatport.com/track/tag-poppin/29355985" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">51</div>
+</div>
+<div class="row" data-score="51.0"
+ data-artist="Masino" data-title="Special Eyes  (Extended Mix)" data-label="Snatch! Records">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/special-eyes/29705899" target="_blank">Special Eyes  (Extended Mix)</a></div>
+<div class="a">Masino</div>
+<div class="d"><b>Snatch! Records</b> &middot; 128 BPM &middot; 9B &middot; 6:30 &middot; 2026-07-23 &middot; House</div>
+<a class="lnk" href="https://www.beatport.com/track/special-eyes/29705899" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">51</div>
+</div>
+<div class="row" data-score="51.0"
+ data-artist="Sonata Collective, Tone Blanco" data-title="Ode To House (Extended Mix)" data-label="Sola">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/ode-to-house/29853699" target="_blank">Ode To House (Extended Mix)</a></div>
+<div class="a">Sonata Collective, Tone Blanco</div>
+<div class="d"><b>Sola</b> &middot; 130 BPM &middot; 10B &middot; 6:09 &middot; 2026-08-07 &middot; Deep House</div>
+<a class="lnk" href="https://www.beatport.com/track/ode-to-house/29853699" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">51</div>
+</div>
+<div class="row" data-score="51.0"
+ data-artist="Sonata Collective, Tone Blanco" data-title="Ode To House (Extended Mix)" data-label="Sola">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/ode-to-house/29377026" target="_blank">Ode To House (Extended Mix)</a></div>
+<div class="a">Sonata Collective, Tone Blanco</div>
+<div class="d"><b>Sola</b> &middot; 130 BPM &middot; 10B &middot; 6:09 &middot; 2026-07-10 &middot; House</div>
+<a class="lnk" href="https://www.beatport.com/track/ode-to-house/29377026" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">51</div>
+</div>
+<div class="row" data-score="50.8"
+ data-artist="Amedeo Picone" data-title="Echoes Of Dance  (Extended Mix)" data-label="Snatch! Records">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/echoes-of-dance/29083164" target="_blank">Echoes Of Dance  (Extended Mix)</a></div>
+<div class="a">Amedeo Picone</div>
+<div class="d"><b>Snatch! Records</b> &middot; 128 BPM &middot; 11A &middot; 4:37 &middot; 2026-06-25 &middot; House</div>
+<a class="lnk" href="https://www.beatport.com/track/echoes-of-dance/29083164" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">51</div>
+</div>
+<div class="row" data-score="50.8"
+ data-artist="Caleb Dent" data-title="Big Bass (Extended Mix)" data-label="Sola">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/big-bass/29657199" target="_blank">Big Bass (Extended Mix)</a></div>
+<div class="a">Caleb Dent</div>
+<div class="d"><b>Sola</b> &middot; 130 BPM &middot; 9A &middot; 4:11 &middot; 2026-07-31 &middot; Tech House</div>
+<a class="lnk" href="https://www.beatport.com/track/big-bass/29657199" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">51</div>
+</div>
+<div class="row" data-score="50.3"
+ data-artist="PLUS2, Doh! (BR)" data-title="Club Jump" data-label="Repopulate Mars">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/club-jump/29170736" target="_blank">Club Jump</a></div>
+<div class="a">PLUS2, Doh! (BR)</div>
+<div class="d"><b>Repopulate Mars</b> &middot; 130 BPM &middot; 7B &middot; 5:18 &middot; 2026-06-26 &middot; Bass House</div>
+<a class="lnk" href="https://www.beatport.com/track/club-jump/29170736" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">50</div>
+</div>
+<div class="row" data-score="49.8"
+ data-artist="Mele" data-title="Soul Makossa (Extended Mix)" data-label="Defected">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/soul-makossa/29505979" target="_blank">Soul Makossa (Extended Mix)</a></div>
+<div class="a">Mele</div>
+<div class="d"><b>Defected</b> &middot; 127 BPM &middot; 6A &middot; 5:15 &middot; 2026-07-10 &middot; House</div>
+<a class="lnk" href="https://www.beatport.com/track/soul-makossa/29505979" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">50</div>
+</div>
+<div class="row" data-score="49.8"
+ data-artist="Archie Hamilton, HQA" data-title="Let The Light In (Extended Mix)" data-label="Defected">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/let-the-light-in/29283040" target="_blank">Let The Light In (Extended Mix)</a></div>
+<div class="a">Archie Hamilton, HQA</div>
+<div class="d"><b>Defected</b> &middot; 126 BPM &middot; 7B &middot; 7:03 &middot; 2026-06-26 &middot; House</div>
+<a class="lnk" href="https://www.beatport.com/track/let-the-light-in/29283040" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">50</div>
+</div>
+<div class="row" data-score="49.8"
+ data-artist="Teddy Douglas, Fast Eddie" data-title="House Music (feat. Fast Eddie) (Mason Maynard's Shaolin Dub)" data-label="Nervous Records">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/house-music-feat-fast-eddie/29740768" target="_blank">House Music (feat. Fast Eddie) (Mason Maynard's Shaolin Dub)</a></div>
+<div class="a">Teddy Douglas, Fast Eddie</div>
+<div class="d"><b>Nervous Records</b> &middot; 129 BPM &middot; 12A &middot; 4:58 &middot; 2026-07-24 &middot; House</div>
+<a class="lnk" href="https://www.beatport.com/track/house-music-feat-fast-eddie/29740768" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">50</div>
+</div>
+<div class="row" data-score="48.5"
+ data-artist="ProOne79" data-title="A Certain Urgency (Night Tool Mix)" data-label="Nervous Records">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/a-certain-urgency/29511946" target="_blank">A Certain Urgency (Night Tool Mix)</a></div>
+<div class="a">ProOne79</div>
+<div class="d"><b>Nervous Records</b> &middot; 128 BPM &middot; 9B &middot; 4:31 &middot; 2026-07-10 &middot; Tech House</div>
+<a class="lnk" href="https://www.beatport.com/track/a-certain-urgency/29511946" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">48</div>
+</div>
+<div class="row" data-score="48.0"
+ data-artist="GUDFELLA, James Poole" data-title="Gator Boots (Extended Mix)" data-label="Defected">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/gator-boots/29377540" target="_blank">Gator Boots (Extended Mix)</a></div>
+<div class="a">GUDFELLA, James Poole</div>
+<div class="d"><b>Defected</b> &middot; 126 BPM &middot; 5A &middot; 4:19 &middot; 2026-07-02 &middot; Tech House</div>
+<a class="lnk" href="https://www.beatport.com/track/gator-boots/29377540" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">48</div>
+</div>
+<div class="row" data-score="48.0"
+ data-artist="Breach, Calle Lebraun" data-title="Visions (Jack) (Extended Mix)" data-label="Defected">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/visions-jack/29283024" target="_blank">Visions (Jack) (Extended Mix)</a></div>
+<div class="a">Breach, Calle Lebraun</div>
+<div class="d"><b>Defected</b> &middot; 126 BPM &middot; 9A &middot; 4:59 &middot; 2026-06-26 &middot; House</div>
+<a class="lnk" href="https://www.beatport.com/track/visions-jack/29283024" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">48</div>
+</div>
+<div class="row" data-score="44.5"
+ data-artist="Nick Curly, Caleb Laurenson, Danny P (IRL)" data-title="Underground (Danny P &amp; Caleb Laurenson Extended Remix)" data-label="Defected">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/underground/29283014" target="_blank">Underground (Danny P &amp; Caleb Laurenson Extended Remix)</a></div>
+<div class="a">Nick Curly, Caleb Laurenson, Danny P (IRL)</div>
+<div class="d"><b>Defected</b> &middot; 130 BPM &middot; 5A &middot; 6:29 &middot; 2026-06-26 &middot; Tech House</div>
+<a class="lnk" href="https://www.beatport.com/track/underground/29283014" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">44</div>
+</div>
+<div class="row" data-score="44.5"
+ data-artist="Illyus Barrientos, MALU (BR)" data-title="Right Here (Extended Mix)" data-label="Toolroom">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/right-here/28938217" target="_blank">Right Here (Extended Mix)</a></div>
+<div class="a">Illyus Barrientos, MALU (BR)</div>
+<div class="d"><b>Toolroom</b> &middot; 130 BPM &middot; 4A &middot; 5:40 &middot; 2026-06-12 &middot; House</div>
+<a class="lnk" href="https://www.beatport.com/track/right-here/28938217" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">44</div>
+</div>
+<div class="row" data-score="43.8"
+ data-artist="DJ S.K.T, DJ Rae, GAZZ (UK)" data-title="Take Me Away (GAZZ Extended Remix)" data-label="Defected">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/take-me-away/29283029" target="_blank">Take Me Away (GAZZ Extended Remix)</a></div>
+<div class="a">DJ S.K.T, DJ Rae, GAZZ (UK)</div>
+<div class="d"><b>Defected</b> &middot; 130 BPM &middot; 6B &middot; 6:40 &middot; 2026-06-26 &middot; House</div>
+<a class="lnk" href="https://www.beatport.com/track/take-me-away/29283029" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">44</div>
+</div>
+<div class="row" data-score="43.8"
+ data-artist="DJ Technics, Piem, SLM, Kotton The Cutie" data-title="Activated (I Just Wanna) (Extended Mix)" data-label="Defected">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/activated-i-just-wanna/29283006" target="_blank">Activated (I Just Wanna) (Extended Mix)</a></div>
+<div class="a">DJ Technics, Piem, SLM, Kotton The Cutie</div>
+<div class="d"><b>Defected</b> &middot; 130 BPM &middot; 8A &middot; 5:25 &middot; 2026-06-26 &middot; House</div>
+<a class="lnk" href="https://www.beatport.com/track/activated-i-just-wanna/29283006" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">44</div>
+</div>
+<div class="row" data-score="43.8"
+ data-artist="Mojjo, Sarria, No One Knows (BR)" data-title="Cash On Cash (Extended Mix)" data-label="Toolroom">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/cash-on-cash/29378613" target="_blank">Cash On Cash (Extended Mix)</a></div>
+<div class="a">Mojjo, Sarria, No One Knows (BR)</div>
+<div class="d"><b>Toolroom</b> &middot; 128 BPM &middot; 6A &middot; 5:35 &middot; 2026-07-17 &middot; Tech House</div>
+<a class="lnk" href="https://www.beatport.com/track/cash-on-cash/29378613" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">44</div>
+</div>
+<div class="row" data-score="43.5"
+ data-artist="The Trip, Eliza Rose, L.P. Rhythm" data-title="Weekend (L.P. Rhythm Extended Remix)" data-label="Defected">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/weekend/29283048" target="_blank">Weekend (L.P. Rhythm Extended Remix)</a></div>
+<div class="a">The Trip, Eliza Rose, L.P. Rhythm</div>
+<div class="d"><b>Defected</b> &middot; 130 BPM &middot; 3A &middot; 6:15 &middot; 2026-06-26 &middot; House</div>
+<a class="lnk" href="https://www.beatport.com/track/weekend/29283048" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">44</div>
+</div>
+<div class="row" data-score="43.5"
+ data-artist="RSquared" data-title="Fantasy (Extended Mix)" data-label="Defected">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/fantasy/29283035" target="_blank">Fantasy (Extended Mix)</a></div>
+<div class="a">RSquared</div>
+<div class="d"><b>Defected</b> &middot; 128 BPM &middot; 3A &middot; 5:54 &middot; 2026-06-26 &middot; Tech House</div>
+<a class="lnk" href="https://www.beatport.com/track/fantasy/29283035" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">44</div>
+</div>
+<div class="row" data-score="42.8"
+ data-artist="Ferreck Dawn" data-title="Lost At The End (Extended Mix)" data-label="Toolroom">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/lost-at-the-end/29226049" target="_blank">Lost At The End (Extended Mix)</a></div>
+<div class="a">Ferreck Dawn</div>
+<div class="d"><b>Toolroom</b> &middot; 128 BPM &middot; 12A &middot; 5:30 &middot; 2026-07-03 &middot; Tech House</div>
+<a class="lnk" href="https://www.beatport.com/track/lost-at-the-end/29226049" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">43</div>
+</div>
+<div class="row" data-score="41.0"
+ data-artist="James Poole" data-title="Lease Of Life (Extended Mix)" data-label="Defected">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/lease-of-life/29283045" target="_blank">Lease Of Life (Extended Mix)</a></div>
+<div class="a">James Poole</div>
+<div class="d"><b>Defected</b> &middot; 128 BPM &middot; 2A &middot; 4:30 &middot; 2026-06-26 &middot; House</div>
+<a class="lnk" href="https://www.beatport.com/track/lease-of-life/29283045" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">41</div>
+</div>
+<div class="row" data-score="39.8"
+ data-artist="Oden &amp; Fatzo, Noa Milee" data-title="You Don't Want To Think About It (Extended Mix)" data-label="Defected">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/you-dont-want-to-think-about-it/29507858" target="_blank">You Don't Want To Think About It (Extended Mix)</a></div>
+<div class="a">Oden &amp; Fatzo, Noa Milee</div>
+<div class="d"><b>Defected</b> &middot; 130 BPM &middot; 7B &middot; 4:47 &middot; 2026-07-24 &middot; House</div>
+<a class="lnk" href="https://www.beatport.com/track/you-dont-want-to-think-about-it/29507858" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">40</div>
+</div>
+<div class="row" data-score="39.8"
+ data-artist="Clüb De Combat" data-title="All The Single Ladies (Extended Mix)" data-label="Defected">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/all-the-single-ladies/29264809" target="_blank">All The Single Ladies (Extended Mix)</a></div>
+<div class="a">Clüb De Combat</div>
+<div class="d"><b>Defected</b> &middot; 130 BPM &middot; 3B &middot; 4:33 &middot; 2026-06-26 &middot; House</div>
+<a class="lnk" href="https://www.beatport.com/track/all-the-single-ladies/29264809" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">40</div>
+</div>
+<div class="row" data-score="39.8"
+ data-artist="James Hurr, Tita Lau" data-title="Sweat (Extended Mix)" data-label="Toolroom">
+<input type="checkbox" class="chk">
+<div class="meta">
+<div class="t"><a class="lnk" style="font-size:.95rem;color:var(--ink)" href="https://www.beatport.com/track/sweat/29358480" target="_blank">Sweat (Extended Mix)</a></div>
+<div class="a">James Hurr, Tita Lau</div>
+<div class="d"><b>Toolroom</b> &middot; 129 BPM &middot; 7B &middot; 4:58 &middot; 2026-07-10 &middot; Tech House</div>
+<a class="lnk" href="https://www.beatport.com/track/sweat/29358480" target="_blank">Preview on Beatport &rarr;</a>
+</div>
+<div class="sc">40</div>
+</div>
+
+<div class="bar"><span><b id="n">0</b> picked</span>
+<button class="copy" onclick="copyPicks()">Copy picks</button></div>
+<script>
+function upd(){
+  const rows=[...document.querySelectorAll('.row')];
+  const n=rows.filter(r=>r.querySelector('.chk').checked).length;
+  document.getElementById('n').textContent=n;
+  rows.forEach(r=>r.classList.toggle('picked',r.querySelector('.chk').checked));
+}
+document.addEventListener('change',e=>{if(e.target.classList.contains('chk'))upd()});
+document.querySelectorAll('.fbtn').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('.fbtn').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');
+  const f=b.dataset.f;
+  document.querySelectorAll('.row').forEach(r=>{
+    const s=parseFloat(r.dataset.score);
+    const p=r.querySelector('.chk').checked;
+    let show=true;
+    if(f==='70')show=s>=70; else if(f==='60')show=s>=60; else if(f==='picked')show=p;
+    r.style.display=show?'flex':'none';
+  });
+});
+function copyPicks(){
+  const out=[...document.querySelectorAll('.row')]
+    .filter(r=>r.querySelector('.chk').checked)
+    .map((r,i)=>`${i+1}. ${r.dataset.artist} - ${r.dataset.title} [${r.dataset.label}]`)
+    .join('\n');
+  if(!out){alert('Nothing picked yet');return}
+  navigator.clipboard.writeText(out).then(()=>alert('Copied to clipboard'));
+}
+</script></body></html>

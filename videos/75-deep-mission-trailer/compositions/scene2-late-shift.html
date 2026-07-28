@@ -1,0 +1,163 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          background: #000000;
+          overflow: hidden;
+          font-family: "Space Mono", monospace;
+          color: #f4f7fa;
+        }
+
+        .bg-photo {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          filter: brightness(0.55) saturate(0.9);
+          transform: scale(1);
+        }
+
+        .bg-scrim {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(180deg, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.15) 40%, rgba(0, 0, 0, 0.75) 100%);
+        }
+
+        .tint-overlay {
+          position: absolute;
+          inset: 0;
+          background: #081420;
+          mix-blend-mode: color;
+          opacity: 0.55;
+        }
+
+        .kicker {
+          position: absolute;
+          top: 64px;
+          left: 50%;
+          transform: translateX(-50%);
+          font-size: 24px;
+          letter-spacing: 0.4em;
+          text-transform: uppercase;
+          color: #9aa7b4;
+          opacity: 0;
+        }
+
+        .clock-wrap {
+          position: absolute;
+          top: 120px;
+          right: 130px;
+          width: 220px;
+          height: 220px;
+          opacity: 0;
+        }
+
+        .clock-face {
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+          border: 3px solid #3ba7e0;
+          box-shadow: 0 0 30px rgba(59, 167, 224, 0.35), inset 0 0 20px rgba(59, 167, 224, 0.12);
+          position: relative;
+        }
+
+        .hand {
+          position: absolute;
+          left: 50%;
+          bottom: 50%;
+          width: 5px;
+          background: #aedcf7;
+          border-radius: 3px;
+          transform-origin: bottom center;
+        }
+
+        .hand-hour { height: 55px; transform: translateX(-50%) rotate(0deg); }
+        .hand-minute { height: 80px; transform: translateX(-50%) rotate(0deg); }
+
+        .readout {
+          position: absolute;
+          bottom: 96px;
+          left: 50%;
+          transform: translateX(-50%);
+          font-size: 56px;
+          letter-spacing: 0.08em;
+          color: #f2faff;
+          text-shadow: 0 0 24px rgba(174, 220, 247, 0.4);
+          opacity: 0;
+        }
+
+        .caption {
+          position: absolute;
+          bottom: 210px;
+          left: 50%;
+          transform: translateX(-50%);
+          font-size: 26px;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: #35d9a6;
+          opacity: 0;
+          text-align: center;
+        }
+      </style>
+
+      <div id="root" data-composition-id="late-shift" data-width="1920" data-height="1080" data-duration="14">
+        <img class="bg-photo" id="l-photo" src="assets/photos/break_smoke.jpg" alt="" />
+        <div class="bg-scrim"></div>
+        <div class="tint-overlay" id="l-tint"></div>
+
+        <p class="kicker" id="l-kicker">The Late Shift</p>
+
+        <div class="clock-wrap" id="l-clock">
+          <div class="clock-face">
+            <div class="hand hand-hour" id="l-hand-hour"></div>
+            <div class="hand hand-minute" id="l-hand-minute"></div>
+          </div>
+        </div>
+
+        <p class="readout" id="l-readout-1">11:58 PM</p>
+        <p class="readout" id="l-readout-2">5:15 AM</p>
+        <p class="caption" id="l-caption">EVERY NIGHT, WHILE THE WORLD SLEPT</p>
+      </div>
+
+      <script>
+        window.__timelines = window.__timelines || {};
+        const tl = gsap.timeline({ paused: true });
+
+        // Slow Ken Burns push-in on the studio photo (allowed: transform/scale)
+        tl.fromTo("#l-photo", { scale: 1.0 }, { scale: 1.12, duration: 14, ease: "none" }, 0);
+
+        tl.fromTo("#l-kicker", { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: 0.6 }, 0.3);
+        tl.fromTo("#l-clock", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.6 }, 1.0);
+
+        // Clock hands spin fast, finite repeat (12 full turns over ~6s, then settle)
+        tl.to("#l-hand-minute", { rotation: 360 * 12, duration: 6, ease: "none" }, 1.2);
+        tl.to("#l-hand-hour", { rotation: 360 * 1, duration: 6, ease: "none" }, 1.2);
+
+        // Two stacked readouts crossfade at a fixed beat -- seek-safe at any
+        // arbitrary render time, unlike a mid-timeline text-content swap.
+        tl.set("#l-readout-2", { opacity: 0 }, 0);
+        tl.fromTo("#l-readout-1", { opacity: 0 }, { opacity: 1, duration: 0.5 }, 2.0);
+        tl.to("#l-readout-1", { opacity: 0, duration: 0.5 }, 7.4);
+        tl.fromTo("#l-readout-2", { opacity: 0 }, { opacity: 1, duration: 0.5 }, 7.6);
+
+        // Night-blue tint fades out to reveal warmer morning light (backgroundColor
+        // is not on the tween allowlist for a color-mix layer, so we tween opacity
+        // of the tint overlay itself instead -- deterministic, allowlisted).
+        tl.to("#l-tint", { opacity: 0, duration: 4 }, 7.4);
+
+        tl.fromTo("#l-caption", { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.5 }, 3.2);
+        tl.to("#l-caption", { opacity: 0, duration: 0.4 }, 7.0);
+
+        window.__timelines["late-shift"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

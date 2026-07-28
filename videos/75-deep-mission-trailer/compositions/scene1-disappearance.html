@@ -1,0 +1,210 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          background:
+            radial-gradient(60% 42% at 50% 32%, rgba(30, 111, 184, 0.16) 0%, rgba(30, 111, 184, 0) 70%),
+            radial-gradient(120% 90% at 50% 100%, #081420 0%, #000000 55%);
+          overflow: hidden;
+          font-family: "Space Mono", monospace;
+          color: #f4f7fa;
+        }
+
+        .kicker {
+          position: absolute;
+          top: 64px;
+          left: 50%;
+          transform: translateX(-50%);
+          font-size: 24px;
+          letter-spacing: 0.4em;
+          text-transform: uppercase;
+          color: #9aa7b4;
+          opacity: 0;
+        }
+
+        .rain-layer {
+          position: absolute;
+          inset: 0;
+        }
+
+        .streak {
+          position: absolute;
+          top: -140px;
+          width: 3px;
+          height: 140px;
+          background: linear-gradient(180deg, rgba(174, 220, 247, 0) 0%, rgba(174, 220, 247, 0.55) 60%, rgba(174, 220, 247, 0) 100%);
+          transform: rotate(8deg);
+        }
+
+        .lightning {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(160deg, #eaf6ff 0%, #aedcf7 100%);
+          opacity: 0;
+        }
+
+        .grid-layer {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 40px;
+        }
+
+        .post-grid {
+          display: grid;
+          grid-template-columns: repeat(5, 100px);
+          grid-template-rows: repeat(3, 100px);
+          gap: 18px;
+        }
+
+        .post-box {
+          width: 100px;
+          height: 100px;
+          border: 1px solid #1a1a24;
+          border-radius: 6px;
+          background: #0b0b11;
+          opacity: 0;
+        }
+
+        .grid-caption {
+          font-size: 30px;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          color: #f4f7fa;
+          text-align: center;
+          max-width: 900px;
+        }
+
+        .grid-caption span {
+          display: block;
+          opacity: 0;
+          margin-bottom: 4px;
+        }
+
+        .stat-wrap {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          opacity: 0;
+          transform: scale(0.9);
+        }
+
+        .stat-num {
+          font-family: "Archivo Black", sans-serif;
+          font-weight: 400;
+          font-size: 260px;
+          color: #f2faff;
+          text-shadow: 0 0 40px rgba(174, 220, 247, 0.45), 0 0 100px rgba(59, 167, 224, 0.3);
+          line-height: 1;
+        }
+
+        .stat-label {
+          font-family: "Space Mono", monospace;
+          font-size: 28px;
+          letter-spacing: 0.3em;
+          text-transform: uppercase;
+          color: #3ba7e0;
+          margin-left: 20px;
+        }
+      </style>
+
+      <div id="root" data-composition-id="disappearance" data-width="1920" data-height="1080" data-duration="14">
+        <p class="kicker" id="d-kicker">Unkle Funk &mdash; 75 Deep</p>
+
+        <div class="rain-layer" id="d-rain">
+          <!-- 12 rain streaks, fixed hand-placed positions (deterministic) -->
+          <div class="streak" style="left: 8%"></div>
+          <div class="streak" style="left: 16%"></div>
+          <div class="streak" style="left: 24%"></div>
+          <div class="streak" style="left: 32%"></div>
+          <div class="streak" style="left: 40%"></div>
+          <div class="streak" style="left: 48%"></div>
+          <div class="streak" style="left: 56%"></div>
+          <div class="streak" style="left: 64%"></div>
+          <div class="streak" style="left: 72%"></div>
+          <div class="streak" style="left: 80%"></div>
+          <div class="streak" style="left: 88%"></div>
+          <div class="streak" style="left: 94%"></div>
+          <div class="lightning" id="d-lightning"></div>
+        </div>
+
+        <div class="grid-layer" id="d-grid-layer">
+          <div class="post-grid" id="d-post-grid">
+            <div class="post-box"></div><div class="post-box"></div><div class="post-box"></div><div class="post-box"></div><div class="post-box"></div>
+            <div class="post-box"></div><div class="post-box"></div><div class="post-box"></div><div class="post-box"></div><div class="post-box"></div>
+            <div class="post-box"></div><div class="post-box"></div><div class="post-box"></div><div class="post-box"></div><div class="post-box"></div>
+          </div>
+          <p class="grid-caption">
+            <span id="d-line1">NO POSTS.</span>
+            <span id="d-line2">NO UPDATES.</span>
+            <span id="d-line3">NO SOCIAL SCENE.</span>
+          </p>
+        </div>
+
+        <div class="stat-wrap" id="d-stat-wrap">
+          <span class="stat-num">5</span><span class="stat-label">YEARS<br />OFF&nbsp;THE&nbsp;GRID</span>
+        </div>
+      </div>
+
+      <script>
+        window.__timelines = window.__timelines || {};
+        const tl = gsap.timeline({ paused: true });
+
+        // Kicker in
+        tl.fromTo("#d-kicker", { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: 0.6 }, 0.2);
+
+        // Rain: 12 streaks fall and loop for phase A (0 -> 6.6s), cycle 0.9s,
+        // finite repeat = floor(6.6 / 0.9) - 1 = 6 (floor, never ceil).
+        tl.fromTo(
+          "#d-rain .streak",
+          { y: -140 },
+          { y: 1220, duration: 0.9, ease: "none", repeat: 6, stagger: 0.05 },
+          0,
+        );
+
+        // Two fixed lightning flashes (deterministic times, not random)
+        tl.fromTo("#d-lightning", { opacity: 0 }, { opacity: 0.55, duration: 0.09 }, 2.3)
+          .to("#d-lightning", { opacity: 0, duration: 0.35 }, 2.39)
+          .fromTo("#d-lightning", { opacity: 0 }, { opacity: 0.4, duration: 0.09 }, 4.6)
+          .to("#d-lightning", { opacity: 0, duration: 0.35 }, 4.69);
+
+        // Rain layer out, grid layer in
+        tl.to("#d-rain", { opacity: 0, duration: 0.8 }, 6.2);
+
+        tl.fromTo(
+          "#d-post-grid .post-box",
+          { opacity: 0 },
+          { opacity: 1, duration: 0.4, stagger: 0.045 },
+          6.6,
+        );
+
+        tl.fromTo("#d-line1", { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.4 }, 8.0)
+          .fromTo("#d-line2", { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.4 }, 8.55)
+          .fromTo("#d-line3", { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.4 }, 9.1);
+
+        // Grid fades back to make room for the "5 YEARS" stat
+        tl.to("#d-grid-layer", { opacity: 0.15, duration: 0.8 }, 10.0);
+        tl.fromTo(
+          "#d-stat-wrap",
+          { opacity: 0, scale: 0.9 },
+          { opacity: 1, scale: 1, duration: 0.7, ease: "power2.out" },
+          10.2,
+        );
+
+        window.__timelines["disappearance"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

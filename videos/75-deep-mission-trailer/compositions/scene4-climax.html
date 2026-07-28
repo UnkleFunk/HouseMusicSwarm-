@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          background: #000000;
+          overflow: hidden;
+          font-family: "Space Mono", monospace;
+          color: #f4f7fa;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .glow {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 900px;
+          height: 900px;
+          margin: -450px 0 0 -450px;
+          border-radius: 50%;
+          background: radial-gradient(circle, rgba(53, 217, 166, 0.28) 0%, rgba(59, 167, 224, 0.14) 45%, rgba(0, 0, 0, 0) 72%);
+          opacity: 0;
+        }
+
+        .counter-wrap {
+          position: relative;
+          display: flex;
+          align-items: baseline;
+          gap: 24px;
+        }
+
+        .counter-num {
+          font-family: "Archivo Black", sans-serif;
+          font-weight: 400;
+          font-size: 400px;
+          line-height: 1;
+          color: #f2faff;
+          text-shadow: 0 0 40px rgba(242, 250, 255, 0.55), 0 0 110px rgba(53, 217, 166, 0.4);
+          display: inline-block;
+          font-variant-numeric: tabular-nums;
+        }
+
+        .counter-of {
+          font-size: 60px;
+          color: #5e7488;
+        }
+
+        .kicker {
+          position: absolute;
+          bottom: 110px;
+          left: 50%;
+          transform: translateX(-50%);
+          font-size: 30px;
+          letter-spacing: 0.32em;
+          text-transform: uppercase;
+          color: #35d9a6;
+          opacity: 0;
+        }
+      </style>
+
+      <div id="root" data-composition-id="climax" data-width="1920" data-height="1080" data-duration="10">
+        <div class="glow" id="c-glow"></div>
+        <div class="counter-wrap">
+          <span class="counter-num" id="c-number">1</span>
+          <span class="counter-of">/75</span>
+        </div>
+        <p class="kicker" id="c-kicker">75 Deep &mdash; Time To Finish The Journey</p>
+      </div>
+
+      <script>
+        window.__timelines = window.__timelines || {};
+        const tl = gsap.timeline({ paused: true });
+        const numEl_id = "c-number";
+
+        tl.fromTo("#c-glow", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.8 }, 0);
+        // Finite pulse, starts once the intro tween settles (no scale overlap):
+        // cycle 1.0s across the remaining ~8.7s window -> repeat = floor(8.7/1)-1 = 7
+        tl.to("#c-glow", { scale: 1.06, duration: 0.5, repeat: 7, yoyo: true, ease: "sine.inOut" }, 0.85);
+
+        // Count-up 1 -> 75, proxy-object tween driving textContent + a
+        // proportional scale grow -- deterministic function of tl.time().
+        const counter = { val: 1 };
+        tl.to(
+          counter,
+          {
+            val: 75,
+            duration: 8.4,
+            ease: "power1.inOut",
+            snap: { val: 1 },
+            onUpdate: function () {
+              const el = document.getElementById(numEl_id);
+              if (!el) return;
+              const v = Math.round(counter.val);
+              el.textContent = v;
+              const scale = 0.88 + ((v - 1) / (75 - 1)) * 0.3;
+              el.style.transform = "scale(" + scale.toFixed(4) + ")";
+            },
+          },
+          0.3,
+        );
+
+        tl.fromTo("#c-kicker", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.6 }, 9.0);
+
+        window.__timelines["climax"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

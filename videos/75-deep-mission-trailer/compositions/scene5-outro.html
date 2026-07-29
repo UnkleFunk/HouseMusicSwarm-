@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          background: #000000;
+          overflow: hidden;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .lockup {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 28px;
+        }
+
+        .title {
+          font-family: "Archivo Black", sans-serif;
+          font-weight: 400;
+          font-size: 220px;
+          line-height: 1;
+          color: #f2faff;
+          text-shadow: 0 0 30px rgba(242, 250, 255, 0.5), 0 0 90px rgba(59, 167, 224, 0.35);
+          opacity: 0;
+          letter-spacing: 0.02em;
+        }
+
+        .url {
+          font-family: "Space Mono", monospace;
+          font-size: 44px;
+          letter-spacing: 0.18em;
+          color: #3ba7e0;
+          opacity: 0;
+        }
+
+        .blackout {
+          position: absolute;
+          inset: 0;
+          background: #000000;
+          opacity: 0;
+        }
+      </style>
+
+      <div id="root" data-composition-id="outro" data-width="1920" data-height="1080" data-duration="12">
+        <div class="lockup">
+          <p class="title" id="o-title">75 DEEP</p>
+          <p class="url" id="o-url">// unklefunk.music</p>
+        </div>
+        <div class="blackout" id="o-blackout"></div>
+      </div>
+
+      <script>
+        window.__timelines = window.__timelines || {};
+        const tl = gsap.timeline({ paused: true });
+
+        tl.fromTo("#o-title", { opacity: 0, scale: 0.92 }, { opacity: 1, scale: 1, duration: 0.9, ease: "power2.out" }, 0.3);
+        tl.fromTo("#o-url", { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.6 }, 1.1);
+
+        // No VO here -- the real track carries this beat solo (see NOTES.md).
+        // Hold the lockup, then fade to black for the final hold.
+        tl.to("#o-blackout", { opacity: 1, duration: 1.6, ease: "power1.in" }, 10.2);
+
+        window.__timelines["outro"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

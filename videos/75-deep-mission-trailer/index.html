@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: #000; }
+      #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; }
+      #root > div[data-composition-src] { position: absolute; inset: 0; }
+    </style>
+  </head>
+  <body>
+    <!--
+      75 DEEP — mission trailer, first draft (60s script target; 64s actual —
+      real narration pacing runs slightly longer than the scripted windows).
+      5 hard scene cuts -> modular sub-compositions. See NOTES.md for what's
+      placeholder vs. real in this draft.
+    -->
+    <div
+      id="root"
+      data-composition-id="root"
+      data-start="0"
+      data-width="1920"
+      data-height="1080"
+      data-duration="64"
+    >
+      <!-- Scene 1: The Disappearance (0-14) -->
+      <div
+        id="el-disappearance"
+        data-composition-id="disappearance"
+        data-composition-src="compositions/scene1-disappearance.html"
+        data-start="0"
+        data-duration="14"
+        data-track-index="1"
+      ></div>
+
+      <!-- Scene 2: The Late Shift (14-28) -->
+      <div
+        id="el-late-shift"
+        data-composition-id="late-shift"
+        data-composition-src="compositions/scene2-late-shift.html"
+        data-start="14"
+        data-duration="14"
+        data-track-index="1"
+      ></div>
+
+      <!-- Scene 3: The Systems (28-42) -->
+      <div
+        id="el-systems"
+        data-composition-id="systems"
+        data-composition-src="compositions/scene3-systems.html"
+        data-start="28"
+        data-duration="14"
+        data-track-index="1"
+      ></div>
+
+      <!-- Scene 4: The Climax (42-52) -->
+      <div
+        id="el-climax"
+        data-composition-id="climax"
+        data-composition-src="compositions/scene4-climax.html"
+        data-start="42"
+        data-duration="10"
+        data-track-index="1"
+      ></div>
+
+      <!-- Scene 5: The Outro (52-64) -->
+      <div
+        id="el-outro"
+        data-composition-id="outro"
+        data-composition-src="compositions/scene5-outro.html"
+        data-start="52"
+        data-duration="12"
+        data-track-index="1"
+      ></div>
+
+      <!--
+        Placeholder scratch VO (Kokoro, local/offline TTS — am_michael voice).
+        NOT Glenn's real voice. Swap each file in assets/audio/ for a real
+        recording before this ships; timings below were fit to these exact
+        placeholder takes and will need re-checking against real VO length.
+      -->
+      <audio
+        id="vo-1"
+        class="clip"
+        src="assets/audio/vo-01-disappearance.wav"
+        data-start="0.4"
+        data-duration="13.01"
+        data-track-index="10"
+        data-volume="1"
+      ></audio>
+      <audio
+        id="vo-2"
+        class="clip"
+        src="assets/audio/vo-02-late-shift.wav"
+        data-start="14.4"
+        data-duration="13.01"
+        data-track-index="10"
+        data-volume="1"
+      ></audio>
+      <audio
+        id="vo-3"
+        class="clip"
+        src="assets/audio/vo-03-systems.wav"
+        data-start="28.4"
+        data-duration="13.23"
+        data-track-index="10"
+        data-volume="1"
+      ></audio>
+      <audio
+        id="vo-4"
+        class="clip"
+        src="assets/audio/vo-04-climax.wav"
+        data-start="42.3"
+        data-duration="9.28"
+        data-track-index="10"
+        data-volume="1"
+      ></audio>
+
+      <!--
+        NO music bed in this draft, on purpose. The script's climax/outro
+        line is "Zero percent AI-generated. The music is one hundred percent
+        human" — generating a fake AI house bassline to sit under that line
+        would contradict the trailer's entire point. Scene 4/5 are built to
+        receive a real Unkle Funk track (bounce of "1998" or another 75 Deep
+        cut) at assets/audio/bassline.mp3 — see NOTES.md.
+      -->
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      // Root timeline stays empty — all animation lives in the sub-comps.
+      window.__timelines["root"] = gsap.timeline({ paused: true });
+    </script>
+  </body>
+</html>

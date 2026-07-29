@@ -351,9 +351,13 @@ h3 {
 }
 
 /* Centered mid-line rhythm: headers centered, copy in a centered measure,
-   images centered wider than the copy — same axis the 2x2 track grid sits on. */
+   images centered wider than the copy — same axis the 2x2 track grid sits on.
+   h2's own max-width (14em) makes it narrower than .wrap, so text-align
+   alone only centers the text inside that narrower box — the box itself
+   needs margin-inline:auto or it sits flush left. */
 #mission .label, #mission h2, #about .label, #about h2,
 #connect .label, #connect h2 { text-align: center; }
+#mission h2, #about h2, #connect h2 { margin-inline: auto; }
 
 .connect-headshot {
   display: block;

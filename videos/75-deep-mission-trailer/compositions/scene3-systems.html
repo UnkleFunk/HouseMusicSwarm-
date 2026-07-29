@@ -1,0 +1,186 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          background:
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cg fill='%231F7A72' fill-opacity='0.28'%3E%3Crect x='18' width='1' height='80'/%3E%3Crect y='18' width='80' height='1'/%3E%3C/g%3E%3Cg fill='%231B2A5B' fill-opacity='0.32'%3E%3Crect x='38' width='2' height='80'/%3E%3Crect y='38' width='80' height='2'/%3E%3C/g%3E%3C/svg%3E") repeat,
+            #060609;
+          overflow: hidden;
+          font-family: "Space Mono", monospace;
+          color: #f4f7fa;
+        }
+
+        .kicker {
+          position: absolute;
+          top: 64px;
+          left: 50%;
+          transform: translateX(-50%);
+          font-size: 24px;
+          letter-spacing: 0.4em;
+          text-transform: uppercase;
+          color: #9aa7b4;
+          opacity: 0;
+        }
+
+        .terminal {
+          position: absolute;
+          top: 220px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 1180px;
+          border: 1px solid #1a1a24;
+          border-radius: 10px;
+          background: #0b0b11;
+          box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6), 0 0 60px rgba(59, 167, 224, 0.08);
+          opacity: 0;
+        }
+
+        .term-bar {
+          display: flex;
+          gap: 10px;
+          padding: 18px 22px;
+          border-bottom: 1px solid #1a1a24;
+        }
+
+        .term-dot { width: 14px; height: 14px; border-radius: 50%; background: #1a1a24; }
+
+        .term-body {
+          padding: 36px 40px 44px;
+          font-size: 28px;
+          line-height: 2.1;
+        }
+
+        .term-line {
+          opacity: 0;
+          color: #9aa7b4;
+        }
+
+        .term-line .prompt { color: #35d9a6; margin-right: 14px; }
+        .term-line .ok { color: #3ba7e0; }
+
+        .arrangement {
+          position: absolute;
+          top: 220px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 1180px;
+          height: 480px;
+          border: 1px solid #1a1a24;
+          border-radius: 10px;
+          background: #0b0b11;
+          box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+          opacity: 0;
+          overflow: hidden;
+        }
+
+        .track-lane {
+          position: relative;
+          height: 90px;
+          border-bottom: 1px solid #1a1a24;
+          display: flex;
+          align-items: center;
+          padding: 0 24px;
+          gap: 10px;
+        }
+
+        .block {
+          height: 46px;
+          border-radius: 4px;
+          flex: none;
+        }
+
+        .lane-1 .block { background: rgba(59, 167, 224, 0.55); }
+        .lane-2 .block { background: rgba(53, 217, 166, 0.55); }
+        .lane-3 .block { background: rgba(174, 220, 247, 0.4); }
+        .lane-4 .block { background: rgba(59, 167, 224, 0.32); }
+
+        .playhead {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 2px;
+          height: 100%;
+          background: #aedcf7;
+          box-shadow: 0 0 16px rgba(174, 220, 247, 0.8);
+        }
+
+        .closer {
+          position: absolute;
+          bottom: 130px;
+          left: 50%;
+          transform: translateX(-50%);
+          font-size: 30px;
+          letter-spacing: 0.06em;
+          text-align: center;
+          color: #35d9a6;
+          opacity: 0;
+        }
+      </style>
+
+      <div id="root" data-composition-id="systems" data-width="1920" data-height="1080" data-duration="14">
+        <p class="kicker" id="s-kicker">The Systems</p>
+
+        <div class="terminal" id="s-terminal">
+          <div class="term-bar">
+            <div class="term-dot"></div><div class="term-dot"></div><div class="term-dot"></div>
+          </div>
+          <div class="term-body">
+            <p class="term-line" id="s-t1"><span class="prompt">$</span>python discover_tracks.py --taste-profile</p>
+            <p class="term-line" id="s-t2"><span class="prompt">$</span>scoring candidates&hellip; <span class="ok">92% match</span></p>
+            <p class="term-line" id="s-t3"><span class="prompt">$</span>git push origin main</p>
+            <p class="term-line" id="s-t4"><span class="prompt">$</span>deploy &rarr; unklefunk.music <span class="ok">&#10003;</span></p>
+          </div>
+        </div>
+
+        <div class="arrangement" id="s-arrangement">
+          <div class="track-lane lane-1">
+            <div class="block" style="width: 120px"></div><div class="block" style="width: 80px"></div><div class="block" style="width: 160px"></div><div class="block" style="width: 60px"></div>
+          </div>
+          <div class="track-lane lane-2">
+            <div class="block" style="width: 90px"></div><div class="block" style="width: 140px"></div><div class="block" style="width: 100px"></div>
+          </div>
+          <div class="track-lane lane-3">
+            <div class="block" style="width: 200px"></div><div class="block" style="width: 70px"></div><div class="block" style="width: 130px"></div>
+          </div>
+          <div class="track-lane lane-4">
+            <div class="block" style="width: 110px"></div><div class="block" style="width: 110px"></div><div class="block" style="width: 110px"></div><div class="block" style="width: 110px"></div>
+          </div>
+          <div class="playhead" id="s-playhead"></div>
+        </div>
+
+        <p class="closer" id="s-closer">BUT THE MUSIC?<br />THE MUSIC IS 100% HUMAN.</p>
+      </div>
+
+      <script>
+        window.__timelines = window.__timelines || {};
+        const tl = gsap.timeline({ paused: true });
+
+        tl.fromTo("#s-kicker", { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: 0.6 }, 0.3);
+
+        tl.fromTo("#s-terminal", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.6 }, 0.6);
+        tl.fromTo("#s-t1", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 1.1)
+          .fromTo("#s-t2", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 2.0)
+          .fromTo("#s-t3", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 2.9)
+          .fromTo("#s-t4", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 3.8);
+
+        // Hold, then hard-cut crossfade to the Ableton-style arrangement mockup
+        tl.to("#s-terminal", { opacity: 0, duration: 0.4 }, 6.6);
+        tl.fromTo("#s-arrangement", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 6.9);
+
+        // Playhead sweeps once across the arrangement, deterministic single pass
+        tl.fromTo("#s-playhead", { x: 0 }, { x: 1178, duration: 5.6, ease: "none" }, 7.1);
+
+        tl.fromTo("#s-closer", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.6 }, 11.6);
+
+        window.__timelines["systems"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

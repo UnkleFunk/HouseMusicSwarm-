@@ -5,11 +5,13 @@ import { COLORS } from "./colors.js";
 // Each sketch exports: SKETCH_NAME, BPM, BARS, KEY, and 6 note generator functions
 import * as sketch_20260604 from "./sketches/2026-06-04.js";
 import * as sketch_20260930 from "./sketches/2026-09-30.js";
+import * as sketch_20261003 from "./sketches/2026-10-03.js";
 // NEW SKETCHES ARE ADDED HERE AUTOMATICALLY BY THE DREAM ENGINE
 
 const SKETCHES = [
   sketch_20260604,
   sketch_20260930,
+  sketch_20261003,
   // additional sketch imports appended here nightly
 ] as const;
 

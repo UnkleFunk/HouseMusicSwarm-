@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Review · Resale{% endblock %}
+{% block bodyattrs %}{% if busy %}data-autorefresh="6"{% endif %}{% endblock %}
+{% block content %}
+<h1>Review</h1>
+{% if busy %}<p class="note">Reading photos for {{ busy }} item{{ 's' if busy != 1 }}. New cards appear here on their own.</p>{% endif %}
+{% if not entries %}
+<p class="muted">Nothing waiting for review. <a href="/upload">Upload photos</a> to get started.</p>
+{% endif %}
+{% for e in entries %}
+  {% set next_url = '/review#item-' ~ e.item.id %}
+  {% include "_card.html" %}
+{% endfor %}
+{% endblock %}

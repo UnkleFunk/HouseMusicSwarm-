@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}{{ e.item.sku }} · Resale{% endblock %}
+{% block bodyattrs %}{% if e.item.analysis_status in ('queued', 'running') %}data-autorefresh="4"{% endif %}{% endblock %}
+{% block content %}
+{% set item = e.item %}
+<p><a href="/items">&larr; All items</a></p>
+
+{% include "_card.html" %}
+
+<section class="card">
+  <h2>Details</h2>
+  <p class="muted">Only what you put in Notes is treated as confirmed (tested, included, history). What you paid never goes in a listing.</p>
+  <form class="stack" method="post" action="/items/{{ item.id }}/update">
+    <input type="hidden" name="next" value="/items/{{ item.id }}">
+    <label>Category
+      <select name="category">
+        {% for cid, label in CATEGORY_CHOICES %}<option value="{{ cid }}" {{ 'selected' if cid == item.category }}>{{ label }}</option>{% endfor %}
+      </select>
+    </label>
+    <label>Brand <input name="brand" value="{{ item.brand }}"></label>
+    <label>Model <input name="model" value="{{ item.model }}"></label>
+    <label>Working name <input name="title" value="{{ item.title }}"></label>
+    <label>Condition
+      <select name="condition">
+        <option value="">Let the photos suggest it</option>
+        {% for g in GRADES.values() %}<option value="{{ g.id }}" {{ 'selected' if g.id == item.condition }}>{{ g.label }}: {{ g.definition }}</option>{% endfor %}
+      </select>
+    </label>
+    <label>Cost basis ($) <input name="cost" inputmode="decimal" value="{{ item.cost_basis_cents|dollars }}"></label>
+    <label>Notes <textarea name="notes" rows="5">{{ item.notes }}</textarea></label>
+    <button class="btn primary">Save details</button>
+  </form>
+  {% if item.waived_shots %}
+  <h3>Marked not applicable</h3>
+  <ul class="plain">
+    {% for s in item.waived_shots %}
+    <li>{{ shot_label(item.category, s) }}
+      <form class="inline" method="post" action="/items/{{ item.id }}/waive"><input type="hidden" name="shot" value="{{ s }}"><input type="hidden" name="undo" value="1"><input type="hidden" name="next" value="/items/{{ item.id }}"><button class="linkbtn">ask for it again</button></form>
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  <form class="inline" method="post" action="/items/{{ item.id }}/redraft">
+    <input type="hidden" name="next" value="/items/{{ item.id }}"><input type="hidden" name="force" value="1">
+    <button class="linkbtn">Redraft everything and discard my edits</button>
+  </form>
+</section>
+
+<section class="card">
+  <h2>Photos ({{ e.photos|length }})</h2>
+  <div class="grid">
+    {% for p in e.photos %}
+    <figure>
+      <a href="/media/{{ item.sku }}/orig/{{ p.filename }}"><img loading="lazy" src="/media/{{ item.sku }}/thumb/{{ p.filename }}" alt=""></a>
+      <figcaption>{{ shot_label(item.category, p.shot) if p.shot else 'not read yet' }}{% if p.quality and p.quality != 'ok' %} <em>({{ p.quality }})</em>{% endif %}
+        <form class="inline" method="post" action="/items/{{ item.id }}/photos/{{ p.id }}/delete" data-confirm="Remove this photo?"><button class="linkbtn">remove</button></form>
+      </figcaption>
+    </figure>
+    {% endfor %}
+  </div>
+  <div class="actions"><a class="btn" href="/upload?item={{ item.id }}">Add photos</a></div>
+</section>
+
+<section class="card">
+  <h2>Danger zone</h2>
+  <form method="post" action="/items/{{ item.id }}/delete" data-confirm="Delete {{ item.sku }} and its photos?"><button class="btn danger">Delete this item</button></form>
+</section>
+{% endblock %}

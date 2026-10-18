@@ -1,0 +1,9 @@
+# Resale app runtime dependencies (separate from the swarm's root requirements.txt)
+fastapi>=0.110
+uvicorn>=0.29
+jinja2>=3.1
+python-multipart>=0.0.9
+pydantic>=2.6
+pillow>=10.1
+pillow-heif>=0.16   # iPhone HEIC photos; the app still runs without it, HEIC uploads are just refused
+anthropic>=1.0      # live mode only; demo mode and the tests do not call it

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Upload · Resale{% endblock %}
+{% block content %}
+<h1>Upload photos</h1>
+<p class="muted">Pick several photos at once. A new item is created unless you choose an existing one.</p>
+
+{% if current %}
+<section class="card">
+  <h2>Adding to {{ current.sku }}: {{ current.title or current.model }}</h2>
+  {% if entry.missing %}
+  <h3>Photos still wanted</h3>
+  <ul class="shots">
+    {% for m in entry.missing %}
+    <li class="{{ 'req' if m.required else 'opt' }}{{ ' pick' if m.id == shot }}">
+      <strong>{{ m.label }}</strong> <span class="tag {{ '' if m.required else 'opt' }}">{{ 'needed' if m.required else 'nice to have' }}</span>
+      <p>{{ m.prompt }}</p>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p class="muted">Nothing specific is missing right now.</p>
+  {% endif %}
+</section>
+{% endif %}
+
+<form class="stack" method="post" action="/upload" enctype="multipart/form-data">
+  <label>Photos
+    <input id="files" type="file" name="files" accept="image/*" multiple required>
+    <span id="file-count" class="muted"></span>
+  </label>
+
+  <label>Add to
+    <select name="item_id">
+      <option value="">A new item</option>
+      {% for i in choices %}<option value="{{ i.id }}" {{ 'selected' if current and current.id == i.id }}>{{ i.sku }}: {{ i.title or i.model or 'untitled' }}</option>{% endfor %}
+    </select>
+  </label>
+
+  <details {{ 'open' if not current }}>
+    <summary>Item details (optional)</summary>
+    <div class="stack inner">
+      <label>Category
+        <select name="category">
+          {% for cid, label in CATEGORY_CHOICES %}<option value="{{ cid }}">{{ label }}</option>{% endfor %}
+        </select>
+      </label>
+      <label>Brand <input name="brand" autocomplete="off"></label>
+      <label>Model <input name="model" autocomplete="off"></label>
+      <label>What you paid ($) <input name="cost" inputmode="decimal" autocomplete="off"></label>
+      <label>Notes <textarea name="notes" rows="3" placeholder="Anything you know: tested, flaws, what's included. Only what you write here is treated as confirmed."></textarea></label>
+    </div>
+  </details>
+
+  <label class="check"><input type="checkbox" name="analyze" value="1" checked> Read the photos and draft listings</label>
+  <button class="btn primary big" type="submit">Upload</button>
+</form>
+{% endblock %}

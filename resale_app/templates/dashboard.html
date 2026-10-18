@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Resale{% endblock %}
+{% block bodyattrs %}{% if busy %}data-autorefresh="6"{% endif %}{% endblock %}
+{% block content %}
+<h1>Resale</h1>
+
+<div class="actions big">
+  <a class="btn primary" href="/upload">Upload photos</a>
+  <a class="btn" href="/review">Review{% if counts.get('review', 0) + counts.get('needs_photos', 0) %} ({{ counts.get('review', 0) + counts.get('needs_photos', 0) }}){% endif %}</a>
+</div>
+
+{% if busy %}<p class="note">Reading photos for {{ busy }} item{{ 's' if busy != 1 }}. This page refreshes itself.</p>{% endif %}
+{% if errors %}<p class="alert">{{ errors }} item{{ 's' if errors != 1 }} failed to analyse. <a href="/items?status=intake">Open</a> an item to see why and retry.</p>{% endif %}
+
+<h2>Where things stand</h2>
+{% if total == 0 %}
+<p class="muted">Nothing here yet. Upload some photos, load your inventory with <code>python -m resale_app seed</code>, or try <code>python -m resale_app demo</code>.</p>
+{% else %}
+<ul class="stats">
+  {% for s in ITEM_STATUSES %}
+  <li><a href="/items?status={{ s }}"><strong>{{ counts.get(s, 0) }}</strong><span>{{ s.replace('_', ' ') }}</span></a></li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+<h2>Ready to post</h2>
+<ul class="plain">
+  {% for p in PLATFORMS.values() %}
+  <li><a href="/export/{{ p.id }}">{{ p.label }}</a> <span class="muted">{{ approved[p.id] }} approved</span></li>
+  {% endfor %}
+</ul>
+{% endblock %}

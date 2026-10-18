@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Items · Resale{% endblock %}
+{% block content %}
+<h1>Items</h1>
+<form class="filters" method="get" action="/items">
+  <input type="search" name="q" value="{{ q }}" placeholder="Search SKU, brand, model, notes">
+  <select name="status" aria-label="Status">
+    <option value="">Any status</option>
+    {% for s in ITEM_STATUSES %}<option value="{{ s }}" {{ 'selected' if s == status }}>{{ s.replace('_', ' ') }}</option>{% endfor %}
+  </select>
+  <select name="category" aria-label="Category">
+    <option value="">Any category</option>
+    {% for cid, label in CATEGORY_CHOICES %}<option value="{{ cid }}" {{ 'selected' if cid == category }}>{{ label }}</option>{% endfor %}
+  </select>
+  <button class="btn">Filter</button>
+</form>
+
+{% if not items %}
+<p class="muted">No items match.</p>
+{% else %}
+<ul class="itemlist">
+  {% for i in items %}
+  <li>
+    <a class="row" href="/items/{{ i.id }}">
+      {% if i.cover %}<img class="mini" loading="lazy" src="/media/{{ i.sku }}/thumb/{{ i.cover }}" alt="">{% else %}<span class="mini empty">no photo</span>{% endif %}
+      <span class="grow">
+        <strong>{{ i.title or i.sku }}</strong>
+        <span class="muted">{{ i.sku }} · {{ i.category }} · {{ i.photo_count }} photo{{ 's' if i.photo_count != 1 }}{% if i.cost_basis_cents is not none %} · cost {{ i.cost_basis_cents|money }}{% endif %}</span>
+      </span>
+      <span class="chip s-{{ i.status }}">{{ i.status.replace('_', ' ') }}</span>
+    </a>
+  </li>
+  {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,166 @@
+{#- One review card per item. Expects `e` (entry from build_entry) and `next_url` (where actions return to). -#}
+{% set item = e.item %}
+<article class="card" id="item-{{ item.id }}">
+  <header class="card-head">
+    <a class="cover" href="/items/{{ item.id }}">
+      {% if e.strip %}<img src="/media/{{ item.sku }}/thumb/{{ e.strip[0].filename }}" alt="">{% else %}<span class="empty">no photo</span>{% endif %}
+    </a>
+    <div class="grow">
+      <h2><a href="/items/{{ item.id }}">{{ item.title or item.sku }}</a></h2>
+      <p class="meta">{{ item.sku }} · {{ CATEGORIES[item.category].label if item.category in CATEGORIES else 'Category not set' }}{% if item.cost_basis_cents is not none %} · cost {{ item.cost_basis_cents|money }}{% endif %}</p>
+      <p><span class="chip s-{{ item.status }}">{{ item.status.replace('_', ' ') }}</span>
+        {% if item.analysis_status in ('queued', 'running') %}<span class="chip busy">reading photos…</span>{% endif %}
+      </p>
+    </div>
+  </header>
+
+  {% if item.analysis_status == 'error' %}
+  <p class="alert">The last read failed: {{ item.analysis_error }}</p>
+  {% endif %}
+
+  {% if not e.analysis %}
+    <p class="muted">{{ e.photos|length }} photo{{ 's' if e.photos|length != 1 }} so far, not read yet.</p>
+    <div class="actions">
+      <form method="post" action="/items/{{ item.id }}/analyze"><input type="hidden" name="next" value="{{ next_url }}"><button class="btn primary" {{ 'disabled' if not e.photos }}>Read photos</button></form>
+      <a class="btn" href="/upload?item={{ item.id }}">Add photos</a>
+    </div>
+  {% else %}
+
+  <div class="strip" aria-label="Photos in suggested order">
+    {% for p in e.strip %}
+    <figure>
+      <a href="/media/{{ item.sku }}/orig/{{ p.filename }}"><img loading="lazy" src="/media/{{ item.sku }}/thumb/{{ p.filename }}" alt="{{ shot_label(item.category, p.shot) }}"></a>
+      <figcaption>{{ loop.index }}. {{ shot_label(item.category, p.shot) }}{% if p.quality and p.quality != 'ok' %} <em>({{ p.quality }})</em>{% endif %}</figcaption>
+    </figure>
+    {% endfor %}
+  </div>
+
+  {% if e.missing %}
+  {% set needed = e.missing|selectattr('required')|list %}
+  {% set optional = e.missing|rejectattr('required')|list %}
+  {% if needed %}
+  <section class="missing">
+    <h3>Photos still needed</h3>
+    <ul class="shots">
+      {% for m in needed %}
+      <li class="req">
+        <strong>{{ m.label }}</strong>
+        <p>{{ m.prompt }}</p>
+        <div class="actions">
+          <a class="btn" href="/upload?item={{ item.id }}&amp;shot={{ m.id }}">Add photos</a>
+          <form method="post" action="/items/{{ item.id }}/waive"><input type="hidden" name="shot" value="{{ m.id }}"><input type="hidden" name="next" value="{{ next_url }}"><button class="btn ghost">Not applicable</button></form>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+  {% if optional %}
+  <details class="optional">
+    <summary>{{ optional|length }} more photo{{ 's' if optional|length != 1 }} would help</summary>
+    <ul class="shots">
+      {% for m in optional %}
+      <li class="opt"><strong>{{ m.label }}</strong><p>{{ m.prompt }}</p></li>
+      {% endfor %}
+    </ul>
+  </details>
+  {% endif %}
+  {% endif %}
+
+  <details class="read">
+    <summary>What I read from the photos ({{ e.analysis.mode }})</summary>
+    <dl>
+      <dt>Identified as</dt>
+      <dd>{{ e.analysis.brand or 'brand not read' }} {{ e.analysis.model }} <span class="muted">({{ e.analysis.identification_confidence }} confidence)</span><br><span class="muted">{{ e.analysis.identification_evidence }}</span></dd>
+      {% if e.analysis.model_numbers %}
+      <dt>Numbers</dt>
+      <dd>{% for n in e.analysis.model_numbers %}<code>{{ n.value }}</code> <span class="muted">{{ n.kind.replace('_', ' ') }}{% if n.kind == 'serial' %}, kept private{% endif %}</span>{{ '; ' if not loop.last }}{% endfor %}</dd>
+      {% endif %}
+      {% if e.analysis.label_text %}
+      <dt>Label text</dt>
+      <dd>{% for t in e.analysis.label_text %}<code>{{ t }}</code>{{ ' ' if not loop.last }}{% endfor %}</dd>
+      {% endif %}
+      <dt>Flaws</dt>
+      <dd>{% if e.analysis.flaws %}<ul>{% for f in e.analysis.flaws %}<li>{{ f.description }} <span class="muted">({{ f.severity }}{% if f.photo_number %}, photo {{ f.photo_number }}{% endif %})</span></li>{% endfor %}</ul>{% else %}None seen.{% endif %}</dd>
+      <dt>Suggested grade</dt>
+      <dd>{{ GRADES[e.analysis.suggested_condition].label }}: {{ e.analysis.condition_rationale }}</dd>
+      {% if e.analysis.unknowns %}
+      <dt>Not known</dt>
+      <dd><ul>{% for u in e.analysis.unknowns %}<li>{{ u }}</li>{% endfor %}</ul></dd>
+      {% endif %}
+    </dl>
+  </details>
+
+  {% for l in e.listings %}
+  {% set plat = l.platform_obj %}
+  <section class="listing state-{{ l.state }}" id="listing-{{ l.id }}">
+    <header>
+      <h3>{{ plat.label if plat else l.platform }}</h3>
+      <span class="chip l-{{ l.state }}">{{ l.state }}</span>
+    </header>
+    {% for w in l.warnings %}<p class="warn">{{ w }}</p>{% endfor %}
+    <dl>
+      <dt>Title <span class="count">{{ l.title|length }}{% if plat %}/{{ plat.title_max }}{% endif %}</span></dt>
+      <dd class="title">{{ l.title }}</dd>
+      <dt>Condition</dt>
+      <dd>{{ plat.condition_labels.get(l.condition_grade, '') if plat else '' }} <span class="muted">({{ GRADES[l.condition_grade].label if l.condition_grade in GRADES else '' }})</span></dd>
+      {% if l.price_cents is not none %}<dt>Price</dt><dd>{{ l.price_cents|money }}</dd>{% endif %}
+      <dt>Description <span class="count">{{ l.description|length }}{% if plat %}/{{ plat.desc_max }}{% endif %}</span></dt>
+      <dd class="desc">{{ l.description }}</dd>
+      {% if l.specs %}
+      <dt>Item specifics</dt>
+      <dd><table class="specs">{% for s in l.specs %}<tr><th>{{ s.name }}</th><td>{{ s.value }}</td></tr>{% endfor %}</table></dd>
+      {% endif %}
+      {% if l.keywords %}<dt>Keywords</dt><dd>{{ l.keywords|join(', ') }}</dd>{% endif %}
+      <dt>Photo order</dt>
+      <dd>{% for p in l.ordered_photos %}<span class="ord">{{ loop.index }}. {{ shot_label(item.category, p.shot) }}</span>{% endfor %}</dd>
+    </dl>
+
+    <input type="checkbox" id="edit-{{ l.id }}" class="edit-toggle" hidden>
+    <div class="actions">
+      {% if l.state == 'draft' %}
+        <form method="post" action="/listings/{{ l.id }}/approve"><input type="hidden" name="next" value="{{ next_url }}"><button class="btn primary">Approve</button></form>
+        <label for="edit-{{ l.id }}" class="btn" role="button" tabindex="0">Edit</label>
+        <form method="post" action="/listings/{{ l.id }}/skip"><input type="hidden" name="next" value="{{ next_url }}"><button class="btn ghost">Skip</button></form>
+      {% elif l.state == 'approved' %}
+        <a class="btn" href="/export/{{ l.platform }}">In {{ plat.label if plat else l.platform }} pack</a>
+        <label for="edit-{{ l.id }}" class="btn" role="button" tabindex="0">Edit</label>
+        <form method="post" action="/listings/{{ l.id }}/reopen"><input type="hidden" name="next" value="{{ next_url }}"><button class="btn ghost">Reopen</button></form>
+      {% elif l.state == 'skipped' %}
+        <form method="post" action="/listings/{{ l.id }}/reopen"><input type="hidden" name="next" value="{{ next_url }}"><button class="btn ghost">Reopen</button></form>
+      {% else %}
+        {% if l.external_url %}<a class="btn" href="{{ l.external_url }}" rel="noopener">View listing</a>{% endif %}
+      {% endif %}
+    </div>
+
+    <form class="edit-form stack" method="post" action="/listings/{{ l.id }}/edit">
+      <input type="hidden" name="next" value="{{ next_url }}">
+      <label>Title <input name="title" value="{{ l.title }}"{% if plat %} data-counter="{{ plat.title_max }}"{% endif %}></label>
+      <label>Description <textarea name="description" rows="12"{% if plat %} data-counter="{{ plat.desc_max }}"{% endif %}>{{ l.description }}</textarea></label>
+      <label>Condition
+        <select name="condition_grade">
+          {% for g in GRADES.values() %}<option value="{{ g.id }}" {{ 'selected' if g.id == l.condition_grade }}>{{ g.label }}</option>{% endfor %}
+        </select>
+      </label>
+      <label>Item specifics (one per line, Name: value)<textarea name="specs" rows="5">{% for s in l.specs %}{{ s.name }}: {{ s.value }}
+{% endfor %}</textarea></label>
+      <label>Keywords (comma separated) <input name="keywords" value="{{ l.keywords|join(', ') }}"></label>
+      <label>Price ($, optional) <input name="price" inputmode="decimal" value="{{ l.price_cents|dollars }}"></label>
+      <div class="actions"><button class="btn primary">Save edits</button><label for="edit-{{ l.id }}" class="btn ghost" role="button" tabindex="0">Cancel</label></div>
+    </form>
+  </section>
+  {% endfor %}
+
+  <footer class="actions item-actions">
+    {% if e.pending > 1 %}
+    <form method="post" action="/items/{{ item.id }}/approve-all"><input type="hidden" name="next" value="{{ next_url }}"><button class="btn primary">Approve all {{ e.pending }}</button></form>
+    {% endif %}
+    {% if e.pending %}
+    <form method="post" action="/items/{{ item.id }}/skip"><input type="hidden" name="next" value="{{ next_url }}"><button class="btn ghost">Skip item</button></form>
+    {% endif %}
+    <a class="btn ghost" href="/upload?item={{ item.id }}">Add photos</a>
+    <form method="post" action="/items/{{ item.id }}/analyze"><input type="hidden" name="next" value="{{ next_url }}"><button class="btn ghost">Re-read photos</button></form>
+    <form method="post" action="/items/{{ item.id }}/redraft"><input type="hidden" name="next" value="{{ next_url }}"><button class="btn ghost">Redraft</button></form>
+  </footer>
+  {% endif %}
+</article>

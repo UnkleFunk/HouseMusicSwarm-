@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Export · Resale{% endblock %}
+{% block content %}
+<h1>Export</h1>
+<p class="muted">Each pack holds your <em>approved</em> listings for one marketplace: copy-ready text, plus the photos in upload order.</p>
+<ul class="itemlist">
+  {% for p in PLATFORMS.values() %}
+  <li>
+    <a class="row" href="/export/{{ p.id }}">
+      <span class="grow"><strong>{{ p.label }}</strong><span class="muted">title {{ p.title_max }} · description {{ p.desc_max }} · up to {{ p.max_photos }} photos</span></span>
+      <span class="chip">{{ counts[p.id] }} approved</span>
+    </a>
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}{{ platform.label }} pack · Resale{% endblock %}
+{% block content %}
+<p><a href="/export">&larr; All platforms</a></p>
+<h1>{{ platform.label }} pack</h1>
+{% if not entries %}
+<p class="muted">No approved {{ platform.label }} listings yet. Approve some on the <a href="/review">review page</a>.</p>
+{% else %}
+<div class="actions">
+  <a class="btn primary" href="/export/{{ platform.id }}/pack.zip">Download pack (text + photos)</a>
+  <a class="btn" href="/export/{{ platform.id }}/listings.txt">All text</a>
+</div>
+
+{% for entry in entries %}
+{% set l = entry.listing %}
+<section class="card" id="pack-{{ l.id }}">
+  <h2>{{ entry.item.sku }}: {{ entry.item.title or entry.item.model }}</h2>
+  <dl class="copy">
+    <dt>Title <button class="copybtn" type="button" data-copy="#t-{{ l.id }}">Copy</button></dt>
+    <dd id="t-{{ l.id }}" class="title">{{ l.title }}</dd>
+    <dt>Condition</dt>
+    <dd>{{ platform.condition_labels.get(l.condition_grade, '') }}</dd>
+    {% if l.price_cents is not none %}<dt>Price</dt><dd>{{ l.price_cents|money }}</dd>{% endif %}
+    <dt>Description <button class="copybtn" type="button" data-copy="#d-{{ l.id }}">Copy</button></dt>
+    <dd id="d-{{ l.id }}" class="desc">{{ l.description }}</dd>
+    {% if l.specs %}
+    <dt>Item specifics <button class="copybtn" type="button" data-copy="#s-{{ l.id }}">Copy</button></dt>
+    <dd id="s-{{ l.id }}" class="desc">{% for s in l.specs %}{{ s.name }}: {{ s.value }}
+{% endfor %}</dd>
+    {% endif %}
+    {% if l.keywords %}
+    <dt>Keywords <button class="copybtn" type="button" data-copy="#k-{{ l.id }}">Copy</button></dt>
+    <dd id="k-{{ l.id }}">{{ l.keywords|join(', ') }}</dd>
+    {% endif %}
+    <dt>Photos, in upload order</dt>
+    <dd class="strip">
+      {% for p in entry.photos %}
+      <figure><a href="/media/{{ entry.item.sku }}/orig/{{ p.filename }}"><img loading="lazy" src="/media/{{ entry.item.sku }}/thumb/{{ p.filename }}" alt=""></a><figcaption>{{ p.number }}. {{ p.label }}</figcaption></figure>
+      {% endfor %}
+    </dd>
+  </dl>
+  <form class="stack" method="post" action="/listings/{{ l.id }}/posted">
+    <input type="hidden" name="next" value="/export/{{ platform.id }}">
+    <label>Posted it? Paste the listing link (optional) <input name="url" inputmode="url" placeholder="https://"></label>
+    <button class="btn">Mark as posted</button>
+  </form>
+</section>
+{% endfor %}
+{% endif %}
+{% endblock %}

@@ -43,6 +43,7 @@ HouseMusicSwarm-/
 ├── ableton_extensions/             # Ableton Live Extensions SDK context, taste fingerprint, built extension projects
 ├── supabase/                       # SQL schema backing the website's WIP-feedback / Q&A widget
 ├── website/                        # Static SPA for unklefunk.music (HTML/CSS/JS)
+├── resale_app/                     # Standalone resale-listing app (FastAPI + SQLite); not part of the swarm — see its README.md / RESUME.md
 ├── assets/                         # Static assets
 ├── bin/                            # `openswarm` CLI launcher script (npm bin entry)
 └── .github/workflows/               # CI/CD (deploy-hostinger.yml, diagnose.yml, build-tui.yml, test-mac.yml)
@@ -287,6 +288,21 @@ The music curation and Ableton co-writing layer is defined in `VISION.md`. Curre
 - [ ] Wire `music_curation/` into `swarm.py` + orchestrator routing — it is currently a standalone module, not yet agent-wrapped
 
 The learning loop (once discovery/review ship): every yes/no/maybe decision lands in `feedback.sqlite`; every 25 decisions, weights auto-retrain into `profile.learned.yaml`, leaving `profile.yaml` as a clean hand-tuned baseline (delete `profile.learned.yaml` to reset learning).
+
+---
+
+## Resale App (Separate Concern)
+
+`resale_app/` is a self-contained app that turns item photos into honest per-platform marketplace listing drafts (eBay, Mercari, Facebook Marketplace, Poshmark). It is **not** wired into `swarm.py`, shares no code with the agents, and has its own `requirements.txt`, data folder (`resale_app/data/`, git-ignored) and tests.
+
+```bash
+pip install -r resale_app/requirements-dev.txt
+python -m pytest resale_app/tests      # no network or API key needed
+python -m resale_app demo              # offline demo on port 8090
+python -m resale_app serve             # live mode when ANTHROPIC_API_KEY is set
+```
+
+Start with `resale_app/README.md` (usage, config, voice and honesty rules) and `resale_app/RESUME.md` (current state, what is untested, next steps). Hazel setup is in `resale_app/docs/HAZEL.md`.
 
 ---
 

@@ -184,3 +184,8 @@ cython_debug/
 .agency_swarm/
 third_party/
 .claude/website/assets/audio/
+
+# Resale app (local data, virtualenv, secrets)
+resale_app/data/
+resale_app/.env
+.venv-resale/

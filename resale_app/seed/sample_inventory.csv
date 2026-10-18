@@ -1,0 +1,9 @@
+ref,category,brand,model,title,condition,status,cost,notes,photos
+sample-001,board,ASUS,TUF GAMING X570-PLUS,,,intake,85.00,"Tested: boots to BIOS. Small scratch near the M.2 heatsink.",
+sample-002,board,Gigabyte,B450 AORUS M,,,intake,22.50,"Came out of a parts lot. Haven't had a CPU to try it with.",
+sample-003,board,MSI,B550-A PRO,,,intake,48.00,"",
+sample-004,clothing,Carhartt WIP,Hooded Sweatshirt,,,intake,14.00,"Size: L. Color: Heather grey. Light pilling on the cuffs.",
+sample-005,clothing,Patagonia,Better Sweater Fleece,,,intake,22.00,"Size: M. Color: Navy.",
+sample-006,sneakers,Nike,Air Max 90,,,intake,40.00,"Size: 10. Colorway: White/Black. Scuffs on the toe box.",
+sample-007,sneakers,New Balance,574,,,intake,18.00,"Size: 9.5.",
+sample-008,unknown,,,Box of cables from the garage lot,,intake,5.00,"Not sorted yet.",
